@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Search pages have no standalone value — they are always the same corpus,
+# filtered by a query the visitor typed.
+Disallow: /search
+Disallow: /bible/search
+
+Sitemap: https://satyasakshi.in/sitemap.xml

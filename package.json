@@ -1,0 +1,38 @@
+{
+  "name": "satyasakshi",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/generate-sitemap.mjs && tsc -b && vite build",
+    "preview": "vite preview",
+    "check": "node scripts/check-links.mjs && node scripts/check-content.mjs && node scripts/check-encoding.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "check:content": "node scripts/check-content.mjs",
+    "lint": "oxlint",
+    "typecheck": "tsc -b --noEmit",
+    "sitemap": "node scripts/generate-sitemap.mjs",
+    "bible:generate": "node scripts/generate-bible-data.cjs",
+    "og:image": "node scripts/generate-og-image.mjs",
+    "icons:generate": "node scripts/generate-icons.mjs",
+    "check:encoding": "node scripts/check-encoding.mjs"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "oxlint": "^1.81.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  }
+}

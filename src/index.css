@@ -1,0 +1,348 @@
+@import 'tailwindcss';
+
+/* Self-hosted Noto Telugu — variable weight 400..700.
+   Source: Google Fonts / Noto project (SIL Open Font License 1.1).
+   Telugu + Latin subsets only, split by unicode-range so unused
+   scripts are never downloaded. */
+@font-face {
+  font-family: 'Noto Sans Telugu';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/noto-sans-telugu-telugu.woff2') format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0C00-0C7F, U+1CDA, U+1CF2, U+200C-200D,
+    U+25CC;
+}
+
+@font-face {
+  font-family: 'Noto Sans Telugu';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/noto-sans-telugu-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Noto Serif Telugu';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/noto-serif-telugu-telugu.woff2') format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0C00-0C7F, U+1CDA, U+1CF2, U+200C-200D,
+    U+25CC;
+}
+
+@font-face {
+  font-family: 'Noto Serif Telugu';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/noto-serif-telugu-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ==========================================================================
+   సత్యసాక్షి — Design tokens
+   A restrained editorial palette: deep forest green, warm cream, muted gold,
+   charcoal ink. Light-first. Gold is used only for small highlights.
+   ========================================================================== */
+
+@theme {
+  /* --- Ink (charcoal, very slightly green-cast) --- */
+  --color-ink: #16191a;
+  --color-ink-soft: #414b46;
+  --color-ink-muted: #6b7570;
+
+  /* --- Forest / biblical green --- */
+  --color-forest-950: #0a1d15;
+  --color-forest-900: #10291e;
+  --color-forest-800: #16382a;
+  --color-forest-700: #1d4a36;
+  --color-forest-600: #276044;
+  --color-forest-500: #33764f;
+  --color-forest-400: #52906b;
+  --color-forest-300: #86b39a;
+  --color-forest-200: #c0d8c9;
+  --color-forest-100: #e2ede6;
+
+  /* --- Warm cream / ivory --- */
+  --color-cream-50: #fffdf8;
+  --color-cream-100: #fbf7ef;
+  --color-cream-200: #f5efe2;
+  --color-cream-300: #ece3d1;
+  --color-cream-400: #ddd0b7;
+
+  /* --- Muted gold --- */
+  --color-gold-700: #8a6524;
+  --color-gold-600: #a67c2e;
+  --color-gold-500: #c29a45;
+  --color-gold-400: #d8b871;
+  --color-gold-200: #eddcb6;
+  --color-gold-100: #f7eeda;
+
+  /* --- Typography --- */
+  --font-serif: 'Noto Serif Telugu', 'Noto Serif', Georgia, serif;
+  --font-sans: 'Noto Sans Telugu', 'Noto Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1.1rem;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.25rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.65rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.85rem;
+
+  /* --- Radius: restrained, editorial. Not everything is a pill. --- */
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 9px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* --- Shadows: soft, low-contrast, warm-tinted --- */
+  --shadow-xs: 0 1px 2px rgb(22 25 26 / 0.05);
+  --shadow-sm: 0 1px 3px rgb(22 25 26 / 0.06), 0 1px 2px rgb(22 25 26 / 0.04);
+  --shadow-md: 0 4px 12px -2px rgb(22 25 26 / 0.08), 0 2px 5px -2px rgb(22 25 26 / 0.05);
+  --shadow-lg: 0 12px 28px -8px rgb(16 41 30 / 0.16), 0 4px 10px -4px rgb(16 41 30 / 0.08);
+  --shadow-xl: 0 26px 56px -18px rgb(16 41 30 / 0.24);
+
+  /* --- Motion: calm and unhurried --- */
+  --ease-calm: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  --animate-rise: rise 0.6s var(--ease-calm) both;
+  --animate-fade: fade 0.5s var(--ease-calm) both;
+
+  /* --- Layout --- */
+  --container-page: 78rem;
+  --container-prose: 44rem;
+}
+
+/* ==========================================================================
+   Base layer
+   ========================================================================== */
+
+@layer base {
+  :root {
+    color-scheme: light;
+    scroll-padding-top: 6rem;
+    scrollbar-gutter: stable;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--color-cream-100);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'kern';
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    line-height: 1.32;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  /* Telugu conjuncts break awkwardly at arbitrary points — give the shaper
+     room and avoid mid-word hyphenation, which Telugu does not use. */
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+    hyphens: none;
+    overflow-wrap: break-word;
+  }
+
+  /* Visible, high-contrast focus ring everywhere — keyboard users first. */
+  :focus-visible {
+    outline: 2px solid var(--color-forest-600);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  ::selection {
+    background-color: var(--color-forest-200);
+    color: var(--color-forest-950);
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   Components layer — small, reusable primitives shared across the platform
+   ========================================================================== */
+
+@layer components {
+  /* Hairline editorial rule, warmer than a plain grey border. */
+  .rule {
+    border-color: var(--color-cream-300);
+  }
+
+  /* Small uppercase eyebrow used above section headings. */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-gold-700);
+  }
+
+  /* Page shell used by every route. */
+  .shell {
+    width: 100%;
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .shell {
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .shell {
+      padding-inline: 3rem;
+    }
+  }
+
+  /* Link underline that animates in from the left. */
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 1px;
+    transition: background-size 0.3s var(--ease-calm);
+  }
+
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* ==========================================================================
+   Keyframes + scroll-reveal (progressive enhancement only)
+   ========================================================================== */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drawer-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Scroll reveal: content starts hidden ONLY when JS has marked it, so the
+   page is fully readable if the script never runs. */
+[data-reveal] {
+  opacity: 0;
+}
+
+html.js [data-reveal] {
+  will-change: opacity, transform;
+}
+
+html.js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s var(--ease-calm),
+    transform 0.7s var(--ease-calm);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  html.js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   Reader highlight — set briefly when a verse is deep-linked (#v16)
+   ========================================================================== */
+
+li.is-target {
+  background-color: var(--color-gold-100);
+  box-shadow: 0 0 0 4px var(--color-gold-100);
+}

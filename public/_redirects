@@ -1,0 +1,10 @@
+# Static host configuration for the single-page application.
+#
+# Every unknown path must be served by index.html so React Router can resolve
+# it. Vite already builds index.html with hashed asset references, so this is a
+# plain fallback — no asset rewriting needed.
+#
+# Works on Netlify and Cloudflare Pages. On nginx use:
+#   location / { try_files $uri $uri/ /index.html; }
+/bible.html   /bible     301
+/*            /index.html 200
