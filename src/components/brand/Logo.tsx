@@ -2,38 +2,19 @@ import { Link } from 'react-router-dom'
 import { site } from '../../config/site'
 
 /**
- * Brand identity.
- *
- * The original Satya Sakshi logo is an opaque near-black square raster, which
- * reads as a heavy blob in a light editorial header. So the header uses a
- * compact drawn mark plus a Telugu wordmark: same name, same promise, far
- * lighter. The original file is still preserved at
- * `public/brand/satyasakshi-logo-original.png` for print and OG use.
+ * Brand identity using the official Satya Sakshi logo.
  */
-export function BrandMark({ size = 36, className = '' }: { size?: number; className?: string }) {
+export function BrandMark({ size = 42, className = '' }: { size?: number; className?: string }) {
   return (
-    <svg
-      viewBox="0 0 40 40"
+    <img
+      src="/brand/satyasakshi-logo-original.png"
+      alt={site.brand.telugu}
       width={size}
       height={size}
-      className={className}
-      aria-hidden="true"
-      focusable="false"
-    >
-      <rect width="40" height="40" rx="10" fill="var(--color-forest-800)" />
-      <g
-        fill="none"
-        stroke="var(--color-gold-400)"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M20 12.5c-2.6-2-5.4-2.8-8.5-2.8v14c3.1 0 5.9.8 8.5 2.8" />
-        <path d="M20 12.5c2.6-2 5.4-2.8 8.5-2.8v14c-3.1 0-5.9.8-8.5 2.8" />
-        <path d="M20 12.5v14" />
-        <path d="M20 26.5v4" />
-      </g>
-    </svg>
+      className={`shrink-0 rounded-full object-cover shadow-sm ring-1 ring-gold-600/40 ${className}`}
+      style={{ width: `${size}px`, height: `${size}px` }}
+      loading="eager"
+    />
   )
 }
 
