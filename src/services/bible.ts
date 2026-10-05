@@ -22,7 +22,7 @@ export interface LoadedBook {
   chapters: Chapter[]
 }
 
-const BOOK_URL = (slug: string) => `${import.meta.env.BASE_URL}bible/${slug}.json`
+const BOOK_URL = (slug: string) => `${import.meta.env.BASE_URL}data/bible/${slug}.json`
 
 const cache = new Map<string, Promise<LoadedBook>>()
 

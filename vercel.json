@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/bible.html",
+      "destination": "/bible",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/bible/(.*\\.json)",
+      "destination": "/data/bible/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

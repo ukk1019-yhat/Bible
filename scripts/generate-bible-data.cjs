@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const SRC = 'C:/Users/ukkuk/AppData/Local/Temp/opencode/te-bible/telugu-bsi.xml';
-const OUT_BIBLE = 'C:/Users/ukkuk/Downloads/Aparanjani mam/public/bible';
-const OUT_TS = 'C:/Users/ukkuk/Downloads/Aparanjani mam/src/data/bible';
+const OUT_BIBLE = path.resolve(__dirname, '../public/data/bible');
+const OUT_TS = path.resolve(__dirname, '../src/data/bible');
 
 const BOOKS = [
   ['ఆదికాండము', 'Genesis', 'genesis', 'ot'],

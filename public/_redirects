@@ -1,1 +1,3 @@
-/*            /index.html 200
+/bible/*.json  /data/bible/:splat 200
+/bible.html    /bible             301
+/*             /index.html        200
