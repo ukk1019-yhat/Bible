@@ -1,22 +1,25 @@
 import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 /**
  * Adds `is-revealed` to `[data-reveal]` elements as they enter the viewport.
  *
- * The `html.js` class is added synchronously on mount so that without JS the
- * content is simply visible — the animation is pure enhancement. Elements are
- * unobserved once revealed, so scrolling back does not re-animate.
+ * Observes elements on initial mount, route transitions, and DOM mutations
+ * (e.g. lazily loaded route chunks, category filter changes) so that content
+ * is immediately revealed on client-side navigation without needing a page reload.
  */
 export function useScrollReveal() {
+  const { pathname } = useLocation()
+
   useEffect(() => {
     document.documentElement.classList.add('js')
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const nodes = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
 
     if (prefersReduced || typeof IntersectionObserver === 'undefined') {
+      const nodes = document.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-revealed)')
       for (const node of nodes) node.classList.add('is-revealed')
-      return () => document.documentElement.classList.remove('js')
+      return
     }
 
     const observer = new IntersectionObserver(
@@ -27,14 +30,31 @@ export function useScrollReveal() {
           observer.unobserve(entry.target)
         }
       },
-      { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
+      { rootMargin: '50px 0px 50px 0px', threshold: 0.01 },
     )
 
-    for (const node of nodes) observer.observe(node)
+    const observeUnrevealed = () => {
+      const nodes = document.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-revealed)')
+      for (const node of nodes) {
+        observer.observe(node)
+      }
+    }
+
+    observeUnrevealed()
+
+    // Observe newly rendered elements on dynamic changes (e.g. lazy routes, filter changes)
+    const mutationObserver = new MutationObserver(() => {
+      observeUnrevealed()
+    })
+
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    })
 
     return () => {
       observer.disconnect()
-      document.documentElement.classList.remove('js')
+      mutationObserver.disconnect()
     }
-  }, [])
+  }, [pathname])
 }
