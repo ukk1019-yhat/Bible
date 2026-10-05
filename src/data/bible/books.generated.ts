@@ -1,6 +1,6 @@
 // AUTO-GENERATED — do not edit by hand.
 // Telugu Bible (BSI) book catalogue, chapter/verse counts derived from the
-// source text. Regenerate with: node scripts/generate-bible-data.cjs
+// source text. Regenerate with: node scripts/generate-bible-data.mjs
 
 export type Testament = 'ot' | 'nt';
 
