@@ -37,7 +37,7 @@ export function SiteFooter() {
       <div className="shell grid gap-12 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] lg:gap-16">
         <div className="max-w-sm">
           <div className="flex items-center gap-3">
-            <BrandMark size={44} />
+            <BrandMark size={56} />
             <Wordmark onDark />
           </div>
 

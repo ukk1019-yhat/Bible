@@ -4,7 +4,7 @@ import { site } from '../../config/site'
 /**
  * Brand identity using the official Satya Sakshi logo.
  */
-export function BrandMark({ size = 42, className = '' }: { size?: number; className?: string }) {
+export function BrandMark({ size = 52, className = '' }: { size?: number; className?: string }) {
   return (
     <img
       src="/brand/satyasakshi-logo-original.png"
@@ -25,11 +25,11 @@ export function Wordmark({
   size?: 'sm' | 'md'
   onDark?: boolean
 }) {
-  const telugu = size === 'sm' ? 'text-base' : 'text-lg'
-  const english = size === 'sm' ? 'text-[0.62rem]' : 'text-[0.68rem]'
+  const telugu = size === 'sm' ? 'text-base' : 'text-[1.28rem]'
+  const english = size === 'sm' ? 'text-[0.64rem]' : 'text-[0.72rem]'
 
   return (
-    <span className="flex flex-col leading-none">
+    <span className="flex flex-col leading-tight">
       <span
         className={`font-serif font-bold tracking-tight ${telugu} ${
           onDark ? 'text-cream-50' : 'text-forest-900'
@@ -38,7 +38,7 @@ export function Wordmark({
         {site.brand.telugu}
       </span>
       <span
-        className={`mt-1 font-sans font-medium uppercase tracking-[0.22em] ${english} ${
+        className={`mt-0.5 font-sans font-medium uppercase tracking-[0.22em] ${english} ${
           onDark ? 'text-gold-400/85' : 'text-gold-700'
         }`}
       >
@@ -51,7 +51,7 @@ export function Wordmark({
 export function BrandLockup({
   size = 'md',
   onDark = false,
-  markSize = 36,
+  markSize = 52,
   className = '',
 }: {
   size?: 'sm' | 'md'
@@ -62,10 +62,10 @@ export function BrandLockup({
   return (
     <Link
       to="/"
-      className={`group inline-flex items-center gap-3 ${className}`}
+      className={`group inline-flex items-center gap-3.5 ${className}`}
       aria-label={`${site.brand.telugu} — ముఖ్య పేజీకి వెళ్ళండి`}
     >
-      <BrandMark size={markSize} className="shrink-0 transition-transform duration-300 group-hover:scale-[1.04]" />
+      <BrandMark size={markSize} className="shrink-0 transition-transform duration-300 group-hover:scale-[1.05]" />
       <Wordmark size={size} onDark={onDark} />
     </Link>
   )

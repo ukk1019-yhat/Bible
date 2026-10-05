@@ -150,7 +150,7 @@ export function SiteHeader() {
             style={{ animation: 'drawer-in 0.28s var(--ease-calm) both' }}
           >
             <div className="flex items-center justify-between border-b border-cream-300 px-5 py-4">
-              <BrandLockup size="sm" markSize={30} />
+              <BrandLockup size="sm" markSize={42} />
               <button
                 type="button"
                 onClick={() => closeDrawer()}
