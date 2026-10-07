@@ -53,20 +53,39 @@ export function BookCard({ book, delay = 0 }: { book: ChristianBook; delay?: num
       style={{ '--reveal-delay': `${delay}ms` } as React.CSSProperties}
       className="group flex h-full flex-col"
     >
-      <BookCover book={book} className="transition-transform duration-300 group-hover:-translate-y-1" />
+      {book.pdfUrl ? (
+        <a
+          href={book.pdfUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block transition-transform duration-300 group-hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-600 focus-visible:ring-offset-2 rounded-[var(--radius-md)]"
+          aria-label={`${book.title} (PDF)`}
+        >
+          <BookCover book={book} />
+        </a>
+      ) : (
+        <BookCover book={book} className="transition-transform duration-300 group-hover:-translate-y-1" />
+      )}
 
       <div className="mt-4 flex flex-1 flex-col">
         <Badge tone="outline" className="self-start">
           {book.category.telugu}
         </Badge>
 
-        {/*
-          No link here on purpose. There is no `/books/:slug` route, and adding
-          one before any book is published would be a route that only ever
-          renders an empty state. When a real PDF lands, link the title straight
-          to `book.pdfUrl`.
-        */}
-        <h3 className="mt-2.5 text-[1.05rem] leading-snug text-forest-900">{book.title}</h3>
+        <h3 className="mt-2.5 text-[1.05rem] leading-snug font-medium text-forest-900">
+          {book.pdfUrl ? (
+            <a
+              href={book.pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-forest-700 hover:underline"
+            >
+              {book.title}
+            </a>
+          ) : (
+            book.title
+          )}
+        </h3>
 
         {book.author ? <p className="mt-1 text-sm text-ink-muted">{book.author}</p> : null}
 
@@ -77,10 +96,15 @@ export function BookCard({ book, delay = 0 }: { book: ChristianBook; delay?: num
         ) : null}
 
         {book.pdfUrl ? (
-          <p className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-forest-700">
+          <a
+            href={book.pdfUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-forest-700 hover:text-forest-800 hover:underline"
+          >
             <Icon name="download" size={15} />
             PDF చదవండి
-          </p>
+          </a>
         ) : (
           <p className="mt-4 inline-flex items-center gap-1.5 text-sm text-ink-muted">
             <Icon name="clock" size={15} />

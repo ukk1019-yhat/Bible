@@ -25,7 +25,18 @@ export const bookCategories: BookCategory[] = [
  *   { slug: '…', title: '…', author: '…', category: bookCategories[0],
  *     description: '…', pdfUrl: '/pdf/….pdf', cover: 'sage', status: 'published' }
  */
-export const books: ChristianBook[] = []
+export const books: ChristianBook[] = [
+  {
+    slug: 'chirala-prasnalu-samadhanalu-2',
+    title: 'చీరాల కూడికలు — ప్రశ్నలు & సమాధానాలు (భాగం 2)',
+    author: 'సత్యసాక్షి',
+    category: bookCategories[0],
+    description: 'చీరాల ప్రత్యేక కూడికలలో అడిగిన బైబిల్ ప్రశ్నలు మరియు దైవ వాక్య ఆధారిత సమాధానాలు.',
+    pdfUrl: 'https://drive.google.com/file/d/1MgoqjECXHVpTMes62RzYjLfcQ0fkjmQj/view?usp=sharing',
+    cover: 'sage',
+    status: 'published',
+  },
+]
 
 export const publishedBooks = books.filter((b) => b.status === 'published')
 
