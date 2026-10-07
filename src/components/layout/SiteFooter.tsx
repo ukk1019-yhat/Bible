@@ -26,7 +26,7 @@ export function SiteFooter() {
         <div className="shell py-10 text-center">
           <p
             lang="te"
-            className="mx-auto max-w-2xl font-serif text-lg leading-relaxed text-cream-100 sm:text-xl"
+            className="mx-auto max-w-2xl text-lg leading-relaxed text-cream-100 sm:text-xl"
           >
             «నీ వాక్యము నా పాదములకు దీపమును, నా త్రోవకు వెలుగై యున్నది»
           </p>

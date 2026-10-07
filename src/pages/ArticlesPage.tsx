@@ -148,7 +148,7 @@ export function ArticleRoute() {
       <div className="shell py-12 sm:py-16">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,44rem)_17rem] lg:items-start lg:gap-16">
           <article>
-            <p className="border-s-2 border-gold-500 ps-5 font-serif text-[1.2rem] leading-relaxed text-forest-900">
+            <p className="border-s-2 border-gold-500 ps-5 text-[1.2rem] leading-relaxed text-forest-900">
               {article.excerpt}
             </p>
 
@@ -165,7 +165,7 @@ export function ArticleRoute() {
                   if (block.type === 'quote') {
                     return (
                       <figure key={index} className="my-7 border-s-2 border-gold-500 ps-5">
-                        <blockquote className="font-serif text-[1.1rem] leading-relaxed text-forest-900">
+                        <blockquote className="text-[1.1rem] leading-relaxed text-forest-900">
                           {block.text}
                         </blockquote>
                         {block.reference ? (

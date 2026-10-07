@@ -131,7 +131,7 @@ export function ProseQuote({
 }) {
   return (
     <figure className="my-7 border-s-2 border-gold-500 ps-5">
-      <blockquote className="font-serif text-[1.1rem] leading-relaxed text-forest-900">
+      <blockquote className="text-[1.1rem] leading-relaxed text-forest-900">
         {children}
       </blockquote>
       {reference ? (
