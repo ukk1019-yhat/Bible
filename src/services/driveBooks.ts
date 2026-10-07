@@ -2,7 +2,7 @@ import type { ChristianBook } from '../types/content'
 import { bookCategories, books as fallbackBooks } from '../data/content/books'
 
 export const GOOGLE_DRIVE_BOOKS_ENDPOINT =
-  'https://script.google.com/macros/s/AKfycbyWMBAUO4GpOG4WnRxoGUwOl9c0ohFopZSdrWNGNVr7XI7dRvu4g_vHprtVCvFsvcox/exec'
+  'https://script.google.com/macros/s/AKfycbycRi4ulh2tajO6g1dzjgfYwdMx3YbkHcSdXGOC8US5Io3e7CAGpbvV-HjZtlje0p78/exec'
 
 const COVERS: ChristianBook['cover'][] = ['sage', 'clay', 'indigo', 'olive', 'plum', 'stone']
 
@@ -40,6 +40,10 @@ export async function fetchDriveBooks(): Promise<ChristianBook[]> {
     }
 
     const mapped: ChristianBook[] = data.map((item: DriveApiBook, index: number) => {
+      const known = fallbackBooks.find(
+        (b) => b.pdfUrl && (b.pdfUrl.includes(item.id) || b.slug === item.id),
+      )
+
       // Find matching category by slug or telugu name in title/description if mentioned
       const matchedCategory =
         bookCategories.find(
@@ -50,12 +54,12 @@ export async function fetchDriveBooks(): Promise<ChristianBook[]> {
 
       return {
         slug: item.id || `drive-book-${index}`,
-        title: item.title || 'తెలుగు క్రైస్తవ పుస్తకం',
-        author: 'సత్యసాక్షి',
-        category: matchedCategory,
-        description: item.description || undefined,
+        title: known?.title || item.title || 'తెలుగు క్రైస్తవ పుస్తకం',
+        author: known?.author || 'సత్యసాక్షి',
+        category: known?.category || matchedCategory,
+        description: known?.description || item.description || undefined,
         pdfUrl: item.pdfUrl,
-        cover: COVERS[index % COVERS.length],
+        cover: known?.cover || COVERS[index % COVERS.length],
         status: 'published',
       }
     })
