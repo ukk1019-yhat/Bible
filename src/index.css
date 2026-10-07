@@ -118,6 +118,41 @@
     U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/* Natyamayuri / Natya Mayuri font definitions */
+@font-face {
+  font-family: 'Natyamayuri';
+  src: local('Natyamayuri'), local('Natya Mayuri'), local('Anu Natyamayuri');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Natya Mayuri';
+  src: local('Natya Mayuri'), local('Natyamayuri'), local('Anu Natyamayuri');
+  font-display: swap;
+}
+
+/* Self-hosted Sree Krushnadevaraya (Natya Mayuri style classical title font) */
+@font-face {
+  font-family: 'Sree Krushnadevaraya';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/sree-krushnadevaraya-telugu.woff2') format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0B83, U+0C00-0C7F, U+1CD5-1CD6, U+1CD8, U+1CDA, U+1CF2, U+200C-200D,
+    U+25CC;
+}
+
+@font-face {
+  font-family: 'Sree Krushnadevaraya';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/sree-krushnadevaraya-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* ==========================================================================
    సత్యసాక్షి — Design tokens
    A restrained editorial palette: deep forest green, warm cream, muted gold,
@@ -160,6 +195,7 @@
   /* --- Typography --- */
   --font-serif: 'Noto Serif Telugu', 'Noto Serif', Georgia, serif;
   --font-sans: 'Anek Telugu', 'Aneka Telugu', 'Noto Sans Telugu', 'Noto Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-logo: 'Natyamayuri', 'Natya Mayuri', 'Anu Natyamayuri', 'Sree Krushnadevaraya', 'Noto Serif Telugu', Georgia, serif;
 
   --text-2xs: 0.6875rem;
   --text-2xs--line-height: 1.1rem;
