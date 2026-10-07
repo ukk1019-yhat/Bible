@@ -1,14 +1,29 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { bookCategories, books } from '../data/content/books'
+import { bookCategories, books as defaultBooks } from '../data/content/books'
 import { BookCard } from '../components/content/BookCard'
 import { Icon } from '../components/ui/Icon'
 import { PageHeader } from '../components/ui/Layout'
 import { EmptyState, Reveal } from '../components/ui/Section'
 import { useSeo } from '../hooks/useSeo'
+import { fetchDriveBooks } from '../services/driveBooks'
+import type { ChristianBook } from '../types/content'
 
 export function BooksPage() {
+  const [bookList, setBookList] = useState<ChristianBook[]>(defaultBooks)
   const [category, setCategory] = useState<string | null>(null)
+
+  useEffect(() => {
+    let active = true
+    fetchDriveBooks().then((items) => {
+      if (active && items.length > 0) {
+        setBookList(items)
+      }
+    })
+    return () => {
+      active = false
+    }
+  }, [])
 
   useSeo({
     title: 'క్రైస్తవ పుస్తకాలు — ఉచిత తెలుగు డౌన్‌లోడ్‌లు',
@@ -19,11 +34,11 @@ export function BooksPage() {
 
   const visible = useMemo(
     () =>
-      category ? books.filter((book) => book.category.slug === category) : books,
-    [category],
+      category ? bookList.filter((book) => book.category.slug === category) : bookList,
+    [category, bookList],
   )
 
-  const hasBooks = books.length > 0
+  const hasBooks = bookList.length > 0
 
   return (
     <>
@@ -50,7 +65,7 @@ export function BooksPage() {
                   : 'bg-cream-200 text-ink-soft hover:bg-cream-300'
               }`}
             >
-              అన్నీ ({books.length})
+              అన్నీ ({bookList.length})
             </button>
             {bookCategories.map((item) => (
               <button
