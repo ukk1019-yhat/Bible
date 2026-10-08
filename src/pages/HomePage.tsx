@@ -132,6 +132,133 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* --------------------------------------------------- Core Vision / Psalm 119:105 */}
+      <section
+        className="relative overflow-hidden bg-forest-950 py-16 text-cream-100 sm:py-20 lg:py-24"
+        aria-labelledby="core-vision-heading"
+      >
+        {/* Atmospheric ambient glow reflecting the lantern's warm light */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_25%_45%,rgba(194,154,69,0.16)_0%,transparent_70%),radial-gradient(ellipse_50%_50%_at_80%_80%,rgba(39,96,68,0.22)_0%,transparent_70%)]"
+        />
+
+        <div className="shell relative">
+          <Reveal>
+            <div className="grid gap-10 lg:grid-cols-[380px_minmax(0,1fr)] lg:items-center xl:grid-cols-[430px_minmax(0,1fr)] lg:gap-14 xl:gap-20">
+              {/* Artwork display */}
+              <div className="group relative mx-auto w-full max-w-sm sm:max-w-md lg:mx-0 lg:max-w-none">
+                {/* Subtle warm halo behind artwork */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-2 rounded-[calc(var(--radius-xl)+4px)] bg-gradient-to-tr from-gold-500/25 via-gold-400/10 to-transparent opacity-80 blur-lg transition-opacity duration-500 group-hover:opacity-100"
+                />
+
+                <div className="relative overflow-hidden rounded-[var(--radius-xl)] border border-gold-500/35 bg-forest-900/90 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+                  <img
+                    src="/brand/psalm-119-105.jpg"
+                    alt="కీర్తనలు 119:105 — నీ వాక్యము నా పాదములకు దీపమును, నా త్రోవకు వెలుగునై యున్నది"
+                    width={768}
+                    height={1024}
+                    className="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                    loading="lazy"
+                  />
+                  {/* Subtle rim reflection overlay */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 rounded-[var(--radius-xl)] ring-1 ring-inset ring-white/10"
+                  />
+                </div>
+              </div>
+
+              {/* Core Concept editorial text */}
+              <div className="flex flex-col">
+                <div className="inline-flex items-center gap-2 self-start rounded-full border border-gold-500/30 bg-gold-950/50 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-gold-300 backdrop-blur-sm">
+                  <Icon name="sparkle" size={14} className="text-gold-400" />
+                  సత్యసాక్షి మూల దర్శనం
+                </div>
+
+                <h2
+                  id="core-vision-heading"
+                  className="mt-4 font-serif text-2xl font-bold tracking-tight text-cream-50 sm:text-3xl lg:text-[2.35rem] lg:leading-[1.25]"
+                >
+                  చీకటిలో నడిచే పాదాలకు దివ్య దీపం
+                </h2>
+
+                <blockquote className="my-6 border-s-2 border-gold-400 ps-5 text-[1.12rem] leading-relaxed text-cream-100 sm:text-[1.24rem]">
+                  <p className="font-serif italic text-gold-200">
+                    «నీ వాక్యము నా పాదములకు దీపమును, నా త్రోవకు వెలుగునై యున్నది.»
+                  </p>
+                  <footer className="mt-2 text-sm font-semibold text-gold-400/90">
+                    — కీర్తనలు 119:105
+                  </footer>
+                </blockquote>
+
+                <p className="text-[1.02rem] leading-relaxed text-cream-200/90 sm:text-[1.08rem]">
+                  సత్యసాక్షి వెబ్‌సైట్ మరియు చానెల్ యొక్క ముఖ్య ఉద్దేశ్యం ఒక్కటే — ఈ లోకపు
+                  అంధకారంలో ప్రయాణిస్తున్న ప్రతి మనిషికి దేవుని వాక్యమనే దివ్య దీపాన్ని
+                  అందించడం. ప్రతి అడుగులో తడబడకుండా, సత్య మార్గంలో నడవడానికి బైబిల్ వెలుగే
+                  మనకు రక్షణ మరియు నిరీక్షణ.
+                </p>
+
+                {/* 3 Pillar concepts */}
+                <div className="mt-8 grid gap-4 border-t border-white/10 pt-6 sm:grid-cols-3">
+                  <div className="rounded-[var(--radius-md)] border border-white/8 bg-white/[0.03] p-4 backdrop-blur-xs">
+                    <span className="flex size-8 items-center justify-center rounded-[var(--radius-xs)] bg-gold-500/20 text-gold-300">
+                      <Icon name="sparkle" size={16} />
+                    </span>
+                    <h3 className="mt-3 text-sm font-semibold text-cream-50">పాదాలకు దీపము</h3>
+                    <p className="mt-1 text-xs leading-relaxed text-cream-300/80">
+                      ప్రతిరోజు ఎదురయ్యే ప్రశ్నలు, శోధనలలో సరైన నిర్ణయం చూపే జ్ఞానం.
+                    </p>
+                  </div>
+
+                  <div className="rounded-[var(--radius-md)] border border-white/8 bg-white/[0.03] p-4 backdrop-blur-xs">
+                    <span className="flex size-8 items-center justify-center rounded-[var(--radius-xs)] bg-gold-500/20 text-gold-300">
+                      <Icon name="book-open" size={16} />
+                    </span>
+                    <h3 className="mt-3 text-sm font-semibold text-cream-50">త్రోవకు వెలుగు</h3>
+                    <p className="mt-1 text-xs leading-relaxed text-cream-300/80">
+                      నిత్యజీవపు బాటలో నమ్మకంతో ముందుకు సాగేందుకు దైవిక మార్గదర్శకత్వం.
+                    </p>
+                  </div>
+
+                  <div className="rounded-[var(--radius-md)] border border-white/8 bg-white/[0.03] p-4 backdrop-blur-xs">
+                    <span className="flex size-8 items-center justify-center rounded-[var(--radius-xs)] bg-gold-500/20 text-gold-300">
+                      <Icon name="play" size={16} />
+                    </span>
+                    <h3 className="mt-3 text-sm font-semibold text-cream-50">వాక్య సందేశాలు</h3>
+                    <p className="mt-1 text-xs leading-relaxed text-cream-300/80">
+                      యూట్యూబ్ మరియు వెబ్‌సైట్ ద్వారా సత్య వాక్యాన్ని ప్రతి ఇంటికి చేర్చడం.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-8 flex flex-wrap items-center gap-3.5">
+                  <Button
+                    to="/bible/psalms/119"
+                    size="lg"
+                    variant="onDark"
+                    icon="book-open"
+                  >
+                    కీర్తనలు 119 చదవండి
+                  </Button>
+                  <Button
+                    href={site.youtube.channelUrl}
+                    size="lg"
+                    variant="secondary"
+                    icon="external"
+                    className="border-gold-500/40 text-cream-100 hover:border-gold-400 hover:bg-gold-500/10 hover:text-white"
+                  >
+                    యూట్యూబ్ చానెల్ చూడండి
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* --------------------------------------------------- Quick resources */}
       <section className="shell py-16 sm:py-20" aria-labelledby="quick-resources">
         <h2 id="quick-resources" className="sr-only">
