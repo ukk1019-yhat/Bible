@@ -246,9 +246,8 @@ export function HomePage() {
                   <Button
                     href={site.youtube.channelUrl}
                     size="lg"
-                    variant="secondary"
+                    variant="onDarkSecondary"
                     icon="external"
-                    className="border-gold-500/40 text-cream-100 hover:border-gold-400 hover:bg-gold-500/10 hover:text-white"
                   >
                     యూట్యూబ్ చానెల్ చూడండి
                   </Button>

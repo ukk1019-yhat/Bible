@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon, type IconName } from './Icon'
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'onDark'
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'onDark' | 'onDarkSecondary'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 interface CommonProps {
@@ -76,6 +76,8 @@ export function Button({
     ghost: 'text-forest-800 hover:text-forest-600 px-0 sm:px-0',
     onDark:
       'bg-cream-50 text-forest-900 shadow-xs hover:bg-cream-200 hover:shadow-md',
+    onDarkSecondary:
+      'border border-gold-400/40 bg-transparent text-cream-100 hover:border-gold-300 hover:bg-white/10 hover:text-white',
   }
 
   const iconOnly = sizes[size].includes('px-3.5') && !String(children).trim()
