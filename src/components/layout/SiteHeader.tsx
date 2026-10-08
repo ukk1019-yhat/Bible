@@ -88,7 +88,7 @@ export function SiteHeader() {
         }`}
       >
         <div className="shell flex h-[4.5rem] items-center justify-between gap-4">
-          <BrandLockup />
+          <BrandLockup hideTextOnMobile />
 
           <nav aria-label={t('a11y.primaryNav')} className="hidden lg:block">
             <ul className="flex items-center gap-7">
