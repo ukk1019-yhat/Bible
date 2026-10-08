@@ -50,11 +50,27 @@ export function RootLayout() {
   useScrollReveal()
 
   return (
-    <div className="flex min-h-dvh flex-col bg-cream-100">
+    <div className="relative flex min-h-dvh flex-col bg-cream-100">
       <ScrollManager />
+
+      {/* Low-opacity background brand watermark across all pages */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-10 flex items-center justify-center overflow-hidden select-none"
+      >
+        <img
+          src="/brand/satyasakshi-watermark.png"
+          alt=""
+          width={500}
+          height={500}
+          className="w-[min(520px,76vw)] max-h-[70vh] object-contain opacity-[0.042] mix-blend-multiply transition-opacity duration-700"
+          loading="eager"
+        />
+      </div>
+
       <SiteHeader />
 
-      <main id="main" className="flex-1">
+      <main id="main" className="relative z-0 flex-1">
         <Outlet />
       </main>
 
