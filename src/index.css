@@ -388,8 +388,6 @@
   .font-logo {
     font-family: var(--font-logo);
     font-weight: 800;
-    -webkit-text-stroke: 0.5px currentColor;
-    paint-order: stroke fill;
   }
 
   .text-balance {

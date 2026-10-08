@@ -68,28 +68,32 @@ export function Wordmark({
   size = 'md',
   onDark = false,
   showTagline = true,
+  align = 'center',
 }: {
   size?: 'sm' | 'md' | 'lg'
   onDark?: boolean
   showTagline?: boolean
+  align?: 'start' | 'center'
 }) {
   const telugu =
     size === 'sm'
-      ? 'text-[1.05rem]'
+      ? 'text-[1.18rem]'
       : size === 'lg'
         ? 'text-2xl sm:text-3xl'
-        : 'text-[1.18rem] sm:text-[1.36rem]'
+        : 'text-[1.58rem] sm:text-[1.78rem]'
   const tagline =
     size === 'sm'
-      ? 'text-[0.58rem]'
+      ? 'text-[0.52rem]'
       : size === 'lg'
         ? 'text-xs'
-        : 'text-[0.62rem] sm:text-[0.72rem]'
+        : 'text-[0.56rem] sm:text-[0.60rem]'
+
+  const alignClass = align === 'center' ? 'items-center text-center' : 'items-start text-left'
 
   return (
-    <span className="flex flex-col leading-tight">
+    <span className={`flex flex-col ${alignClass}`}>
       <span
-        className={`font-logo font-extrabold tracking-tight ${telugu} ${
+        className={`font-logo font-extrabold tracking-[0.06em] leading-none pb-1 ${telugu} ${
           onDark ? 'text-cream-50' : 'text-forest-950'
         }`}
       >
@@ -97,8 +101,8 @@ export function Wordmark({
       </span>
       {showTagline && (
         <span
-          className={`mt-0.5 font-serif italic font-medium leading-none tracking-tight sm:tracking-normal truncate max-w-[210px] sm:max-w-none ${tagline} ${
-            onDark ? 'text-gold-300/90' : 'text-stone-800'
+          className={`mt-2 font-serif font-semibold leading-none tracking-normal whitespace-nowrap ${tagline} ${
+            onDark ? 'text-gold-300' : 'text-stone-800'
           }`}
         >
           {site.brand.tagline}
@@ -114,6 +118,7 @@ export function BrandLockup({
   markSize = 52,
   markVariant = 'emblem',
   showTagline = true,
+  align = 'center',
   className = '',
 }: {
   size?: 'sm' | 'md' | 'lg'
@@ -121,6 +126,7 @@ export function BrandLockup({
   markSize?: number
   markVariant?: 'emblem' | 'full'
   showTagline?: boolean
+  align?: 'start' | 'center'
   className?: string
 }) {
   return (
@@ -134,7 +140,7 @@ export function BrandLockup({
         variant={markVariant}
         className="group-hover:scale-[1.05]"
       />
-      <Wordmark size={size} onDark={onDark} showTagline={showTagline} />
+      <Wordmark size={size} onDark={onDark} showTagline={showTagline} align={align} />
     </Link>
   )
 }
