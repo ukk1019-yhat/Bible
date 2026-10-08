@@ -69,7 +69,7 @@ export function AboutPage() {
                   అధికారిక చిహ్నం &amp; నినాదం
                 </span>
                 <h2 className="mt-1 font-logo text-2xl font-extrabold text-forest-950 sm:text-3xl">
-                  {site.brand.teluguSpaced}
+                  {site.brand.telugu}
                 </h2>
                 <p className="mt-1 font-serif italic text-sm font-semibold text-gold-800">
                   &ldquo;{site.brand.tagline}&rdquo;

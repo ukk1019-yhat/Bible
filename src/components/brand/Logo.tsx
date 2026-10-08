@@ -93,11 +93,11 @@ export function Wordmark({
   return (
     <span className={`flex flex-col ${alignClass}`}>
       <span
-        className={`font-logo font-extrabold tracking-[0.06em] leading-none pb-1 ${telugu} ${
+        className={`font-logo font-extrabold tracking-tight leading-none pb-1 ${telugu} ${
           onDark ? 'text-cream-50' : 'text-forest-950'
         }`}
       >
-        {site.brand.teluguSpaced}
+        {site.brand.telugu}
       </span>
       {showTagline && (
         <span
