@@ -98,24 +98,28 @@
 
 @font-face {
   font-family: 'Natyamayuri';
-  src: local('Natyamayuri'), local('Natya Mayuri'), local('Anu Natyamayuri'),
+  src: local('Natyamayuri Bold'), local('Natyamayuri'), local('Natya Mayuri Bold'),
+       local('Natya Mayuri'), local('Anu Natyamayuri Bold'), local('Anu Natyamayuri'),
        url('/fonts/Natyamayuri.woff2') format('woff2'),
        url('/fonts/Natyamayuri.ttf') format('truetype');
+  font-weight: 400 900;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Natya Mayuri';
-  src: local('Natya Mayuri'), local('Natyamayuri'), local('Anu Natyamayuri'),
+  src: local('Natya Mayuri Bold'), local('Natya Mayuri'), local('Natyamayuri Bold'),
+       local('Natyamayuri'), local('Anu Natyamayuri Bold'), local('Anu Natyamayuri'),
        url('/fonts/Natyamayuri.woff2') format('woff2'),
        url('/fonts/Natyamayuri.ttf') format('truetype');
+  font-weight: 400 900;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Sree Krushnadevaraya';
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400;
   font-display: swap;
   src: url('/fonts/sree-krushnadevaraya-telugu.woff2') format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0B83, U+0C00-0C7F, U+1CD5-1CD6, U+1CD8, U+1CDA, U+1CF2, U+200C-200D, U+25CC;
@@ -124,8 +128,26 @@
 @font-face {
   font-family: 'Sree Krushnadevaraya';
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400;
   font-display: swap;
   src: url('/fonts/sree-krushnadevaraya-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Ramabhadra';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/ramabhadra-telugu.woff2') format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0B83, U+0C00-0C7F, U+1CD5-1CD6, U+1CD8, U+1CDA, U+1CF2, U+200C-200D, U+25CC;
+}
+
+@font-face {
+  font-family: 'Ramabhadra';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/ramabhadra-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }

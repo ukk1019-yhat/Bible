@@ -31,7 +31,7 @@ export function Wordmark({
   return (
     <span className="flex flex-col leading-tight">
       <span
-        className={`font-logo font-bold tracking-tight ${telugu} ${
+        className={`font-logo font-extrabold tracking-tight ${telugu} ${
           onDark ? 'text-cream-50' : 'text-forest-900'
         }`}
       >
