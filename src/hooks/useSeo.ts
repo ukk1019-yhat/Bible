@@ -82,7 +82,7 @@ function injectSiteJsonLd() {
       alternateName: site.brand.telugu,
       url: `${site.url}/`,
       description: site.brand.promise,
-      slogan: site.brand.mission,
+      slogan: `${site.brand.tagline} — ${site.brand.mission}`,
     },
   ]
   upsertJsonLd(SITE_JSONLD_ID, graph)

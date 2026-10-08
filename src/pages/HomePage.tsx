@@ -65,7 +65,13 @@ export function HomePage() {
         <div className="shell relative py-16 sm:py-24 lg:py-28">
           <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
             <div>
-              <p className="eyebrow mb-5">{site.brand.positioning}</p>
+              <div className="mb-5 flex flex-wrap items-center gap-2.5">
+                <p className="eyebrow">{site.brand.positioning}</p>
+                <span className="hidden text-gold-600/70 sm:inline" aria-hidden="true">•</span>
+                <span className="font-serif italic text-xs tracking-wide text-gold-800">
+                  &ldquo;{site.brand.tagline}&rdquo;
+                </span>
+              </div>
 
               <h1 className="text-[2.15rem] leading-[1.22] text-forest-950 sm:text-5xl lg:text-[3.4rem]">
                 దేవుని వాక్యము
@@ -173,9 +179,14 @@ export function HomePage() {
 
               {/* Core Concept editorial text */}
               <div className="flex flex-col">
-                <div className="inline-flex items-center gap-2 self-start rounded-full border border-gold-500/30 bg-gold-950/50 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-gold-300 backdrop-blur-sm">
-                  <Icon name="sparkle" size={14} className="text-gold-400" />
-                  సత్యసాక్షి మూల దర్శనం
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="inline-flex items-center gap-2 self-start rounded-full border border-gold-500/30 bg-gold-950/50 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-gold-300 backdrop-blur-sm">
+                    <Icon name="sparkle" size={14} className="text-gold-400" />
+                    సత్యసాక్షి మూల దర్శనం
+                  </div>
+                  <span className="font-serif italic text-xs tracking-wider text-gold-300/85">
+                    &ldquo;{site.brand.tagline}&rdquo;
+                  </span>
                 </div>
 
                 <h2

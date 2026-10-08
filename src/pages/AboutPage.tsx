@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { BIBLE_BOOKS } from '../data/bible/books.generated'
 import { site } from '../config/site'
+import { FullBrandLogo } from '../components/brand/Logo'
 import { ScriptureBlock } from '../components/bible/ScriptureBlock'
 import { Icon, type IconName } from '../components/ui/Icon'
 import { PageHeader, Prose } from '../components/ui/Layout'
@@ -61,6 +62,24 @@ export function AboutPage() {
       <div className="shell py-14 sm:py-20">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,40rem)_1fr] lg:gap-20">
           <div>
+            <div className="mb-10 flex flex-col items-center gap-6 rounded-[var(--radius-xl)] border border-cream-300 bg-cream-50 p-6 shadow-sm sm:flex-row sm:items-center">
+              <FullBrandLogo width={220} className="shrink-0" />
+              <div className="flex-1 text-center sm:text-left">
+                <span className="text-2xs font-semibold uppercase tracking-[0.16em] text-gold-700">
+                  అధికారిక చిహ్నం &amp; నినాదం
+                </span>
+                <h2 className="mt-1 font-logo text-2xl font-extrabold text-forest-950 sm:text-3xl">
+                  {site.brand.teluguSpaced}
+                </h2>
+                <p className="mt-1 font-serif italic text-sm font-semibold text-gold-800">
+                  &ldquo;{site.brand.tagline}&rdquo;
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                  సంప్రదాయ ఆలోచనా ధోరణులను దేవుని వాక్య వెలుగులో సవాలు చేస్తూ, పరిశుద్ధ సత్యాన్ని తెలుగు ప్రజల హృదయాల్లో నాటడమే మా దర్శనం.
+                </p>
+              </div>
+            </div>
+
             <Prose>
               <p className="text-[1.1rem] text-ink">
                 <strong className="font-semibold text-forest-900">{site.brand.telugu}</strong>{' '}

@@ -14,7 +14,9 @@ export const site = {
 
   brand: {
     telugu: 'సత్యసాక్షి',
+    teluguSpaced: 'సత్య సాక్షి',
     english: 'Satya Sakshi',
+    tagline: 'We Challenge Conventional Thinking',
     positioning: 'తెలుగు క్రైస్తవ జ్ఞాన వేదిక',
     mission: 'దేవుని వాక్యము ప్రతి ఇంటికి',
     promise: 'తెలుగు క్రైస్తవులకు బైబిల్ ఆధారిత వనరులు.',
