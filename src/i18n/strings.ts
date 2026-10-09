@@ -144,7 +144,7 @@ const en: Record<keyof typeof te, string> = {
   'footer.youtubeChannel': 'YouTube channel',
   'footer.locationsHeading': 'Our Locations & Fellowship Centers',
   'footer.locationsTitle': 'Visit Us',
-  'footer.locationsSubtitle': 'Welcome to our Bible study and worship fellowship centers in Kakinada and U. Kothapalli. Get directions on Google Maps or scan the QR code.',
+  'footer.locationsSubtitle': 'Welcome to our Bible study and worship fellowship centers in Kakinada and Gondhi Kottapalli (Sankavaram Mandal). Get directions on Google Maps or scan the QR code.',
   'footer.getDirections': 'Get Directions on Google Maps',
   'footer.scanQr': 'Scan QR Code',
   'footer.scanPrompt': 'Scan with mobile camera to open navigation directly',
