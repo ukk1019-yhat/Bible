@@ -21,6 +21,16 @@ const sunilKumar = speakers[0]
 
 export const videos: Video[] = [
   {
+    slug: 'satya-sakshi-magazine-rerelease',
+    title: 'సత్యసాక్షి పత్రిక పునఃప్రచురణ — సామర్లకోట బైబిల్ సెమినార్',
+    description:
+      'సామర్లకోటలో జరిగిన బైబిల్ సెమినార్‌లో సత్యసాక్షి పత్రిక పునఃప్రచురణ మరియు దైవ సందేశం — Bro. P. Sunilkumar, Warangal (Satya Sakshi Magazine Rerelease).',
+    youtubeId: 'Q2a2PxXr3vk',
+    category: 'బైబిల్ సందేశాలు',
+    speaker: sunilKumar,
+    featured: true,
+  },
+  {
     slug: 'bible-chadive-kramamu',
     title: 'బైబిల్ చదివే క్రమము',
     description:
@@ -28,7 +38,6 @@ export const videos: Video[] = [
     youtubeId: 'BvDAnUwlGnk',
     category: 'బైబిల్ సందేశాలు',
     speaker: sunilKumar,
-    featured: true,
   },
   {
     slug: 'lukha-15-vivarana',
