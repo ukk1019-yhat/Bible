@@ -62,6 +62,12 @@ const te = {
   'footer.bibleCredit': 'Sajeeva Vahini వారి అనుమతితో.',
   'footer.psalmRef': 'కీర్తనలు 119:105',
   'footer.youtubeChannel': 'YouTube చానెల్',
+  'footer.locationsHeading': 'మా కేంద్రాలు & ప్రార్థనా స్థలాలు',
+  'footer.locationsTitle': 'మమ్మల్ని సందర్శించండి',
+  'footer.locationsSubtitle': 'దేవుని వాక్య అధ్యయనం & ఆరాధన కూడికల కొరకు మా కేంద్రాలకు స్వాగతం. గూగుల్ మ్యాప్స్ లేదా QR కోడ్ ద్వారా సులభంగా చేరుకోండి.',
+  'footer.getDirections': 'గూగుల్ మ్యాప్స్ మార్గం',
+  'footer.scanQr': 'QR స్కాన్ చేయండి',
+  'footer.scanPrompt': 'కెమెరాతో స్కాన్ చేసి నేరుగా గూగుల్ మ్యాప్స్‌లో మార్గం పొందండి',
 
   /* Language switcher */
   'lang.label': 'భాష',
@@ -136,6 +142,12 @@ const en: Record<keyof typeof te, string> = {
   'footer.bibleCredit': ', with permission from Sajeeva Vahini.',
   'footer.psalmRef': 'Psalm 119:105',
   'footer.youtubeChannel': 'YouTube channel',
+  'footer.locationsHeading': 'Our Locations & Fellowship Centers',
+  'footer.locationsTitle': 'Visit Us',
+  'footer.locationsSubtitle': 'Welcome to our Bible study and worship fellowship centers in Kakinada and U. Kothapalli. Get directions on Google Maps or scan the QR code.',
+  'footer.getDirections': 'Get Directions on Google Maps',
+  'footer.scanQr': 'Scan QR Code',
+  'footer.scanPrompt': 'Scan with mobile camera to open navigation directly',
 
   'lang.label': 'Language',
   'lang.switchTo': 'Switch to Telugu',

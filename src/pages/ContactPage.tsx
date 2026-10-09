@@ -93,12 +93,11 @@ export function ContactPage() {
             <Reveal className="mt-6">
               <div className="rounded-[var(--radius-lg)] border border-gold-200 bg-gold-100/60 p-5">
                 <h3 className="flex items-center gap-2 font-medium text-forest-900">
-                  <Icon name="alert" size={18} className="text-gold-700" />
-                  ఇమెయిల్, ఫోన్ ఇంకా ప్రచురించలేదు
+                  <Icon name="map-pin" size={18} className="text-gold-700" />
+                  కేంద్రాల చిరునామాలు అందుబాటులో ఉన్నాయి
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-                  సత్యసాక్షి ఇప్పటికి ఇమెయిల్ చిరునామా, ఫోన్ నంబర్ లేదా చిరునామా ప్రకటించలేదు.
-                  ఆ వివరాలు అందుబాటులోకి వచ్చిన వెంటనే ఇక్కడ కనిపిస్తాయి.
+                  సత్యసాక్షి బైబిల్ స్టడీ సెంటర్ (కాకినాడ) మరియు చర్చ్ ఆఫ్ ది లివింగ్ గాడ్ (గొంధి) చిరునామాలు, గూగుల్ మ్యాప్స్ మార్గాలు క్రింద ఫుటర్‌లో చూడవచ్చు.
                 </p>
               </div>
             </Reveal>

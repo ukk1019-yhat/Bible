@@ -36,6 +36,8 @@ export type IconName =
   | 'home'
   | 'language'
   | 'text-size'
+  | 'map-pin'
+  | 'qr-code'
 
 const paths: Record<IconName, React.ReactNode> = {
   book: (
@@ -173,6 +175,20 @@ const paths: Record<IconName, React.ReactNode> = {
       <path d="M4.6 14.5h4.8" />
       <path d="m14 18 2.8-8 2.8 8" />
       <path d="M14.8 15.4h4" />
+    </>
+  ),
+  'map-pin': (
+    <>
+      <path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21Z" />
+      <circle cx="12" cy="9.5" r="2.5" />
+    </>
+  ),
+  'qr-code': (
+    <>
+      <rect x="3" y="3" width="7" height="7" rx="1.5" />
+      <rect x="14" y="3" width="7" height="7" rx="1.5" />
+      <rect x="3" y="14" width="7" height="7" rx="1.5" />
+      <path d="M14 14h3v3h-3zM18 18h3v3h-3zM14 20h3M20 14v3" />
     </>
   ),
 }
