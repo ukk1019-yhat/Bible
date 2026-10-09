@@ -84,10 +84,10 @@ export function Wordmark({
         : 'text-[1.58rem] sm:text-[1.78rem]'
   const tagline =
     size === 'sm'
-      ? 'text-[0.52rem]'
+      ? 'text-[0.62rem] sm:text-[0.66rem]'
       : size === 'lg'
-        ? 'text-xs'
-        : 'text-[0.56rem] sm:text-[0.60rem]'
+        ? 'text-xs sm:text-sm'
+        : 'text-[0.68rem] sm:text-[0.74rem]'
 
   const alignClass = align === 'center' ? 'items-center text-center' : 'items-start text-left'
 
@@ -102,13 +102,13 @@ export function Wordmark({
       </span>
       {showTagline && (
         <span
-          className={`mt-1.5 ${
+          className={`mt-1 ${
             size === 'lg' ? 'inline-block' : 'hidden sm:inline-block'
-          } font-serif font-semibold leading-none tracking-normal whitespace-nowrap ${tagline} ${
-            onDark ? 'text-gold-300' : 'text-stone-800'
+          } font-sans font-semibold leading-none tracking-normal whitespace-nowrap ${tagline} ${
+            onDark ? 'text-gold-300' : 'text-forest-800'
           }`}
         >
-          {site.brand.tagline}
+          {site.brand.positioning}
         </span>
       )}
     </span>

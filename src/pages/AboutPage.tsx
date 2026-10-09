@@ -37,9 +37,9 @@ const PILLARS: { icon: IconName; title: string; body: string; to: string }[] = [
 
 export function AboutPage() {
   useSeo({
-    title: 'మా గురించి — సత్యసాక్షి',
+    title: 'మా గురించి — సత్య సాక్షి',
     description:
-      'సత్యసాక్షి గురించి: తెలుగు క్రైస్తవుల కోసం బైబిల్, సందేశాలు, ప్రశ్నలు & సమాధానాలు అందించే డిజిటల్ జ్ఞాన వేదిక. మా లక్ష్యం, మా వనరులు.',
+      'సత్య సాక్షి గురించి: తెలుగు క్రైస్తవుల కోసం బైబిల్, సందేశాలు, ప్రశ్నలు & సమాధానాలు అందించే క్రైస్తవ విజ్ఞాన వేధిక. మా లక్ష్యం, మా వనరులు.',
     path: '/about',
     jsonLd: graph({
       '@type': 'AboutPage',
@@ -71,7 +71,10 @@ export function AboutPage() {
                 <h2 className="mt-1 font-logo text-2xl font-extrabold text-forest-950 sm:text-3xl">
                   {site.brand.telugu}
                 </h2>
-                <p className="mt-1 font-serif italic text-sm font-semibold text-gold-800">
+                <p className="mt-1 font-sans text-sm font-semibold text-gold-800">
+                  {site.brand.positioning}
+                </p>
+                <p className="mt-0.5 font-serif italic text-xs text-ink-muted">
                   &ldquo;{site.brand.tagline}&rdquo;
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-ink-soft">

@@ -13,11 +13,11 @@ export const site = {
   locale: 'te_IN',
 
   brand: {
-    telugu: 'సత్యసాక్షి',
+    telugu: 'సత్య సాక్షి',
     teluguSpaced: 'సత్య సాక్షి',
     english: 'Satya Sakshi',
     tagline: 'We Challenge Conventional Thinking',
-    positioning: 'తెలుగు క్రైస్తవ జ్ఞాన వేదిక',
+    positioning: 'క్రైస్తవ విజ్ఞాన వేధిక',
     mission: 'దేవుని వాక్యము ప్రతి ఇంటికి',
     promise: 'తెలుగు క్రైస్తవులకు బైబిల్ ఆధారిత వనరులు.',
   },

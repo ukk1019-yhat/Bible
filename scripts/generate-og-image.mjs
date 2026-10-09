@@ -104,18 +104,21 @@ function svg() {
   ${MARK}
 
   <text x="88" y="300" font-family="Noto Sans Telugu" font-size="82" font-weight="700"
-        fill="${COLORS.cream100}">సత్యసాక్షి</text>
+        fill="${COLORS.cream100}">సత్య సాక్షి</text>
 
   <text x="88" y="352" font-family="Noto Sans Telugu" font-size="24" font-weight="400"
         fill="${COLORS.gold400}" letter-spacing="6">SATYA SAKSHI</text>
 
   <rect x="88" y="392" width="72" height="3" fill="${COLORS.gold400}" />
 
-  <text x="88" y="462" font-family="Noto Sans Telugu" font-size="40" font-weight="400"
+  <text x="88" y="452" font-family="Noto Sans Telugu" font-size="32" font-weight="700"
+        fill="${COLORS.gold200}">క్రైస్తవ విజ్ఞాన వేధిక</text>
+
+  <text x="88" y="500" font-family="Noto Sans Telugu" font-size="28" font-weight="400"
         fill="${COLORS.forest100}">దేవుని వాక్యము ప్రతి ఇంటికి</text>
 
-  <text x="88" y="524" font-family="Noto Sans Telugu" font-size="26" font-weight="400"
-        fill="${COLORS.cream300}" fill-opacity="0.85">తెలుగు బైబిల్ · సందేశాలు · ప్రశ్నలకు సమాధానాలు</text>
+  <text x="88" y="546" font-family="Noto Sans Telugu" font-size="22" font-weight="400"
+        fill="${COLORS.cream300}" fill-opacity="0.85">పరిశుద్ధ బైబిల్ · సందేశాలు · ప్రశ్నలకు సమాధానాలు</text>
 
   <text x="${WIDTH - 88}" y="556" font-family="Noto Sans Telugu" font-size="24" font-weight="400"
         fill="${COLORS.gold400}" fill-opacity="0.9" text-anchor="end">satyasakshi.in</text>
