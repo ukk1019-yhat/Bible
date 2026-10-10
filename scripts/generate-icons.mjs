@@ -1,71 +1,61 @@
 /**
- * Generates the PWA / home-screen icons from the same open-book mark used by
- * public/favicon.svg and the OG card:
+ * Generates the PWA / home-screen icons using the official Satya Sakshi logo:
  *
  *   node scripts/generate-icons.mjs
  *
- * Two families are written, because they have different requirements:
- *
- *   - `any` icons may use the full square, so the mark is drawn generously.
- *   - the `maskable` icon must survive Android cropping to a circle inscribed
- *     in the middle 80% of the image, so the mark is scaled down to sit inside
- *     that safe zone. The real logo does not qualify: its wordmark runs to the
- *     edges, so declaring it maskable (as an earlier manifest did) would clip
- *     the Telugu text.
- *
- * Rasterised with resvg so no font is involved — the mark is pure geometry.
+ * Features:
+ *   - Uses the official uncropped brand logo (satyasakshi-logo-full.png)
+ *   - Crisp, high-contrast pure white (#ffffff) canvas
+ *   - The maskable icon (maskable-512.png) scales the emblem to fit comfortably
+ *     within the Android 80% safe zone circle, ensuring zero clipping on any launcher
+ *     (Circle, Samsung squircle, rounded rectangle, etc.)
  */
 import { mkdir, writeFile } from 'node:fs/promises'
+import fs from 'node:fs'
 import { Resvg } from '@resvg/resvg-js'
 
-const COLORS = {
-  forest900: '#10291e',
-  gold400: '#d8b871',
+const sourcePng = 'public/brand/satyasakshi-logo-full.png'
+
+if (!fs.existsSync(sourcePng)) {
+  console.error('Source logo file does not exist at:', sourcePng)
+  process.exit(1)
 }
 
-/**
- * Draws the mark centred in a `size` square.
- *
- * `scale` is the fraction of the canvas the mark's 40×40 box occupies. The
- * favicon uses 1; maskable icons need about 0.62 so the corners of the box,
- * and therefore of the safe circle, stay outside the artwork.
- */
-function svg(size, scale) {
-  const box = size * scale
-  const offset = (size - box) / 2
-  const stroke = (box / 40) * 1.9
+const pngData = fs.readFileSync(sourcePng)
+const pngB64 = pngData.toString('base64')
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-  <rect width="${size}" height="${size}" fill="${COLORS.forest900}" />
-  <g transform="translate(${offset.toFixed(2)} ${offset.toFixed(2)}) scale(${(box / 40).toFixed(4)})">
-    <g fill="none" stroke="${COLORS.gold400}" stroke-width="${stroke.toFixed(3)}"
-       stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20 12.5c-2.6-2-5.4-2.8-8.5-2.8v14c3.1 0 5.9 0.8 8.5 2.8" />
-      <path d="M20 12.5c2.6-2 5.4-2.8 8.5-2.8v14c-3.1 0-5.9 0.8-8.5 2.8" />
-      <path d="M20 12.5v14" />
-      <path d="M20 26.5v4.2" />
-    </g>
-  </g>
+const LOGO_W = 764
+const LOGO_H = 636
+
+function generateIconSvg(canvasSize, logoWidth) {
+  const logoHeight = Math.round(logoWidth * (LOGO_H / LOGO_W))
+  const x = Math.round((canvasSize - logoWidth) / 2)
+  const y = Math.round((canvasSize - logoHeight) / 2)
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasSize}" height="${canvasSize}" viewBox="0 0 ${canvasSize} ${canvasSize}">
+  <rect width="${canvasSize}" height="${canvasSize}" fill="#ffffff" />
+  <image href="data:image/png;base64,${pngB64}" x="${x}" y="${y}" width="${logoWidth}" height="${logoHeight}" />
 </svg>`
 }
 
 const TARGETS = [
-  // Apple touch icons are always masked to a rounded square by the OS, so the
-  // mark can fill more of the canvas.
-  { file: 'public/icons/apple-touch-icon.png', size: 180, scale: 1 },
-  { file: 'public/icons/icon-192.png', size: 192, scale: 1 },
-  { file: 'public/icons/icon-512.png', size: 512, scale: 1 },
-  // Maskable: artwork confined to the middle 80% safe zone.
-  { file: 'public/icons/maskable-512.png', size: 512, scale: 0.62 },
-  // Extra density for iOS home screens on Retina.
-  { file: 'public/icons/icon-1024.png', size: 1024, scale: 1 },
+  // Apple touch icons (180x180)
+  { file: 'public/icons/apple-touch-icon.png', size: 180, logoWidth: 136 },
+  // PWA standard icons
+  { file: 'public/icons/icon-192.png', size: 192, logoWidth: 144 },
+  { file: 'public/icons/icon-512.png', size: 512, logoWidth: 384 },
+  // Maskable: emblem strictly fits within 80% safe zone circle (radius 204.8 at 512x512)
+  { file: 'public/icons/maskable-512.png', size: 512, logoWidth: 330 },
+  // High-DPI icon
+  { file: 'public/icons/icon-1024.png', size: 1024, logoWidth: 768 },
 ]
 
 await mkdir('public/icons', { recursive: true })
 
-for (const { file, size, scale } of TARGETS) {
-  const resvg = new Resvg(svg(size, scale), { fitTo: { mode: 'width', value: size } })
+for (const { file, size, logoWidth } of TARGETS) {
+  const svg = generateIconSvg(size, logoWidth)
+  const resvg = new Resvg(svg, { fitTo: { mode: 'width', value: size } })
   const png = resvg.render().asPng()
   await writeFile(file, png)
-  console.log(`${file} written (${size}×${size}, ${png.length} bytes)`)
+  console.log(`${file} written (${size}×${size}, logoWidth=${logoWidth}, ${png.length} bytes)`)
 }
