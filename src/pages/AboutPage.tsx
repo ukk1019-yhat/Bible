@@ -18,7 +18,7 @@ const PILLARS: { icon: IconName; title: string; body: string; to: string }[] = [
   {
     icon: 'play',
     title: 'సందేశాలు',
-    body: 'బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — బ్రో. పి. సునిల్‌కుమార్ గారి బోధనలు మీరు ఎప్పుడైనా చూడగలరు.',
+    body: 'బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — బ్రో. సుధాకర్ గారి బోధనలు మీరు ఎప్పుడైనా చూడగలరు.',
     to: '/messages',
   },
   {
@@ -186,7 +186,7 @@ export function AboutPage() {
             <div className="rounded-[var(--radius-lg)] border border-cream-300 bg-cream-50 p-6">
               <h2 className="text-lg text-forest-900">మా సందేశాలు</h2>
               <p className="mt-2.5 text-[0.95rem] leading-relaxed text-ink-soft">
-                సత్యసాక్షి సందేశాలు బ్రో. పి. సునిల్కుమార్ గారి YouTube
+                సత్యసాక్షి సందేశాలు “Church of The Living God — కాకినాడ” అనే YouTube
                 చానెల్‌లో ప్రచురిస్తారు.
               </p>
               <a

@@ -5,7 +5,7 @@ import { useSeo } from '../hooks/useSeo'
 const DESTINATIONS: { to: string; label: string; description: string; icon: IconName }[] = [
   { to: '/bible', label: 'బైబిల్', description: '66 పుస్తకాలు, 1,189 అధ్యాయాలు', icon: 'book-open' },
   { to: '/questions', label: 'ప్రశ్నలు & సమాధానాలు', description: 'బైబిల్ ఆధారంగా', icon: 'question' },
-  { to: '/messages', label: 'సందేశాలు', description: 'బ్రో. సునిల్‌కుమార్ గారి బోధనలు', icon: 'play' },
+  { to: '/messages', label: 'సందేశాలు', description: 'బ్రో. సుధాకర్ గారి బోధనలు', icon: 'play' },
   { to: '/books', label: 'పుస్తకాలు', description: 'తెలుగు క్రైస్తవ పుస్తకాలు', icon: 'stack' },
   { to: '/articles', label: 'వ్యాసాలు', description: 'ఆలోచనలకు ఆహారం', icon: 'book' },
 ]

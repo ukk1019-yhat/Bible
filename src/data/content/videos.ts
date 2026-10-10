@@ -2,7 +2,7 @@ import type { Speaker, Video } from '../../types/content'
 
 /**
  * Satya Sakshi publishes its Bible messages on the YouTube channel
- * Bro. P. SunilKumar Garu (@sudhaword).
+ * Bro. Sudhakar Garu (@sudhaword).
  *
  * Titles, channel and speaker names below are taken verbatim from the channel's
  * own metadata — nothing is paraphrased or invented. `duration` and
@@ -11,23 +11,23 @@ import type { Speaker, Video } from '../../types/content'
  */
 export const speakers: Speaker[] = [
   {
-    name: 'Bro. P. SunilKumar Garu',
+    name: 'Bro. Sudhakar Garu',
     honorific: 'బ్రో.',
-    slug: 'p-sunilkumar',
+    slug: 'bro-sudhakar',
   },
 ]
 
-const sunilKumar = speakers[0]
+const sudhakar = speakers[0]
 
 export const videos: Video[] = [
   {
     slug: 'satya-sakshi-magazine-rerelease',
     title: 'సత్యసాక్షి పత్రిక పునఃప్రచురణ — సామర్లకోట బైబిల్ సెమినార్',
     description:
-      'సామర్లకోటలో జరిగిన బైబిల్ సెమినార్‌లో సత్యసాక్షి పత్రిక పునఃప్రచురణ మరియు దైవ సందేశం — Bro. P. Sunilkumar, Warangal (Satya Sakshi Magazine Rerelease).',
+      'సామర్లకోటలో జరిగిన బైబిల్ సెమినార్‌లో సత్యసాక్షి పత్రిక పునఃప్రచురణ మరియు దైవ సందేశం — Bro. Sudhakar Garu, Church of The Living God (Satya Sakshi Magazine Rerelease).',
     youtubeId: 'Q2a2PxXr3vk',
     category: 'బైబిల్ సందేశాలు',
-    speaker: sunilKumar,
+    speaker: sudhakar,
     featured: true,
   },
   {
@@ -37,7 +37,7 @@ export const videos: Video[] = [
       'దేవుని వాక్యాన్ని ఏ క్రమంలో చదవాలి, ప్రతి అధ్యాయంలో ఏమి గ్రహించాలి — బైబిల్ అధ్యయనానికి మంచి పాఠం.',
     youtubeId: 'BvDAnUwlGnk',
     category: 'బైబిల్ సందేశాలు',
-    speaker: sunilKumar,
+    speaker: sudhakar,
   },
   {
     slug: 'lukha-15-vivarana',
@@ -46,7 +46,7 @@ export const videos: Video[] = [
     description: 'లూకా అధ్యాయం 15 వివరణ — ఇశ్రాయేలీయుల ప్రజల గొర్రె గురించి.',
     youtubeId: 'U6JQVb2-oLY',
     category: 'బైబిల్ అధ్యయనం',
-    speaker: sunilKumar,
+    speaker: sudhakar,
     scripture: 'లూకా 15',
   },
   {
@@ -57,7 +57,7 @@ export const videos: Video[] = [
       "దేవుడు 'నిశ్చయముగా చత్తురు' అని పలికిన ఆ మాట గురించి బైబిల్ ఆధారంగా వివరణ.",
     youtubeId: 'ZV-lPF5i-Po',
     category: 'ప్రశ్నలు & సమాధానాలు',
-    speaker: sunilKumar,
+    speaker: sudhakar,
   },
 ]
 

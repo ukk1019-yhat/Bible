@@ -11,7 +11,7 @@ import { FooterLocations } from './FooterLocations'
 const year = new Date().getFullYear()
 
 export function SiteFooter() {
-  const { t, language } = useLanguage()
+  const { t } = useLanguage()
 
   return (
     <footer className="mt-auto bg-forest-950 text-cream-200">
@@ -55,7 +55,7 @@ export function SiteFooter() {
             className="mt-6 inline-flex min-h-10 items-center gap-2.5 rounded-[var(--radius-sm)] border border-white/15 px-4 text-sm text-cream-100 transition-colors hover:border-gold-500/60 hover:text-white"
           >
             <Icon name="youtube" size={18} className="text-gold-400" />
-            {language === 'en' ? 'Bro. P. SunilKumar Garu' : 'బ్రో. పి. సునిల్కుమార్ గారు'}
+            Church of The Living God — Kakinada
             <Icon name="external" size={14} className="text-cream-300/70" />
           </a>
         </div>

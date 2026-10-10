@@ -317,7 +317,7 @@ export function HomePage() {
             <SectionHeading
               eyebrow="బైబిల్ సందేశం"
               title="ఈ సప్తాహాంలో మొదలుపెట్టండి"
-              lede="బ్రో. పి. సునిల్‌కుమార్ గారి బైబిల్ సందేశాలు — మీరు ఎప్పుడైనా చూడగలరు."
+              lede="బ్రో. సుధాకర్ గారి బైబిల్ సందేశాలు — మీరు ఎప్పుడైనా చూడగలరు."
               action={{ label: 'అన్ని సందేశాలు', to: '/messages' }}
             />
           </Reveal>
@@ -430,7 +430,7 @@ export function HomePage() {
               <div>
                 <Icon name="youtube" size={30} className="text-gold-400" />
                 <h2 className="mt-5 text-2xl text-cream-50 sm:text-3xl">
-                  బ్రో. పి. సునిల్కుమార్ గారు
+                  Church of The Living God — కాకినాడ
                 </h2>
                 <p className="mt-4 max-w-xl leading-relaxed text-cream-300/85">
                   సత్యసాక్షి సందేశాలు YouTube చానెల్‌లో అందుబాటులో ఉన్నాయి. మీరు ఎప్పుడైనా,
