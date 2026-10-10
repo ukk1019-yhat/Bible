@@ -52,44 +52,28 @@ export const site = {
      */
     email: null as string | null,
     phone: null as string | null,
-    address: 'కాకినాడ & గొంధి కొత్తపల్లి (శంఖవరం మండలం), కాకినాడ జిల్లా, ఆంధ్రప్రదేశ్',
+    address: 'రోడ్ నం. 1, విద్యానగర్, రమణయ్యపేట, కాకినాడ - 533005',
   },
 
   /**
-   * Official physical locations & prayer centers with Google Maps coordinates and verified QR codes.
+   * Official physical location & prayer center with Google Maps coordinates and verified QR code.
    */
   locations: [
     {
       id: 'kakinada-bible-study',
       name: 'BIBLE STUDY CENTER - KAKINADA',
       teluguName: 'బైబిల్ స్టడీ సెంటర్ — కాకినాడ',
-      area: 'కాకినాడ (Kakinada)',
+      area: 'కాకినాడ',
       city: 'Kakinada',
       landmark: 'రమణయ్యపేట',
       addressLine1: 'రోడ్ నం. 1, విద్యానగర్',
       addressLine2: 'రమణయ్యపేట, కాకినాడ - 533005',
       fullAddress: 'Road No. 1, Vidyanagar, Ramanayyapeta, Kakinada - 533005',
-      plusCode: 'X6QX+WCR, Kakinada',
+      plusCode: 'Kakinada',
       mapUrl: 'https://maps.app.goo.gl/PUXgiSjS7GHXwY758',
       qrImage: '/brand/qr-kakinada-bible-study.png',
       tag: 'బైబిల్ అధ్యయన కేంద్రం',
       englishTag: 'Bible Study Center',
-    },
-    {
-      id: 'kottapalli-church',
-      name: 'CHURCH OF THE LIVING GOD - G.KOTTAPALLI',
-      teluguName: 'చర్చ్ ఆఫ్ ది లివింగ్ గాడ్ — జి. కొత్తపల్లి',
-      area: 'గొంధి కొత్తపల్లి, శంఖవరం మండలం',
-      city: 'Sankavaram Mandal',
-      landmark: 'గొంధి కొత్తపల్లి',
-      addressLine1: 'గొంధి కొత్తపల్లి, శంఖవరం మండలం',
-      addressLine2: 'కాకినాడ జిల్లా, ఆంధ్రప్రదేశ్ - 533407',
-      fullAddress: '88JM+C2H, Gondhi Kottapalli, Sankavaram Mandal, Kakinada District, Andhra Pradesh - 533407',
-      plusCode: '88JM+C2H, Gondhi Kottapalli',
-      mapUrl: 'https://maps.app.goo.gl/Qqwh9oDj4oA6sgs7A',
-      qrImage: '/brand/qr-kottapalli-church.png',
-      tag: 'ఆరాధన & ప్రార్థనా మందిరం',
-      englishTag: 'Worship Center',
     },
   ],
 

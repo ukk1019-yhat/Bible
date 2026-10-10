@@ -30,7 +30,7 @@ export function FooterLocations() {
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className={site.locations.length > 1 ? "grid gap-6 md:grid-cols-2" : "grid gap-6 max-w-2xl"}>
         {site.locations.map((loc) => {
           const isTelugu = language === 'te'
           const title = isTelugu ? loc.teluguName : loc.name
@@ -50,7 +50,7 @@ export function FooterLocations() {
               />
 
               <div>
-                {/* Header row: badge + plus code */}
+                {/* Header row: badge + city location */}
                 <div className="flex items-center justify-between gap-3">
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-gold-500/30 bg-gold-500/12 px-3 py-0.5 text-2xs font-semibold text-gold-300">
                     <span className="size-1.5 rounded-full bg-gold-400 animate-pulse" />
@@ -58,11 +58,11 @@ export function FooterLocations() {
                   </span>
 
                   <span
-                    title="Plus Code"
-                    className="inline-flex items-center gap-1 rounded-md border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-3xs text-cream-300/75"
+                    title={isTelugu ? 'ప్రాంతం' : 'Location'}
+                    className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-2.5 py-0.5 text-2xs font-medium text-cream-200/90"
                   >
-                    <Icon name="map-pin" size={10} className="text-gold-400" />
-                    {loc.plusCode}
+                    <Icon name="map-pin" size={11} className="text-gold-400" />
+                    {isTelugu ? loc.area : loc.city}
                   </span>
                 </div>
 
