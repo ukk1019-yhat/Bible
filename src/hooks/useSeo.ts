@@ -83,6 +83,7 @@ function injectSiteJsonLd() {
       url: `${site.url}/`,
       description: site.brand.promise,
       slogan: `${site.brand.tagline} — ${site.brand.mission}`,
+      email: site.contact.email,
     },
   ]
   upsertJsonLd(SITE_JSONLD_ID, graph)

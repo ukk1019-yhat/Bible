@@ -58,6 +58,16 @@ export function SiteFooter() {
             Church of The Living God — Kakinada
             <Icon name="external" size={14} className="text-cream-300/70" />
           </a>
+
+          {site.contact.email && (
+            <a
+              href={`mailto:${site.contact.email}`}
+              className="mt-3 flex min-h-10 items-center gap-2.5 rounded-[var(--radius-sm)] border border-white/15 px-4 text-sm text-cream-100 transition-colors hover:border-gold-500/60 hover:text-white"
+            >
+              <Icon name="mail" size={18} className="text-gold-400" />
+              <span>{site.contact.email}</span>
+            </a>
+          )}
         </div>
 
         <nav aria-labelledby="footer-resources">

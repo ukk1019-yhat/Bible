@@ -46,11 +46,9 @@ export const site = {
 
   contact: {
     /**
-     * No published email address was found on the existing site. Leaving this
-     * `null` makes the contact form show a clear "not yet connected" notice
-     * instead of silently swallowing the message.
+     * Official support & contact email.
      */
-    email: null as string | null,
+    email: 'bible@support.satyasakshi.in',
     phone: null as string | null,
     address: 'కాకినాడ & గొంధి కొత్తపల్లి (శంఖవరం మండలం), కాకినాడ జిల్లా, ఆంధ్రప్రదేశ్',
   },
