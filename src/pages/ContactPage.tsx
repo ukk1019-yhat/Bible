@@ -50,7 +50,7 @@ export function ContactPage() {
                 <div>
                   <h3 className="font-medium text-forest-900">YouTube చానెల్</h3>
                   <p className="mt-1 text-sm leading-relaxed text-ink-soft">
-                    Church of The Living God — కాకినాడ. సందేశాలను చూడండి, కమెంట్‌లో మీ
+                    బ్రో. పి. సునిల్కుమార్ గారి సందేశాలను చూడండి, కమెంట్‌లో మీ
                     ప్రశ్నలు పెట్టండి.
                   </p>
                   <a

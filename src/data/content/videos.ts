@@ -2,7 +2,7 @@ import type { Speaker, Video } from '../../types/content'
 
 /**
  * Satya Sakshi publishes its Bible messages on the YouTube channel
- * "Church of The Living God – Kakinada" (@sudhaword).
+ * Bro. P. SunilKumar Garu (@sudhaword).
  *
  * Titles, channel and speaker names below are taken verbatim from the channel's
  * own metadata — nothing is paraphrased or invented. `duration` and

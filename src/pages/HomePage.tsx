@@ -430,7 +430,7 @@ export function HomePage() {
               <div>
                 <Icon name="youtube" size={30} className="text-gold-400" />
                 <h2 className="mt-5 text-2xl text-cream-50 sm:text-3xl">
-                  Church of The Living God — కాకినాడ
+                  బ్రో. పి. సునిల్కుమార్ గారు
                 </h2>
                 <p className="mt-4 max-w-xl leading-relaxed text-cream-300/85">
                   సత్యసాక్షి సందేశాలు YouTube చానెల్‌లో అందుబాటులో ఉన్నాయి. మీరు ఎప్పుడైనా,

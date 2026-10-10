@@ -175,7 +175,7 @@ export function VideosPage() {
         eyebrow="వీడియోలు"
         title="అన్ని వీడియోలు"
         icon="youtube"
-        lede="Church of The Living God — కాకినాడ చానెల్‌లోని అన్ని సందేశాలు ఒకే చోట."
+        lede="బ్రో. పి. సునిల్కుమార్ గారి చానెల్‌లోని అన్ని సందేశాలు ఒకే చోట."
         crumbs={[{ label: 'హోమ్', to: '/' }, { label: 'వీడియోలు' }]}
       >
         <a
@@ -208,7 +208,7 @@ export function VideoRoute() {
     title: video ? `${video.title} — సత్యసాక్షి` : 'వీడియో కనబడలేదు',
     description:
       video?.description ??
-      'సత్యసాక్షి బైబిల్ సందేశాలు — Church of The Living God, కాకినాడ చానెల్‌లో.',
+      'సత్యసాక్షి బైబిల్ సందేశాలు — బ్రో. పి. సునిల్కుమార్ గారి YouTube చానెల్‌లో.',
     path: `/videos/${slug}`,
     type: 'video.other',
   })
