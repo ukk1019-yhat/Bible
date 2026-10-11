@@ -38,6 +38,7 @@ export type IconName =
   | 'text-size'
   | 'map-pin'
   | 'qr-code'
+  | 'refresh'
 
 const paths: Record<IconName, React.ReactNode> = {
   book: (
@@ -190,6 +191,9 @@ const paths: Record<IconName, React.ReactNode> = {
       <rect x="3" y="14" width="7" height="7" rx="1.5" />
       <path d="M14 14h3v3h-3zM18 18h3v3h-3zM14 20h3M20 14v3" />
     </>
+  ),
+  refresh: (
+    <path d="M21 12a9 9 0 0 0-15.5-6.36L3 8m0-5v5h5M3 12a9 9 0 0 0 15.5 6.36L21 16m0 5v-5h-5" />
   ),
 }
 

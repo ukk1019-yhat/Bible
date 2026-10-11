@@ -16,12 +16,25 @@ interface DriveApiBook {
 
 const CACHE_KEY = 'satya_sakshi_drive_books_cache'
 
+/**
+ * Fetches the live list of Christian books from Google Drive.
+ * Bypasses all browser and proxy caches to ensure any additions or deletions
+ * in Google Drive immediately reflect on the website.
+ */
 export async function fetchDriveBooks(): Promise<ChristianBook[]> {
   try {
-    const res = await fetch(GOOGLE_DRIVE_BOOKS_ENDPOINT, {
+    const timestamp = Date.now()
+    const url = `${GOOGLE_DRIVE_BOOKS_ENDPOINT}${
+      GOOGLE_DRIVE_BOOKS_ENDPOINT.includes('?') ? '&' : '?'
+    }_t=${timestamp}`
+
+    const res = await fetch(url, {
       method: 'GET',
+      cache: 'no-store',
       headers: {
         Accept: 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        Pragma: 'no-cache',
       },
     })
 
@@ -35,8 +48,14 @@ export async function fetchDriveBooks(): Promise<ChristianBook[]> {
       throw new Error('Drive script did not return an array')
     }
 
+    // If drive folder is empty (e.g. all books deleted), return empty list
     if (data.length === 0) {
-      return fallbackBooks
+      try {
+        sessionStorage.removeItem(CACHE_KEY)
+      } catch {
+        // ignore
+      }
+      return []
     }
 
     const mapped: ChristianBook[] = data.map((item: DriveApiBook, index: number) => {
@@ -64,16 +83,16 @@ export async function fetchDriveBooks(): Promise<ChristianBook[]> {
       }
     })
 
-    // Cache successful response
+    // Update session cache with latest fresh data
     try {
       sessionStorage.setItem(CACHE_KEY, JSON.stringify(mapped))
     } catch {
-      // ignore storage quota errors
+      // ignore
     }
 
     return mapped
   } catch (err) {
-    // If network fails, try cache first
+    // Only if network fails, check if we have a temporary offline cache
     try {
       const cached = sessionStorage.getItem(CACHE_KEY)
       if (cached) {

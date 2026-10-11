@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { bookCategories, books as defaultBooks } from '../data/content/books'
+import { bookCategories } from '../data/content/books'
 import { BookCard } from '../components/content/BookCard'
 import { Icon } from '../components/ui/Icon'
 import { PageHeader } from '../components/ui/Layout'
@@ -10,14 +10,28 @@ import { fetchDriveBooks } from '../services/driveBooks'
 import type { ChristianBook } from '../types/content'
 
 export function BooksPage() {
-  const [bookList, setBookList] = useState<ChristianBook[]>(defaultBooks)
+  const [bookList, setBookList] = useState<ChristianBook[]>([])
   const [category, setCategory] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
+
+  const loadBooks = async (isManual = false) => {
+    if (isManual) setRefreshing(true)
+    try {
+      const items = await fetchDriveBooks()
+      setBookList(items)
+    } finally {
+      setLoading(false)
+      if (isManual) setRefreshing(false)
+    }
+  }
 
   useEffect(() => {
     let active = true
     fetchDriveBooks().then((items) => {
-      if (active && items.length > 0) {
+      if (active) {
         setBookList(items)
+        setLoading(false)
       }
     })
     return () => {
@@ -51,10 +65,9 @@ export function BooksPage() {
       />
 
       <div className="shell py-12 sm:py-16">
-        {/* Filters exist even with an empty library: the taxonomy is real, and
-            it becomes useful the moment a file is published. */}
-        {hasBooks ? (
-          <div className="mb-8 flex flex-wrap items-center gap-2">
+        {/* Filters and live sync refresh button */}
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={() => setCategory(null)}
@@ -65,49 +78,92 @@ export function BooksPage() {
                   : 'bg-cream-200 text-ink-soft hover:bg-cream-300'
               }`}
             >
-              అన్నీ ({bookList.length})
+              అన్నీ {hasBooks ? `(${bookList.length})` : ''}
             </button>
-            {bookCategories.map((item) => (
-              <button
-                key={item.slug}
-                type="button"
-                onClick={() => setCategory(item.slug)}
-                aria-pressed={category === item.slug}
-                className={`min-h-9 rounded-full px-4 text-sm transition-colors ${
-                  category === item.slug
-                    ? 'bg-forest-800 font-medium text-cream-50'
-                    : 'bg-cream-200 text-ink-soft hover:bg-cream-300'
-                }`}
+            {bookCategories.map((item) => {
+              const count = bookList.filter((b) => b.category.slug === item.slug).length
+              return (
+                <button
+                  key={item.slug}
+                  type="button"
+                  onClick={() => setCategory(item.slug)}
+                  aria-pressed={category === item.slug}
+                  className={`min-h-9 rounded-full px-4 text-sm transition-colors ${
+                    category === item.slug
+                      ? 'bg-forest-800 font-medium text-cream-50'
+                      : 'bg-cream-200 text-ink-soft hover:bg-cream-300'
+                  }`}
+                >
+                  {item.telugu} {count > 0 ? `(${count})` : ''}
+                </button>
+              )
+            })}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => loadBooks(true)}
+            disabled={refreshing}
+            className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-cream-400 bg-cream-100 px-3.5 py-1 text-xs font-medium text-forest-900 transition-colors hover:bg-cream-200 disabled:opacity-50"
+            title="Google Drive నుండి తాజా పుస్తకాలను అప్‌డేట్ చేయండి"
+          >
+            <Icon
+              name="refresh"
+              size={14}
+              className={refreshing ? 'animate-spin text-gold-600' : 'text-forest-700'}
+            />
+            <span>{refreshing ? 'తాజాకరిస్తోంది...' : 'తాజాకరించు (Sync)'}</span>
+          </button>
+        </div>
+
+        {/* Book Grid or Skeleton or Empty State */}
+        {loading && bookList.length === 0 ? (
+          <div className="grid gap-6 sm:grid-cols-3 lg:grid-cols-5">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div
+                key={i}
+                className="flex aspect-[3/4] animate-pulse flex-col justify-end rounded-[var(--radius-md)] bg-cream-200/80 p-4"
               >
-                {item.telugu}
-              </button>
+                <div className="h-4 w-3/4 rounded bg-cream-300/80" />
+              </div>
             ))}
           </div>
-        ) : null}
-
-        {visible.length > 0 ? (
+        ) : visible.length > 0 ? (
           <ul className="grid gap-6 sm:grid-cols-3 lg:grid-cols-5">
             {visible.map((book, index) => (
               <li key={book.slug}>
-                <BookCard book={book} delay={index * 60} />
+                <BookCard book={book} delay={index * 40} />
               </li>
             ))}
           </ul>
         ) : (
           <EmptyState
             icon={<Icon name="stack" size={28} />}
-            title="పుస్తకాలు త్వరలో అందుబాటులో"
+            title={category ? 'ఈ విభాగంలో పుస్తకాలు లేవు' : 'పుస్తకాలు త్వరలో అందుబాటులో'}
             description={
-              <>
-                <p>
-                  సత్యసాక్షి ఉచిత తెలుగు క్రైస్తవ PDF పుస్తకాలను తయారు చేస్తోంది. ఇప్పటికి
-                  ఏ పుస్తకం కూడా ప్రచురించలేదు.
-                </p>
-                <p className="mt-3">
-                  ప్రచురణ జరిగిన వెంటనే ఇక్కడ కనిపిస్తాయి. అప్పటివరకు మీరు బైబిల్ చదవగలరు —
-                  అది ఇక్కడే ఉంది.
-                </p>
-              </>
+              category ? (
+                <>
+                  <p>ఎంచుకున్న విభాగంలో ప్రస్తుతం పుస్తకాలు లేవు.</p>
+                  <button
+                    type="button"
+                    onClick={() => setCategory(null)}
+                    className="mt-4 rounded-full bg-forest-800 px-5 py-2 text-sm font-medium text-cream-50 transition-colors hover:bg-forest-900"
+                  >
+                    అన్ని పుస్తకాలు చూడండి
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p>
+                    సత్యసాక్షి ఉచిత తెలుగు క్రైస్తవ PDF పుస్తకాలను తయారు చేస్తోంది. ఇప్పటికి
+                    ఏ పుస్తకం కూడా ప్రచురించలేదు.
+                  </p>
+                  <p className="mt-3">
+                    ప్రచురణ జరిగిన వెంటనే ఇక్కడ కనిపిస్తాయి. అప్పటివరకు మీరు బైబిల్ చదవగలరు —
+                    అది ఇక్కడే ఉంది.
+                  </p>
+                </>
+              )
             }
           />
         )}
