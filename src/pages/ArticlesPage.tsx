@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {
   articleCategories,
-  articles,
   getArticleBySlug,
 } from '../data/content/articles'
+import { fetchLiveArticles, getCachedArticles } from '../services/firestoreContent'
+import type { Article } from '../types/content'
 import { ArticleCard } from '../components/content/Cards'
 import { Icon } from '../components/ui/Icon'
 import { PageHeader, Prose } from '../components/ui/Layout'
@@ -15,6 +16,11 @@ import NotFoundPage from './NotFoundPage'
 
 export function ArticlesPage() {
   const [category, setCategory] = useState<string | null>(null)
+  const [articlesList, setArticlesList] = useState<Article[]>(getCachedArticles())
+
+  useEffect(() => {
+    fetchLiveArticles().then(setArticlesList)
+  }, [])
 
   useSeo({
     title: 'వ్యాసాలు — విశ్వాసం, ప్రార్థన, ఆత్మీయ జీవితం',
@@ -26,9 +32,9 @@ export function ArticlesPage() {
   const visible = useMemo(
     () =>
       category
-        ? articles.filter((article) => article.category.slug === category)
-        : articles,
-    [category],
+        ? articlesList.filter((article) => article.category.slug === category)
+        : articlesList,
+    [category, articlesList],
   )
 
   return (
@@ -53,7 +59,7 @@ export function ArticlesPage() {
                 : 'bg-cream-200 text-ink-soft hover:bg-cream-300'
             }`}
           >
-            అన్నీ ({articles.length})
+            అన్నీ ({articlesList.length})
           </button>
 
           {articleCategories.map((item) => (
@@ -68,7 +74,7 @@ export function ArticlesPage() {
                   : 'bg-cream-200 text-ink-soft hover:bg-cream-300'
               }`}
             >
-              {item.telugu} ({articles.filter((a) => a.category.slug === item.slug).length})
+              {item.telugu} ({articlesList.filter((a) => a.category.slug === item.slug).length})
             </button>
           ))}
         </div>
@@ -96,7 +102,17 @@ export function ArticlesPage() {
 
 export function ArticleRoute() {
   const { slug = '' } = useParams()
-  const article = getArticleBySlug(slug)
+  const [articlesList, setArticlesList] = useState<Article[]>(getCachedArticles())
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    fetchLiveArticles().then((res) => {
+      setArticlesList(res)
+      setLoaded(true)
+    })
+  }, [])
+
+  const article = articlesList.find((a) => a.slug === slug) ?? getArticleBySlug(slug)
 
   useSeo({
     title: article ? `${article.title} — వ్యాసాలు` : 'వ్యాసం కనబడలేదు',
@@ -116,7 +132,16 @@ export function ArticleRoute() {
         : undefined,
   })
 
-  if (!article) return <NotFoundPage />
+  if (!article) {
+    if (!loaded) {
+      return (
+        <div className="shell py-24 text-center">
+          <p className="text-sm text-ink-muted">వ్యాసం లోడ్ అవుతోంది...</p>
+        </div>
+      )
+    }
+    return <NotFoundPage />
+  }
 
   return (
     <>
@@ -225,9 +250,9 @@ export function ArticleRoute() {
             <div className="rounded-[var(--radius-lg)] border border-cream-300 bg-cream-50 p-5">
               <h2 className="text-sm font-semibold text-forest-900">ఇతర వ్యాసాలు</h2>
               <ul className="mt-4 space-y-3">
-                {articles
-                  .filter((item) => item.slug !== article.slug)
-                  .map((item) => (
+                {articlesList
+                  .filter((item: Article) => item.slug !== article.slug)
+                  .map((item: Article) => (
                     <li key={item.slug}>
                       <Link
                         to={`/articles/${item.slug}`}

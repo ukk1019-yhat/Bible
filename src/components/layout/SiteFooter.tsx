@@ -123,6 +123,13 @@ export function SiteFooter() {
               © {year} {site.brand.telugu}. {t('footer.rights')}
             </p>
             <LanguageToggle compact />
+            <Link
+              to="/admin"
+              className="text-cream-400/50 hover:text-gold-300 transition-colors inline-flex items-center gap-1 text-[11px]"
+              title="అడ్మిన్ పోర్టల్"
+            >
+              అడ్మిన్
+            </Link>
           </div>
 
           {/* Bible text attribution — required, and honest, in every language. */}

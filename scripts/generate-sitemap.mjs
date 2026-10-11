@@ -138,7 +138,7 @@ function contentUrls() {
  * Routes that must stay out of the sitemap even though the router serves them.
  * Both set `noIndex`, so listing them would contradict their own meta tags.
  */
-const NO_INDEX = new Set(['search', 'bible/search'])
+const NO_INDEX = new Set(['search', 'bible/search', 'admin'])
 
 /**
  * Fails if the sitemap advertises a page the router does not serve, or misses

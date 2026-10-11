@@ -1,11 +1,12 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {
   getQuestionBySlug,
   getRelatedQuestions,
-  questions,
   questionTopics,
 } from '../data/content/questions'
+import { fetchLiveQuestions, getCachedQuestions } from '../services/firestoreContent'
+import type { Question } from '../types/content'
 import { ScriptureBlock } from '../components/bible/ScriptureBlock'
 import { QuestionCard } from '../components/content/Cards'
 import { Icon } from '../components/ui/Icon'
@@ -20,7 +21,12 @@ import NotFoundPage from './NotFoundPage'
 export function QuestionsPage() {
   const [topic, setTopic] = useState<string | null>(null)
   const [input, setInput] = useState('')
+  const [questionsList, setQuestionsList] = useState<Question[]>(getCachedQuestions())
   const query = useDebounced(input, 180)
+
+  useEffect(() => {
+    fetchLiveQuestions().then(setQuestionsList)
+  }, [])
 
   useSeo({
     title: 'ప్రశ్నలు & సమాధానాలు — బైబిల్ ఆధారంగా',
@@ -29,7 +35,7 @@ export function QuestionsPage() {
     path: '/questions',
     jsonLd: graph({
       '@type': 'FAQPage',
-      mainEntity: questions.map((question) => ({
+      mainEntity: questionsList.map((question) => ({
         '@type': 'Question',
         name: question.question,
         acceptedAnswer: {
@@ -44,7 +50,7 @@ export function QuestionsPage() {
 
   const visible = useMemo(
     () =>
-      questions.filter((question) => {
+      questionsList.filter((question) => {
         if (topic && question.topic !== topic) return false
         if (!query.trim()) return true
         return matchesAllTokens(
@@ -52,7 +58,7 @@ export function QuestionsPage() {
           query,
         )
       }),
-    [topic, query],
+    [topic, query, questionsList],
   )
 
   return (
@@ -93,11 +99,11 @@ export function QuestionsPage() {
                         : 'bg-cream-200 text-ink-soft hover:bg-cream-300'
                     }`}
                   >
-                    అన్నీ ({questions.length})
+                    అన్నీ ({questionsList.length})
                   </button>
                 </li>
                 {questionTopics.map((item) => {
-                  const count = questions.filter((q) => q.topic === item).length
+                  const count = questionsList.filter((q) => q.topic === item).length
                   return (
                     <li key={item}>
                       <button
@@ -153,7 +159,17 @@ export function QuestionsPage() {
 /** Route wrapper — validates the slug before the SEO hook resolves a title. */
 export function QuestionRoute() {
   const { slug = '' } = useParams()
-  const question = getQuestionBySlug(slug)
+  const [questionsList, setQuestionsList] = useState<Question[]>(getCachedQuestions())
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    fetchLiveQuestions().then((res) => {
+      setQuestionsList(res)
+      setLoaded(true)
+    })
+  }, [])
+
+  const question = questionsList.find((q) => q.slug === slug) ?? getQuestionBySlug(slug)
 
   useSeo({
     title: question ? `${question.question} — ప్రశ్నలు & సమాధానాలు` : 'ప్రశ్న కనబడలేదు',
@@ -161,11 +177,20 @@ export function QuestionRoute() {
     path: `/questions/${slug}`,
   })
 
-  if (!question) return <NotFoundPage />
+  if (!question) {
+    if (!loaded) {
+      return (
+        <div className="shell py-24 text-center">
+          <p className="text-sm text-ink-muted">ప్రశ్న లోడ్ అవుతోంది...</p>
+        </div>
+      )
+    }
+    return <NotFoundPage />
+  }
   return <QuestionView question={question} />
 }
 
-function QuestionView({ question }: { question: (typeof questions)[number] }) {
+function QuestionView({ question }: { question: Question }) {
   const related = getRelatedQuestions(question.slug)
 
   return (

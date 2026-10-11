@@ -48,6 +48,7 @@ const PrivacyPage = lazy(() =>
   import('./pages/LegalPages').then((m) => ({ default: m.PrivacyPage })),
 )
 const TermsPage = lazy(() => import('./pages/LegalPages').then((m) => ({ default: m.TermsPage })))
+const AdminPage = lazy(() => import('./pages/AdminPage').then((m) => ({ default: m.AdminPage })))
 
 /** Shown while a lazily loaded route is fetched. */
 function RouteFallback() {
@@ -85,6 +86,7 @@ const router = createBrowserRouter([
       { path: 'search', element: <SearchPage /> },
       { path: 'about', element: <AboutPage /> },
       { path: 'contact', element: <ContactPage /> },
+      { path: 'admin', element: <AdminPage /> },
       { path: 'privacy', element: <PrivacyPage /> },
       { path: 'terms', element: <TermsPage /> },
       { path: '*', element: <NotFoundPage /> },
