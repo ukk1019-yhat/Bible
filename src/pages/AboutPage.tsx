@@ -18,7 +18,7 @@ const PILLARS: { icon: IconName; title: string; body: string; to: string }[] = [
   {
     icon: 'play',
     title: 'సందేశాలు',
-    body: 'బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — సుధాకర్ బోధనలు మీరు ఎప్పుడైనా చూడగలరు.',
+    body: 'బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — Bro. Sudhakar CH. బోధనలు మీరు ఎప్పుడైనా చూడగలరు.',
     to: '/messages',
   },
   {

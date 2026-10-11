@@ -108,9 +108,9 @@ function VideoListing({ messagesOnly = false }: ListingProps) {
 
 export function MessagesPage() {
   useSeo({
-    title: 'బైబిల్ సందేశాలు — సుధాకర్ బోధనలు',
+    title: 'బైబిల్ సందేశాలు — Bro. Sudhakar CH. బోధనలు',
     description:
-      'బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — సుధాకర్ బోధనలను YouTubeలో ఆన్‌లైన్ చూడండి.',
+      'బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — Bro. Sudhakar CH. బోధనలను YouTubeలో ఆన్‌లైన్ చూడండి.',
     path: '/messages',
     jsonLd: graph({
       '@type': 'CollectionPage',
@@ -126,7 +126,7 @@ export function MessagesPage() {
         eyebrow="సందేశాలు"
         title="బైబిల్ సందేశాలు"
         icon="play"
-        lede="బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — సుధాకర్ బోధనలు. మీరు ఎప్పుడైనా, ఎక్కడైనా చూడగలరు."
+        lede="బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — Bro. Sudhakar CH. బోధనలు. మీరు ఎప్పుడైనా, ఎక్కడైనా చూడగలరు."
         crumbs={[{ label: 'హోమ్', to: '/' }, { label: 'సందేశాలు' }]}
       />
 
