@@ -130,7 +130,7 @@ export function VideoCard({ video, featured = false, delay = 0 }: VideoCardProps
               <>
                 <Icon name="quote" size={14} className="text-gold-600" />
                 <span>
-                  {video.speaker.honorific} {video.speaker.name}
+                  {video.speaker.honorific ? `${video.speaker.honorific} ` : ''}{video.speaker.name}
                 </span>
               </>
             ) : null}

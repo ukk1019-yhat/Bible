@@ -30,7 +30,7 @@ export function ContactPage() {
 
     const subject = encodeURIComponent(
       form.name
-        ? `[సత్య సాక్షి సంప్రదింపు] ${form.name} గారి నుండి సందేశం`
+        ? `[సత్య సాక్షి సంప్రదింపు] ${form.name} నుండి సందేశం`
         : `[సత్య సాక్షి సంప్రదింపు] సందేశం`
     )
     const bodyLines = [
@@ -52,7 +52,7 @@ export function ContactPage() {
   const mailtoFallback = site.contact.email
     ? `mailto:${site.contact.email}?subject=${encodeURIComponent(
         form.name
-          ? `[సత్య సాక్షి సంప్రదింపు] ${form.name} గారి నుండి సందేశం`
+          ? `[సత్య సాక్షి సంప్రదింపు] ${form.name} నుండి సందేశం`
           : '[సత్య సాక్షి సంప్రదింపు] సందేశం'
       )}&body=${encodeURIComponent(
         `పేరు: ${form.name}\nఇమెయిల్: ${form.email}\n\nసందేశం:\n${form.message}`

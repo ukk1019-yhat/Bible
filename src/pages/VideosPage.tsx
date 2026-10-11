@@ -108,9 +108,9 @@ function VideoListing({ messagesOnly = false }: ListingProps) {
 
 export function MessagesPage() {
   useSeo({
-    title: 'బైబిల్ సందేశాలు — బ్రో. సుధాకర్ గారి బోధనలు',
+    title: 'బైబిల్ సందేశాలు — సుధాకర్ బోధనలు',
     description:
-      'బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — బ్రో. సుధాకర్ గారి బోధనలను YouTubeలో ఆన్‌లైన్ చూడండి.',
+      'బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — సుధాకర్ బోధనలను YouTubeలో ఆన్‌లైన్ చూడండి.',
     path: '/messages',
     jsonLd: graph({
       '@type': 'CollectionPage',
@@ -126,7 +126,7 @@ export function MessagesPage() {
         eyebrow="సందేశాలు"
         title="బైబిల్ సందేశాలు"
         icon="play"
-        lede="బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — బ్రో. సుధాకర్ గారి బోధనలు. మీరు ఎప్పుడైనా, ఎక్కడైనా చూడగలరు."
+        lede="బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — సుధాకర్ బోధనలు. మీరు ఎప్పుడైనా, ఎక్కడైనా చూడగలరు."
         crumbs={[{ label: 'హోమ్', to: '/' }, { label: 'సందేశాలు' }]}
       />
 
@@ -281,7 +281,7 @@ export function VideoRoute() {
                   <div>
                     <dt className="text-ink-muted">బోధకుడు</dt>
                     <dd className="mt-0.5 font-medium text-forest-900">
-                      {speaker.honorific} {speaker.name}
+                      {speaker.honorific ? `${speaker.honorific} ` : ''}{speaker.name}
                     </dd>
                   </div>
                 ) : null}

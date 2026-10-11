@@ -2,7 +2,7 @@ import type { Speaker, Video } from '../../types/content'
 
 /**
  * Satya Sakshi publishes its Bible messages on the YouTube channel
- * Bro. Sudhakar Garu (@sudhaword).
+ * Sudhakar CH (@sudhaword).
  *
  * Titles, channel and speaker names below are taken verbatim from the channel's
  * own metadata — nothing is paraphrased or invented. `duration` and
@@ -11,9 +11,8 @@ import type { Speaker, Video } from '../../types/content'
  */
 export const speakers: Speaker[] = [
   {
-    name: 'Bro. Sudhakar Garu',
-    honorific: 'బ్రో.',
-    slug: 'bro-sudhakar',
+    name: 'Sudhakar CH',
+    slug: 'sudhakar',
   },
 ]
 
@@ -24,7 +23,7 @@ export const videos: Video[] = [
     slug: 'satya-sakshi-magazine-rerelease',
     title: 'సత్యసాక్షి పత్రిక పునఃప్రచురణ — సామర్లకోట బైబిల్ సెమినార్',
     description:
-      'సామర్లకోటలో జరిగిన బైబిల్ సెమినార్‌లో సత్యసాక్షి పత్రిక పునఃప్రచురణ మరియు దైవ సందేశం — Bro. Sudhakar Garu, Church of The Living God (Satya Sakshi Magazine Rerelease).',
+      'సామర్లకోటలో జరిగిన బైబిల్ సెమినార్‌లో సత్యసాక్షి పత్రిక పునఃప్రచురణ మరియు దైవ సందేశం — Sudhakar CH, Church of The Living God (Satya Sakshi Magazine Rerelease).',
     youtubeId: 'Q2a2PxXr3vk',
     category: 'బైబిల్ సందేశాలు',
     speaker: sudhakar,

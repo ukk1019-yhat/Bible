@@ -18,7 +18,7 @@ export type VideoCategory = (typeof VIDEO_CATEGORIES)[number]
 
 export interface Speaker {
   name: string
-  /** Short honourific used in listings, e.g. "బ్రో." */
+  /** Short honourific used in listings */
   honorific?: string
   slug: string
 }
