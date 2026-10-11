@@ -13,8 +13,13 @@ import { questions as initialQuestions } from '../data/content/questions'
 import { videos as initialVideos } from '../data/content/videos'
 
 const ARTICLES_COLLECTION = 'articles'
+const DELETED_ARTICLES_COLLECTION = 'deleted_articles'
+
 const QUESTIONS_COLLECTION = 'questions'
+const DELETED_QUESTIONS_COLLECTION = 'deleted_questions'
+
 const VIDEOS_COLLECTION = 'videos'
+const DELETED_VIDEOS_COLLECTION = 'deleted_videos'
 
 /**
  * Remove any undefined values to avoid Firestore serialization errors.
@@ -57,25 +62,30 @@ let cachedArticles: Article[] | null = null
 
 export async function fetchLiveArticles(): Promise<Article[]> {
   try {
-    const q = query(collection(db, ARTICLES_COLLECTION))
-    const snapshot = await getDocs(q)
+    const [qSnap, delSnap] = await Promise.all([
+      getDocs(query(collection(db, ARTICLES_COLLECTION))),
+      getDocs(query(collection(db, DELETED_ARTICLES_COLLECTION))).catch(() => ({ docs: [] })),
+    ])
 
-    if (snapshot.empty) {
-      cachedArticles = initialArticles
-      return initialArticles
-    }
+    const deletedSlugs = new Set(delSnap.docs.map((d: any) => d.id))
 
     const firestoreArticles: Article[] = []
-    snapshot.forEach((docSnap) => {
-      firestoreArticles.push(docSnap.data() as Article)
+    qSnap.forEach((docSnap) => {
+      if (!deletedSlugs.has(docSnap.id)) {
+        firestoreArticles.push(docSnap.data() as Article)
+      }
     })
 
     const map = new Map<string, Article>()
     for (const item of initialArticles) {
-      map.set(item.slug, item)
+      if (!deletedSlugs.has(item.slug)) {
+        map.set(item.slug, item)
+      }
     }
     for (const item of firestoreArticles) {
-      map.set(item.slug, item)
+      if (!deletedSlugs.has(item.slug)) {
+        map.set(item.slug, item)
+      }
     }
 
     const merged = Array.from(map.values())
@@ -94,6 +104,7 @@ export function getCachedArticles(): Article[] {
 export async function saveArticleToFirestore(article: Article): Promise<void> {
   const sanitized = sanitizeForFirestore(article)
   await setDoc(doc(db, ARTICLES_COLLECTION, article.slug), sanitized)
+  await deleteDoc(doc(db, DELETED_ARTICLES_COLLECTION, article.slug)).catch(() => {})
   if (cachedArticles) {
     const index = cachedArticles.findIndex((a) => a.slug === article.slug)
     if (index >= 0) {
@@ -106,6 +117,10 @@ export async function saveArticleToFirestore(article: Article): Promise<void> {
 
 export async function deleteArticleFromFirestore(slug: string): Promise<void> {
   await deleteDoc(doc(db, ARTICLES_COLLECTION, slug))
+  await setDoc(doc(db, DELETED_ARTICLES_COLLECTION, slug), {
+    slug,
+    deletedAt: new Date().toISOString(),
+  })
   if (cachedArticles) {
     cachedArticles = cachedArticles.filter((a) => a.slug !== slug)
   }
@@ -115,6 +130,7 @@ export async function seedInitialArticles(): Promise<number> {
   let count = 0
   for (const article of initialArticles) {
     await setDoc(doc(db, ARTICLES_COLLECTION, article.slug), sanitizeForFirestore(article))
+    await deleteDoc(doc(db, DELETED_ARTICLES_COLLECTION, article.slug)).catch(() => {})
     count++
   }
   return count
@@ -128,25 +144,30 @@ let cachedQuestions: Question[] | null = null
 
 export async function fetchLiveQuestions(): Promise<Question[]> {
   try {
-    const q = query(collection(db, QUESTIONS_COLLECTION))
-    const snapshot = await getDocs(q)
+    const [qSnap, delSnap] = await Promise.all([
+      getDocs(query(collection(db, QUESTIONS_COLLECTION))),
+      getDocs(query(collection(db, DELETED_QUESTIONS_COLLECTION))).catch(() => ({ docs: [] })),
+    ])
 
-    if (snapshot.empty) {
-      cachedQuestions = initialQuestions
-      return initialQuestions
-    }
+    const deletedSlugs = new Set(delSnap.docs.map((d: any) => d.id))
 
     const firestoreQuestions: Question[] = []
-    snapshot.forEach((docSnap) => {
-      firestoreQuestions.push(docSnap.data() as Question)
+    qSnap.forEach((docSnap) => {
+      if (!deletedSlugs.has(docSnap.id)) {
+        firestoreQuestions.push(docSnap.data() as Question)
+      }
     })
 
     const map = new Map<string, Question>()
     for (const item of initialQuestions) {
-      map.set(item.slug, item)
+      if (!deletedSlugs.has(item.slug)) {
+        map.set(item.slug, item)
+      }
     }
     for (const item of firestoreQuestions) {
-      map.set(item.slug, item)
+      if (!deletedSlugs.has(item.slug)) {
+        map.set(item.slug, item)
+      }
     }
 
     const merged = Array.from(map.values())
@@ -165,6 +186,7 @@ export function getCachedQuestions(): Question[] {
 export async function saveQuestionToFirestore(question: Question): Promise<void> {
   const sanitized = sanitizeForFirestore(question)
   await setDoc(doc(db, QUESTIONS_COLLECTION, question.slug), sanitized)
+  await deleteDoc(doc(db, DELETED_QUESTIONS_COLLECTION, question.slug)).catch(() => {})
   if (cachedQuestions) {
     const index = cachedQuestions.findIndex((q) => q.slug === question.slug)
     if (index >= 0) {
@@ -177,6 +199,10 @@ export async function saveQuestionToFirestore(question: Question): Promise<void>
 
 export async function deleteQuestionFromFirestore(slug: string): Promise<void> {
   await deleteDoc(doc(db, QUESTIONS_COLLECTION, slug))
+  await setDoc(doc(db, DELETED_QUESTIONS_COLLECTION, slug), {
+    slug,
+    deletedAt: new Date().toISOString(),
+  })
   if (cachedQuestions) {
     cachedQuestions = cachedQuestions.filter((q) => q.slug !== slug)
   }
@@ -186,6 +212,7 @@ export async function seedInitialQuestions(): Promise<number> {
   let count = 0
   for (const question of initialQuestions) {
     await setDoc(doc(db, QUESTIONS_COLLECTION, question.slug), sanitizeForFirestore(question))
+    await deleteDoc(doc(db, DELETED_QUESTIONS_COLLECTION, question.slug)).catch(() => {})
     count++
   }
   return count
@@ -199,25 +226,30 @@ let cachedVideos: Video[] | null = null
 
 export async function fetchLiveVideos(): Promise<Video[]> {
   try {
-    const q = query(collection(db, VIDEOS_COLLECTION))
-    const snapshot = await getDocs(q)
+    const [qSnap, delSnap] = await Promise.all([
+      getDocs(query(collection(db, VIDEOS_COLLECTION))),
+      getDocs(query(collection(db, DELETED_VIDEOS_COLLECTION))).catch(() => ({ docs: [] })),
+    ])
 
-    if (snapshot.empty) {
-      cachedVideos = initialVideos
-      return initialVideos
-    }
+    const deletedSlugs = new Set(delSnap.docs.map((d: any) => d.id))
 
     const firestoreVideos: Video[] = []
-    snapshot.forEach((docSnap) => {
-      firestoreVideos.push(docSnap.data() as Video)
+    qSnap.forEach((docSnap) => {
+      if (!deletedSlugs.has(docSnap.id)) {
+        firestoreVideos.push(docSnap.data() as Video)
+      }
     })
 
     const map = new Map<string, Video>()
     for (const item of initialVideos) {
-      map.set(item.slug, item)
+      if (!deletedSlugs.has(item.slug)) {
+        map.set(item.slug, item)
+      }
     }
     for (const item of firestoreVideos) {
-      map.set(item.slug, item)
+      if (!deletedSlugs.has(item.slug)) {
+        map.set(item.slug, item)
+      }
     }
 
     const merged = Array.from(map.values())
@@ -236,6 +268,7 @@ export function getCachedVideos(): Video[] {
 export async function saveVideoToFirestore(video: Video): Promise<void> {
   const sanitized = sanitizeForFirestore(video)
   await setDoc(doc(db, VIDEOS_COLLECTION, video.slug), sanitized)
+  await deleteDoc(doc(db, DELETED_VIDEOS_COLLECTION, video.slug)).catch(() => {})
   if (cachedVideos) {
     const index = cachedVideos.findIndex((v) => v.slug === video.slug)
     if (index >= 0) {
@@ -248,6 +281,10 @@ export async function saveVideoToFirestore(video: Video): Promise<void> {
 
 export async function deleteVideoFromFirestore(slug: string): Promise<void> {
   await deleteDoc(doc(db, VIDEOS_COLLECTION, slug))
+  await setDoc(doc(db, DELETED_VIDEOS_COLLECTION, slug), {
+    slug,
+    deletedAt: new Date().toISOString(),
+  })
   if (cachedVideos) {
     cachedVideos = cachedVideos.filter((v) => v.slug !== slug)
   }
@@ -257,6 +294,7 @@ export async function seedInitialVideos(): Promise<number> {
   let count = 0
   for (const video of initialVideos) {
     await setDoc(doc(db, VIDEOS_COLLECTION, video.slug), sanitizeForFirestore(video))
+    await deleteDoc(doc(db, DELETED_VIDEOS_COLLECTION, video.slug)).catch(() => {})
     count++
   }
   return count

@@ -261,11 +261,13 @@ export function AdminPage() {
     if (!window.confirm(`"${title}" వీడియోను తొలగించాలనుకుంటున్నారా?`)) return
     setActionLoading(true)
     try {
+      setVideos((prev) => prev.filter((v) => v.slug !== slug))
       await deleteVideoFromFirestore(slug)
       showToast('వీడియో తొలగించబడింది!')
       await loadVideos()
     } catch (err: any) {
       showToast('తొలగించడంలో లోపం: ' + err.message, 'error')
+      await loadVideos()
     } finally {
       setActionLoading(false)
     }
@@ -359,11 +361,13 @@ export function AdminPage() {
     if (!window.confirm(`"${title}" వ్యాసాన్ని తొలగించాలనుకుంటున్నారా?`)) return
     setActionLoading(true)
     try {
+      setArticles((prev) => prev.filter((a) => a.slug !== slug))
       await deleteArticleFromFirestore(slug)
       showToast('వ్యాసం తొలగించబడింది!')
       await loadArticles()
     } catch (err: any) {
       showToast('తొలగించడంలో లోపం: ' + err.message, 'error')
+      await loadArticles()
     } finally {
       setActionLoading(false)
     }
@@ -457,11 +461,13 @@ export function AdminPage() {
     if (!window.confirm(`"${questionText}" ప్రశ్నను తొలగించాలనుకుంటున్నారా?`)) return
     setActionLoading(true)
     try {
+      setQuestions((prev) => prev.filter((q) => q.slug !== slug))
       await deleteQuestionFromFirestore(slug)
       showToast('ప్రశ్న తొలగించబడింది!')
       await loadQuestions()
     } catch (err: any) {
       showToast('తొలగించడంలో లోపం: ' + err.message, 'error')
+      await loadQuestions()
     } finally {
       setActionLoading(false)
     }
