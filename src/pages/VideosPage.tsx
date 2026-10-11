@@ -1,10 +1,10 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {
   getVideoBySlug,
   speakers,
-  videos,
 } from '../data/content/videos'
+import { fetchLiveVideos, getCachedVideos } from '../services/firestoreContent'
 import { VIDEO_CATEGORIES, type Video, type VideoCategory } from '../types/content'
 import { site } from '../config/site'
 import { VideoCard } from '../components/content/VideoCard'
@@ -36,9 +36,19 @@ interface ListingProps {
 }
 
 function VideoListing({ messagesOnly = false }: ListingProps) {
-  const pool = messagesOnly
-    ? videos.filter((video) => MESSAGE_CATEGORIES.includes(video.category))
-    : videos
+  const [videoList, setVideoList] = useState<Video[]>(getCachedVideos())
+
+  useEffect(() => {
+    fetchLiveVideos().then(setVideoList)
+  }, [])
+
+  const pool = useMemo(
+    () =>
+      messagesOnly
+        ? videoList.filter((video) => MESSAGE_CATEGORIES.includes(video.category))
+        : videoList,
+    [messagesOnly, videoList],
+  )
 
   const [category, setCategory] = useState<VideoCategory | null>(null)
 
@@ -202,7 +212,17 @@ export function VideosPage() {
 
 export function VideoRoute() {
   const { slug = '' } = useParams()
-  const video = getVideoBySlug(slug)
+  const [videoList, setVideoList] = useState<Video[]>(getCachedVideos())
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    fetchLiveVideos().then((res) => {
+      setVideoList(res)
+      setLoaded(true)
+    })
+  }, [])
+
+  const video = videoList.find((v) => v.slug === slug) ?? getVideoBySlug(slug)
 
   useSeo({
     title: video ? `${video.title} — సత్యసాక్షి` : 'వీడియో కనబడలేదు',
@@ -213,9 +233,18 @@ export function VideoRoute() {
     type: 'video.other',
   })
 
-  if (!video) return <NotFoundPage />
+  if (!video) {
+    if (!loaded) {
+      return (
+        <div className="shell py-24 text-center">
+          <p className="text-sm text-ink-muted">వీడియో లోడ్ అవుతోంది...</p>
+        </div>
+      )
+    }
+    return <NotFoundPage />
+  }
 
-  const others = videos
+  const others = videoList
     .filter((item) => item.slug !== video.slug)
     .slice(0, 3)
 

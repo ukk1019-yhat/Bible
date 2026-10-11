@@ -16,10 +16,17 @@ import {
   saveQuestionToFirestore,
   deleteQuestionFromFirestore,
   seedInitialQuestions,
+  fetchLiveVideos,
+  saveVideoToFirestore,
+  deleteVideoFromFirestore,
+  seedInitialVideos,
+  extractYouTubeId,
 } from '../services/firestoreContent'
 import { fetchDriveBooks } from '../services/driveBooks'
-import type { Article, Question, ChristianBook } from '../types/content'
+import type { Article, Question, ChristianBook, Video, VideoCategory } from '../types/content'
 import { articleCategories } from '../data/content/articles'
+import { VIDEO_CATEGORIES } from '../types/content'
+import { speakers } from '../data/content/videos'
 import { Icon } from '../components/ui/Icon'
 import { BrandLockup } from '../components/brand/Logo'
 import { useSeo } from '../hooks/useSeo'
@@ -43,7 +50,14 @@ export function AdminPage() {
   const [actionLoading, setActionLoading] = useState(false)
 
   // Tabs
-  const [activeTab, setActiveTab] = useState<'articles' | 'questions' | 'books' | 'info'>('articles')
+  const [activeTab, setActiveTab] = useState<'videos' | 'articles' | 'questions' | 'books' | 'info'>('videos')
+
+  // Videos state
+  const [videos, setVideos] = useState<Video[]>([])
+  const [videosLoading, setVideosLoading] = useState(false)
+  const [videoModalOpen, setVideoModalOpen] = useState(false)
+  const [editingVideo, setEditingVideo] = useState<Partial<Video> | null>(null)
+  const [youtubeInput, setYoutubeInput] = useState('')
 
   // Articles state
   const [articles, setArticles] = useState<Article[]>([])
@@ -83,10 +97,23 @@ export function AdminPage() {
   // Load content when logged in
   useEffect(() => {
     if (!user) return
+    loadVideos()
     loadArticles()
     loadQuestions()
     loadDriveBooks()
   }, [user])
+
+  const loadVideos = async () => {
+    setVideosLoading(true)
+    try {
+      const data = await fetchLiveVideos()
+      setVideos(data)
+    } catch {
+      showToast('వీడియోలు లోడ్ చేయడంలో లోపం', 'error')
+    } finally {
+      setVideosLoading(false)
+    }
+  }
 
   const loadArticles = async () => {
     setArticlesLoading(true)
@@ -160,6 +187,102 @@ export function AdminPage() {
   const handleLogout = async () => {
     await logoutAdmin()
     showToast('లాగౌట్ అయ్యారు.')
+  }
+
+  // Video Actions
+  const handleOpenNewVideo = () => {
+    setEditingVideo({
+      slug: '',
+      title: '',
+      youtubeId: '',
+      category: 'బైబిల్ సందేశాలు',
+      speaker: speakers[0],
+      description: '',
+      scripture: '',
+      featured: false,
+    })
+    setYoutubeInput('')
+    setVideoModalOpen(true)
+  }
+
+  const handleEditVideo = (v: Video) => {
+    setEditingVideo(v)
+    setYoutubeInput(v.youtubeId)
+    setVideoModalOpen(true)
+  }
+
+  const handleSaveVideo = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!editingVideo) return
+
+    const extractedId = extractYouTubeId(youtubeInput)
+    if (!extractedId) {
+      showToast('దయచేసి సరైన YouTube Video లింక్ లేదా ID ఇవ్వండి', 'error')
+      return
+    }
+
+    if (!editingVideo.title?.trim()) {
+      showToast('శీర్షిక అవసరం', 'error')
+      return
+    }
+
+    const slug =
+      editingVideo.slug?.trim() ||
+      extractedId ||
+      editingVideo.title.toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 30)
+
+    setActionLoading(true)
+    try {
+      const completeVideo: Video = {
+        slug: slug.toLowerCase().replace(/\s+/g, '-'),
+        title: editingVideo.title.trim(),
+        youtubeId: extractedId,
+        category: (editingVideo.category as VideoCategory) || 'బైబిల్ సందేశాలు',
+        speaker: editingVideo.speaker || speakers[0],
+        description: editingVideo.description?.trim() || undefined,
+        scripture: editingVideo.scripture?.trim() || undefined,
+        featured: Boolean(editingVideo.featured),
+        publishedAt: editingVideo.publishedAt || new Date().toISOString(),
+      }
+
+      await saveVideoToFirestore(completeVideo)
+      showToast('వీడియో విజయవంతంగా సేవ్ చేయబడింది! సందేశాలలో అప్‌డేట్ అయ్యింది.')
+      setVideoModalOpen(false)
+      await loadVideos()
+    } catch (err: any) {
+      console.error(err)
+      showToast('వీడియో సేవ్ చేయడంలో లోపం: ' + err.message, 'error')
+    } finally {
+      setActionLoading(false)
+    }
+  }
+
+  const handleDeleteVideo = async (slug: string, title: string) => {
+    if (!window.confirm(`"${title}" వీడియోను తొలగించాలనుకుంటున్నారా?`)) return
+    setActionLoading(true)
+    try {
+      await deleteVideoFromFirestore(slug)
+      showToast('వీడియో తొలగించబడింది!')
+      await loadVideos()
+    } catch (err: any) {
+      showToast('తొలగించడంలో లోపం: ' + err.message, 'error')
+    } finally {
+      setActionLoading(false)
+    }
+  }
+
+  const handleSeedVideos = async () => {
+    if (!window.confirm('ప్రస్తుత ప్రారంభ YouTube వీడియోలను డేటాబేస్‌కి ఎక్కించాలనుకుంటున్నారా?')) return
+    setActionLoading(true)
+    try {
+      const count = await seedInitialVideos()
+      showToast(`${count} వీడియోలు డేటాబేస్‌లో చేర్చబడ్డాయి!`)
+      await loadVideos()
+    } catch (err: any) {
+      showToast('సీడింగ్ లోపం: ' + err.message, 'error')
+    } finally {
+      setActionLoading(false)
+    }
   }
 
   // Article Actions
@@ -382,7 +505,7 @@ export function AdminPage() {
               అడ్మిన్ పోర్టల్ లాగిన్
             </h1>
             <p className="mt-2 text-sm text-ink-muted">
-              వ్యాసాలు మరియు ప్రశ్నలు మార్చుటకు, జోడించుటకు ప్రవేశించండి.
+              YouTube సందేశాలు, వ్యాసాలు మరియు ప్రశ్నలు మార్చుటకు ప్రవేశించండి.
             </p>
           </div>
 
@@ -402,7 +525,7 @@ export function AdminPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@satyasakshi.in"
+                placeholder="bible@support.satyasakshi.in"
                 className="mt-1.5 w-full rounded-lg border border-cream-300 bg-cream-50 px-3.5 py-2.5 text-sm text-ink-strong focus:border-forest-600 focus:bg-white focus:outline-none focus:ring-2 focus:ring-forest-600/20"
               />
             </div>
@@ -513,6 +636,18 @@ export function AdminPage() {
         {/* Navigation Tabs */}
         <div className="flex flex-wrap items-center gap-2 border-b border-cream-300 pb-3">
           <button
+            onClick={() => setActiveTab('videos')}
+            className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all ${
+              activeTab === 'videos'
+                ? 'bg-forest-800 text-cream-50 shadow-sm'
+                : 'bg-white text-ink-soft hover:bg-cream-200 hover:text-ink-strong'
+            }`}
+          >
+            <Icon name="youtube" size={16} />
+            YouTube సందేశాలు ({videos.length})
+          </button>
+
+          <button
             onClick={() => setActiveTab('articles')}
             className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all ${
               activeTab === 'articles'
@@ -561,7 +696,138 @@ export function AdminPage() {
           </button>
         </div>
 
-        {/* TAB 1: ARTICLES */}
+        {/* TAB: YOUTUBE VIDEOS & MESSAGES */}
+        {activeTab === 'videos' && (
+          <section className="mt-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="text-xl font-serif font-bold text-forest-950">
+                  YouTube సందేశాలు & వీడియోల నిర్వహణ
+                </h2>
+                <p className="text-xs text-ink-muted">
+                  ఇక్కడ కొత్త YouTube వీడియో చేర్చితే, అది వెంటనే సందేశాలు (/messages) మరియు వీడియోల (/videos) పేజీలలో అప్‌డేట్ అవుతుంది.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleSeedVideos}
+                  disabled={actionLoading}
+                  title="ప్రస్తుతం ఉన్న ప్రారంభ వీడియోలను డేటాబేస్‌కి అప్‌లోడ్ చేయండి"
+                  className="rounded-lg border border-cream-300 bg-white px-3 py-2 text-xs font-semibold text-ink-soft hover:bg-cream-200 transition-colors"
+                >
+                  ప్రారంభ వీడియోలు సింక్ చేయండి
+                </button>
+                <button
+                  onClick={handleOpenNewVideo}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-forest-800 px-4 py-2 text-xs font-semibold text-cream-50 hover:bg-forest-900 transition-colors shadow-sm"
+                >
+                  <Icon name="play" size={14} />
+                  కొత్త వీడియో చేర్చండి
+                </button>
+              </div>
+            </div>
+
+            {/* Videos Table */}
+            <div className="mt-6 overflow-hidden rounded-xl border border-cream-300 bg-white shadow-sm">
+              {videosLoading ? (
+                <div className="p-8 text-center text-sm text-ink-muted">లోడ్ అవుతోంది...</div>
+              ) : videos.length === 0 ? (
+                <div className="p-12 text-center text-sm text-ink-muted">
+                  ఇంకా ఏ వీడియోలు లేవు. పైన ఉన్న "కొత్త వీడియో చేర్చండి" బటన్ క్లిక్ చేయండి.
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm">
+                    <thead className="border-b border-cream-200 bg-cream-50 text-xs font-semibold uppercase text-ink-soft">
+                      <tr>
+                        <th className="px-5 py-3.5">వీడియో / శీర్షిక</th>
+                        <th className="px-4 py-3.5">విభాగం (Category)</th>
+                        <th className="px-4 py-3.5">బోధకుడు (Speaker)</th>
+                        <th className="px-4 py-3.5">వాక్యం (Scripture)</th>
+                        <th className="px-5 py-3.5 text-right">చర్యలు (Actions)</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-cream-200">
+                      {videos.map((vid) => (
+                        <tr key={vid.slug} className="hover:bg-cream-50/70 transition-colors">
+                          <td className="px-5 py-4">
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={`https://i.ytimg.com/vi/${vid.youtubeId}/default.jpg`}
+                                alt={vid.title}
+                                className="h-12 w-16 rounded object-cover border border-cream-200 bg-cream-100 shrink-0"
+                              />
+                              <div>
+                                <p className="font-medium text-forest-950 line-clamp-1">{vid.title}</p>
+                                <p className="text-xs font-mono text-ink-muted mt-0.5">
+                                  ID: {vid.youtubeId}
+                                  {vid.featured && (
+                                    <span className="ml-2 rounded-full bg-gold-100 text-gold-900 px-2 py-0.5 text-[10px] font-sans font-semibold">
+                                      ఫీచర్డ్
+                                    </span>
+                                  )}
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-4 py-4">
+                            <span className="rounded-full bg-cream-200 px-2.5 py-1 text-xs text-ink-strong">
+                              {vid.category}
+                            </span>
+                          </td>
+                          <td className="px-4 py-4 text-xs text-ink-strong">
+                            {vid.speaker?.name || 'Bro. Sudhakar CH.'}
+                          </td>
+                          <td className="px-4 py-4 text-xs text-gold-800 font-medium">
+                            {vid.scripture || '—'}
+                          </td>
+                          <td className="px-5 py-4 text-right">
+                            <div className="flex items-center justify-end gap-2">
+                              <Link
+                                to={`/videos/${vid.slug}`}
+                                target="_blank"
+                                className="rounded p-1.5 text-ink-soft hover:bg-cream-200 hover:text-ink-strong"
+                                title="వెబ్‌సైట్‌లో చూడండి"
+                              >
+                                <Icon name="external" size={15} />
+                              </Link>
+                              <a
+                                href={`https://www.youtube.com/watch?v=${vid.youtubeId}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="rounded p-1.5 text-red-700 hover:bg-red-50"
+                                title="YouTube లో చూడండి"
+                              >
+                                <Icon name="youtube" size={16} />
+                              </a>
+                              <button
+                                onClick={() => handleEditVideo(vid)}
+                                className="rounded p-1.5 text-forest-800 hover:bg-forest-50 font-medium text-xs flex items-center gap-1"
+                                title="సవరించండి"
+                              >
+                                సవరించు
+                              </button>
+                              <button
+                                onClick={() => handleDeleteVideo(vid.slug, vid.title)}
+                                className="rounded p-1.5 text-red-600 hover:bg-red-50 text-xs flex items-center gap-1"
+                                title="తొలగించండి"
+                              >
+                                తొలగించు
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
+        {/* TAB: ARTICLES */}
         {activeTab === 'articles' && (
           <section className="mt-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -677,7 +943,7 @@ export function AdminPage() {
           </section>
         )}
 
-        {/* TAB 2: QUESTIONS & ANSWERS */}
+        {/* TAB: QUESTIONS & ANSWERS */}
         {activeTab === 'questions' && (
           <section className="mt-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -792,7 +1058,7 @@ export function AdminPage() {
           </section>
         )}
 
-        {/* TAB 3: DRIVE BOOKS */}
+        {/* TAB: DRIVE BOOKS */}
         {activeTab === 'books' && (
           <section className="mt-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -849,7 +1115,7 @@ export function AdminPage() {
           </section>
         )}
 
-        {/* TAB 4: SYSTEM INFO */}
+        {/* TAB: SYSTEM INFO */}
         {activeTab === 'info' && (
           <section className="mt-6 max-w-2xl rounded-xl border border-cream-300 bg-white p-6 shadow-sm">
             <h2 className="text-lg font-serif font-bold text-forest-950">డేటాబేస్ & సిస్టమ్ సమాచారం</h2>
@@ -878,6 +1144,209 @@ export function AdminPage() {
           </section>
         )}
       </main>
+
+      {/* YOUTUBE VIDEO CREATE / EDIT MODAL */}
+      {videoModalOpen && editingVideo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-cream-200 pb-3">
+              <h3 className="text-lg font-serif font-bold text-forest-950 flex items-center gap-2">
+                <Icon name="youtube" size={22} className="text-red-600" />
+                {editingVideo.slug ? 'YouTube వీడియో సవరణ' : 'కొత్త YouTube వీడియో చేర్చండి'}
+              </h3>
+              <button
+                onClick={() => setVideoModalOpen(false)}
+                className="text-ink-muted hover:text-ink-strong"
+              >
+                <Icon name="close" size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveVideo} className="mt-4 space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-ink-soft uppercase tracking-wider">
+                  YouTube లింక్ లేదా Video ID *
+                </label>
+                <p className="text-[11px] text-ink-muted mb-1">
+                  మీరు YouTube వీడియో లింక్ (ఉదా: <code>https://youtu.be/...</code> లేదా <code>https://www.youtube.com/watch?v=...</code>) లేదా వీడియో ID నేరుగా పేస్ట్ చేయవచ్చు.
+                </p>
+                <input
+                  type="text"
+                  required
+                  value={youtubeInput}
+                  onChange={(e) => {
+                    const inputVal = e.target.value
+                    setYoutubeInput(inputVal)
+                    const extracted = extractYouTubeId(inputVal)
+                    setEditingVideo({
+                      ...editingVideo,
+                      youtubeId: extracted,
+                      slug: editingVideo.slug || extracted,
+                    })
+                  }}
+                  placeholder="ఉదా: https://youtu.be/Q2a2PxXr3vk లేదా Q2a2PxXr3vk"
+                  className="mt-1 w-full rounded-lg border border-cream-300 px-3.5 py-2 text-sm focus:border-forest-600 focus:outline-none"
+                />
+
+                {/* Instant Live Thumbnail Preview */}
+                {extractYouTubeId(youtubeInput) && (
+                  <div className="mt-3 flex items-center gap-3 rounded-lg border border-cream-200 bg-cream-50 p-2.5">
+                    <img
+                      src={`https://i.ytimg.com/vi/${extractYouTubeId(youtubeInput)}/mqdefault.jpg`}
+                      alt="YouTube Preview"
+                      className="h-16 w-24 rounded object-cover shadow-sm bg-black"
+                    />
+                    <div className="text-xs text-forest-900">
+                      <p className="font-semibold text-green-700 flex items-center gap-1">
+                        <Icon name="check" size={13} />
+                        YouTube ID గుర్తించబడింది: <code>{extractYouTubeId(youtubeInput)}</code>
+                      </p>
+                      <p className="text-ink-muted mt-0.5">ప్రివ్యూ కనపడుతోంది</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-ink-soft uppercase tracking-wider">
+                  శీర్షిక (Video Title) *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={editingVideo.title || ''}
+                  onChange={(e) =>
+                    setEditingVideo({ ...editingVideo, title: e.target.value })
+                  }
+                  placeholder="ఉదా: బైబిల్ చదివే క్రమము"
+                  className="mt-1 w-full rounded-lg border border-cream-300 px-3.5 py-2 text-sm focus:border-forest-600 focus:outline-none"
+                />
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="block text-xs font-semibold text-ink-soft uppercase tracking-wider">
+                    స్లగ్ / URL ID
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editingVideo.slug || ''}
+                    onChange={(e) =>
+                      setEditingVideo({ ...editingVideo, slug: e.target.value })
+                    }
+                    placeholder="bible-chadive-kramamu"
+                    className="mt-1 w-full rounded-lg border border-cream-300 px-3.5 py-2 text-sm font-mono focus:border-forest-600 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-ink-soft uppercase tracking-wider">
+                    విభాగం (Category) *
+                  </label>
+                  <select
+                    value={editingVideo.category || 'బైబిల్ సందేశాలు'}
+                    onChange={(e) =>
+                      setEditingVideo({
+                        ...editingVideo,
+                        category: e.target.value as VideoCategory,
+                      })
+                    }
+                    className="mt-1 w-full rounded-lg border border-cream-300 px-3.5 py-2 text-sm focus:border-forest-600 focus:outline-none"
+                  >
+                    {VIDEO_CATEGORIES.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="block text-xs font-semibold text-ink-soft uppercase tracking-wider">
+                    బోధకుడు (Speaker)
+                  </label>
+                  <input
+                    type="text"
+                    value={editingVideo.speaker?.name || 'Bro. Sudhakar CH.'}
+                    onChange={(e) =>
+                      setEditingVideo({
+                        ...editingVideo,
+                        speaker: { name: e.target.value, slug: 'sudhakar' },
+                      })
+                    }
+                    className="mt-1 w-full rounded-lg border border-cream-300 px-3.5 py-2 text-sm focus:border-forest-600 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-ink-soft uppercase tracking-wider">
+                    వాక్య ఆధారం (Scripture - ఐచ్ఛికం)
+                  </label>
+                  <input
+                    type="text"
+                    value={editingVideo.scripture || ''}
+                    onChange={(e) =>
+                      setEditingVideo({ ...editingVideo, scripture: e.target.value })
+                    }
+                    placeholder="ఉదా: లూకా 15 లేదా యోహాను 3:16"
+                    className="mt-1 w-full rounded-lg border border-cream-300 px-3.5 py-2 text-sm focus:border-forest-600 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-ink-soft uppercase tracking-wider">
+                  వివరణ (Description)
+                </label>
+                <textarea
+                  rows={3}
+                  value={editingVideo.description || ''}
+                  onChange={(e) =>
+                    setEditingVideo({ ...editingVideo, description: e.target.value })
+                  }
+                  placeholder="ఈ సందేశం గురించిన సంక్షిప్త వివరణ..."
+                  className="mt-1 w-full rounded-lg border border-cream-300 px-3.5 py-2 text-sm focus:border-forest-600 focus:outline-none"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  id="featuredVideoCheckbox"
+                  checked={Boolean(editingVideo.featured)}
+                  onChange={(e) =>
+                    setEditingVideo({ ...editingVideo, featured: e.target.checked })
+                  }
+                  className="h-4 w-4 rounded border-cream-300 text-forest-800 focus:ring-forest-600"
+                />
+                <label htmlFor="featuredVideoCheckbox" className="text-xs font-medium text-forest-950">
+                  హోమ్‌పేజీ ఫీచర్డ్ వీడియోగా చూపించు (Feature this message)
+                </label>
+              </div>
+
+              <div className="flex justify-end gap-3 border-t border-cream-200 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setVideoModalOpen(false)}
+                  className="rounded-lg border border-cream-300 px-4 py-2 text-xs font-semibold text-ink-soft hover:bg-cream-100"
+                >
+                  రద్దు చేయండి
+                </button>
+                <button
+                  type="submit"
+                  disabled={actionLoading}
+                  className="rounded-lg bg-forest-800 px-5 py-2 text-xs font-semibold text-cream-50 hover:bg-forest-900 disabled:opacity-50"
+                >
+                  {actionLoading ? 'సేవ్ అవుతోంది...' : 'వీడియో సేవ్ చేయండి'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* ARTICLE CREATE / EDIT MODAL */}
       {articleModalOpen && editingArticle && (
@@ -909,7 +1378,6 @@ export function AdminPage() {
                     setEditingArticle({
                       ...editingArticle,
                       title,
-                      // auto-slug if creating new
                       slug: editingArticle.slug || title.toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 30),
                     })
                   }}
