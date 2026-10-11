@@ -6,19 +6,20 @@ import { Icon } from '../components/ui/Icon'
 import { PageHeader } from '../components/ui/Layout'
 import { EmptyState, Reveal } from '../components/ui/Section'
 import { useSeo } from '../hooks/useSeo'
-import { fetchDriveBooks } from '../services/driveBooks'
+import { fetchDriveBooks, getCachedBooks } from '../services/driveBooks'
 import type { ChristianBook } from '../types/content'
 
 export function BooksPage() {
-  const [bookList, setBookList] = useState<ChristianBook[]>([])
+  const initialBooks = useMemo(() => getCachedBooks(), [])
+  const [bookList, setBookList] = useState<ChristianBook[]>(initialBooks)
   const [category, setCategory] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(initialBooks.length === 0)
   const [refreshing, setRefreshing] = useState(false)
 
   const loadBooks = async (isManual = false) => {
     if (isManual) setRefreshing(true)
     try {
-      const items = await fetchDriveBooks()
+      const items = await fetchDriveBooks(isManual)
       setBookList(items)
     } finally {
       setLoading(false)
@@ -28,7 +29,7 @@ export function BooksPage() {
 
   useEffect(() => {
     let active = true
-    fetchDriveBooks().then((items) => {
+    fetchDriveBooks(false).then((items) => {
       if (active) {
         setBookList(items)
         setLoading(false)

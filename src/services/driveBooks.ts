@@ -17,26 +17,61 @@ interface DriveApiBook {
 const CACHE_KEY = 'satya_sakshi_drive_books_cache'
 
 /**
- * Fetches the live list of Christian books from Google Drive.
- * Bypasses all browser and proxy caches to ensure any additions or deletions
- * in Google Drive immediately reflect on the website.
+ * Returns currently cached books immediately (0ms).
+ * Checks localStorage first, then sessionStorage, then fallbackBooks.
  */
-export async function fetchDriveBooks(): Promise<ChristianBook[]> {
+export function getCachedBooks(): ChristianBook[] {
+  try {
+    const local = localStorage.getItem(CACHE_KEY)
+    if (local) {
+      const parsed = JSON.parse(local)
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  try {
+    const session = sessionStorage.getItem(CACHE_KEY)
+    if (session) {
+      const parsed = JSON.parse(session)
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  return fallbackBooks
+}
+
+/**
+ * Fetches the live list of Christian books from Google Drive in background.
+ * If fresh data is fetched, it updates both localStorage and sessionStorage.
+ */
+export async function fetchDriveBooks(bypassCache = false): Promise<ChristianBook[]> {
   try {
     const timestamp = Date.now()
     const url = `${GOOGLE_DRIVE_BOOKS_ENDPOINT}${
       GOOGLE_DRIVE_BOOKS_ENDPOINT.includes('?') ? '&' : '?'
     }_t=${timestamp}`
 
+    const controller = new AbortController()
+    // 8-second safety timeout so slow scripts never hang indefinitely
+    const timeoutId = setTimeout(() => controller.abort(), 8000)
+
     const res = await fetch(url, {
       method: 'GET',
-      cache: 'no-store',
+      signal: controller.signal,
+      cache: bypassCache ? 'no-store' : 'default',
       headers: {
         Accept: 'application/json',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        Pragma: 'no-cache',
       },
     })
+    clearTimeout(timeoutId)
 
     if (!res.ok) {
       throw new Error(`Drive script returned HTTP ${res.status}`)
@@ -48,9 +83,10 @@ export async function fetchDriveBooks(): Promise<ChristianBook[]> {
       throw new Error('Drive script did not return an array')
     }
 
-    // If drive folder is empty (e.g. all books deleted), return empty list
+    // If drive folder is empty (e.g. all books deleted in Drive), clear cache and return empty list
     if (data.length === 0) {
       try {
+        localStorage.removeItem(CACHE_KEY)
         sessionStorage.removeItem(CACHE_KEY)
       } catch {
         // ignore
@@ -63,7 +99,6 @@ export async function fetchDriveBooks(): Promise<ChristianBook[]> {
         (b) => b.pdfUrl && (b.pdfUrl.includes(item.id) || b.slug === item.id),
       )
 
-      // Find matching category by slug or telugu name in title/description if mentioned
       const matchedCategory =
         bookCategories.find(
           (c) =>
@@ -83,26 +118,18 @@ export async function fetchDriveBooks(): Promise<ChristianBook[]> {
       }
     })
 
-    // Update session cache with latest fresh data
+    // Persist to localStorage and sessionStorage for instant load next time
     try {
-      sessionStorage.setItem(CACHE_KEY, JSON.stringify(mapped))
+      const serialized = JSON.stringify(mapped)
+      localStorage.setItem(CACHE_KEY, serialized)
+      sessionStorage.setItem(CACHE_KEY, serialized)
     } catch {
       // ignore
     }
 
     return mapped
   } catch (err) {
-    // Only if network fails, check if we have a temporary offline cache
-    try {
-      const cached = sessionStorage.getItem(CACHE_KEY)
-      if (cached) {
-        return JSON.parse(cached)
-      }
-    } catch {
-      // ignore
-    }
-
-    // Otherwise return fallback books from books.ts
-    return fallbackBooks
+    console.warn('Google Drive books fetch error or timeout, using cached books:', err)
+    return getCachedBooks()
   }
 }
