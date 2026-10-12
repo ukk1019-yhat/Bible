@@ -111,6 +111,20 @@ export function SiteHeader() {
               <Icon name="search" size={19} />
             </Link>
 
+            {site.contact.phone && (
+              <a
+                href={site.contact.whatsappUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label={`WhatsApp: ${site.contact.phoneFormatted}`}
+                title={`WhatsApp: ${site.contact.phoneFormatted}`}
+                className="hidden min-h-10 items-center gap-1.5 rounded-[var(--radius-sm)] border border-emerald-300 bg-emerald-50/80 px-3 text-sm font-medium text-emerald-800 transition-colors hover:bg-emerald-100 hover:text-emerald-950 md:inline-flex"
+              >
+                <Icon name="whatsapp" size={17} className="text-emerald-600" />
+                <span className="hidden xl:inline">WhatsApp</span>
+              </a>
+            )}
+
             <Link
               to="/contact"
               className="hidden min-h-10 items-center rounded-[var(--radius-sm)] bg-forest-800 px-4 text-sm font-medium text-cream-50 transition-colors hover:bg-forest-700 xl:inline-flex"

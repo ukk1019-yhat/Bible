@@ -100,7 +100,7 @@ export function ContactPage() {
                         className="inline-flex min-h-9 items-center gap-2 rounded-[var(--radius-sm)] bg-emerald-700 px-3.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-emerald-800"
                       >
                         <Icon name="whatsapp" size={15} />
-                        WhatsApp లో సందేశం పంపండి
+                        WhatsApp: {site.contact.phoneFormatted}
                         <Icon name="external" size={12} className="opacity-80" />
                       </a>
                       <a
@@ -108,7 +108,7 @@ export function ContactPage() {
                         className="inline-flex min-h-9 items-center gap-1.5 rounded-[var(--radius-sm)] border border-emerald-300 bg-white px-3.5 text-xs font-medium text-forest-900 transition-colors hover:bg-emerald-50"
                       >
                         <Icon name="phone" size={14} className="text-emerald-700" />
-                        {site.contact.phoneFormatted}
+                        కాల్ చేయండి ({site.contact.phoneFormatted})
                       </a>
                     </div>
                   </div>
@@ -306,7 +306,7 @@ export function ContactPage() {
                     className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-md)] border border-emerald-600 bg-emerald-50 px-5 text-sm font-medium text-emerald-900 transition-colors hover:bg-emerald-100 sm:w-auto"
                   >
                     <Icon name="whatsapp" size={18} className="text-emerald-700" />
-                    WhatsApp లో పంపండి
+                    WhatsApp ({site.contact.phoneFormatted}) లో పంపండి
                   </a>
                 )}
 

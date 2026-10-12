@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { SiteHeader } from './SiteHeader'
 import { SiteFooter } from './SiteFooter'
+import { FloatingWhatsApp } from '../ui/FloatingWhatsApp'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 
 /**
@@ -75,6 +76,8 @@ export function RootLayout() {
       </main>
 
       <SiteFooter />
+
+      <FloatingWhatsApp />
     </div>
   )
 }
