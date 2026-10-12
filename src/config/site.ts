@@ -103,6 +103,11 @@ export const site = {
 
   credits: {
     designedBy: 'Setsuzoku',
+    website: 'https://www.setsuzoku.in',
+    displayUrl: 'www.setsuzoku.in',
+    logo: '/brand/setsuzoku-logo.png',
+    emblem: '/brand/setsuzoku-emblem.png',
+    horizontalLogo: '/brand/setsuzoku-horizontal.png',
   },
 } as const
 

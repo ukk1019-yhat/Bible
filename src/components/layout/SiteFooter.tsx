@@ -129,6 +129,57 @@ export function SiteFooter() {
         <FooterLocations />
       </div>
 
+      {/* Setsuzoku Design & Technology Partner Showcase */}
+      <div className="border-t border-white/10 bg-black/20">
+        <div className="shell flex flex-col items-center justify-between gap-5 py-6 sm:flex-row sm:gap-6">
+          <div className="flex flex-col items-center text-center sm:items-start sm:text-left">
+            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-gold-400">
+              Technology &amp; Design Partner
+            </span>
+            <p className="mt-1 text-sm text-cream-300/80">
+              డిజిటల్ వేదిక రూపకల్పన &amp; సాంకేతిక నిర్వహణ
+            </p>
+          </div>
+
+          <a
+            href={site.credits.website}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="group flex items-center gap-4 rounded-2xl border border-white/15 bg-white/5 px-5 py-3.5 shadow-md backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:border-emerald-400/60 hover:bg-white/10 hover:shadow-xl hover:shadow-emerald-950/50"
+            title={`${site.credits.designedBy} - ${site.credits.displayUrl}`}
+          >
+            <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-white p-1.5 shadow-md transition-transform duration-300 group-hover:scale-105">
+              <img
+                src={site.credits.emblem}
+                alt={`${site.credits.designedBy} Logo`}
+                width={48}
+                height={48}
+                className="size-11 object-contain"
+              />
+            </div>
+
+            <div className="flex flex-col text-left">
+              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-cream-300/80">
+                {t('footer.designedBy')}
+              </span>
+              <div className="mt-0.5 flex flex-wrap items-center gap-2.5">
+                <span className="text-lg font-bold tracking-tight text-white transition-colors group-hover:text-emerald-300 sm:text-xl">
+                  {site.credits.designedBy}
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full border border-emerald-400/40 bg-emerald-500/20 px-3 py-0.5 font-mono text-xs font-semibold text-emerald-300 transition-colors group-hover:bg-emerald-500/30 group-hover:text-emerald-200">
+                  {site.credits.displayUrl}
+                  <Icon
+                    name="external"
+                    size={12}
+                    className="opacity-80 transition-transform duration-300 group-hover:translate-x-0.5"
+                  />
+                </span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
       <div className="border-t border-white/8">
         <div className="shell flex flex-col gap-5 py-7 text-xs text-cream-300/65 md:flex-row md:items-center md:justify-between md:gap-8">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
@@ -140,7 +191,14 @@ export function SiteFooter() {
             </span>
             <p className="text-cream-300/80">
               {t('footer.designedBy')}{' '}
-              <span className="font-medium text-gold-400/90">{site.credits.designedBy}</span>
+              <a
+                href={site.credits.website}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="font-medium text-gold-400/90 transition-colors hover:text-gold-300 hover:underline"
+              >
+                {site.credits.designedBy} ({site.credits.displayUrl})
+              </a>
             </p>
             <span className="hidden text-white/20 sm:inline" aria-hidden="true">
               •
