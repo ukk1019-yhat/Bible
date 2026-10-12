@@ -17,7 +17,7 @@ export function ContactPage() {
   useSeo({
     title: 'సంప్రదించండి',
     description:
-      'సత్యసాక్షితో సంప్రదించండి. మీ ప్రశ్నలు, ప్రార్థన అవసరాలు, సూచనల కోసం bible@support.satyasakshi.in లేదా మా YouTube చానెల్ ద్వారా సంప్రదించండి.',
+      'సత్యసాక్షితో సంప్రదించండి. మీ ప్రశ్నలు, ప్రార్థన అవసరాలు, సూచనల కోసం WhatsApp (+91 98499 44954), bible@support.satyasakshi.in లేదా మా YouTube చానెల్ ద్వారా సంప్రదించండి.',
     path: '/contact',
   })
 
@@ -76,6 +76,45 @@ export function ContactPage() {
             <h2 className="text-xl text-forest-950">ఈ రోజు మనకు అందుబాటులో ఉన్నది</h2>
 
             <ul className="mt-6 space-y-4">
+              {/* WhatsApp & Phone */}
+              {site.contact.phone && (
+                <li className="flex items-start gap-4 rounded-[var(--radius-lg)] border border-emerald-300 bg-emerald-50/70 p-5 shadow-xs transition-colors hover:border-emerald-400">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-emerald-700 text-cream-50">
+                    <Icon name="whatsapp" size={20} />
+                  </span>
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <h3 className="font-medium text-forest-950">WhatsApp &amp; ఫోన్</h3>
+                      <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-800">
+                        త్వరిత సంభాషణ
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm leading-relaxed text-ink-soft">
+                      సందేహాలు, ప్రార్థనా అవసరాలు లేదా సమాచారం కోసం మాకు నేరుగా వాట్సాప్‌లో సందేశం పంపండి లేదా కాల్ చేయండి.
+                    </p>
+                    <div className="mt-3 flex flex-wrap items-center gap-3">
+                      <a
+                        href={site.contact.whatsappUrl}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="inline-flex min-h-9 items-center gap-2 rounded-[var(--radius-sm)] bg-emerald-700 px-3.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-emerald-800"
+                      >
+                        <Icon name="whatsapp" size={15} />
+                        WhatsApp లో సందేశం పంపండి
+                        <Icon name="external" size={12} className="opacity-80" />
+                      </a>
+                      <a
+                        href={`tel:+91${site.contact.phone}`}
+                        className="inline-flex min-h-9 items-center gap-1.5 rounded-[var(--radius-sm)] border border-emerald-300 bg-white px-3.5 text-xs font-medium text-forest-900 transition-colors hover:bg-emerald-50"
+                      >
+                        <Icon name="phone" size={14} className="text-emerald-700" />
+                        {site.contact.phoneFormatted}
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              )}
+
               {/* Official email */}
               <li className="flex items-start gap-4 rounded-[var(--radius-lg)] border border-forest-300 bg-forest-50/70 p-5 shadow-xs">
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-forest-900 text-cream-100">
@@ -254,6 +293,22 @@ export function ContactPage() {
                   <Icon name="mail" size={18} />
                   సందేశం పంపండి
                 </button>
+
+                {site.contact.phone && (
+                  <a
+                    href={`https://wa.me/91${site.contact.phone}?text=${encodeURIComponent(
+                      form.message
+                        ? `పేరు: ${form.name || 'పేర్కొనలేదు'}\n\nసందేశం: ${form.message}`
+                        : 'నమస్కారం! నేను సత్యసాక్షి వేదిక నుండి సంప్రదిస్తున్నాను.'
+                    )}`}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-md)] border border-emerald-600 bg-emerald-50 px-5 text-sm font-medium text-emerald-900 transition-colors hover:bg-emerald-100 sm:w-auto"
+                  >
+                    <Icon name="whatsapp" size={18} className="text-emerald-700" />
+                    WhatsApp లో పంపండి
+                  </a>
+                )}
 
                 <a
                   href={`mailto:${site.contact.email}`}

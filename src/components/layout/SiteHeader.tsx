@@ -187,6 +187,19 @@ export function SiteHeader() {
             <div className="space-y-4 border-t border-cream-300 px-5 py-5">
               <LanguageToggle />
 
+              {site.contact.phone && (
+                <a
+                  href={site.contact.whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="flex items-center gap-2.5 text-sm text-ink-soft transition-colors hover:text-emerald-700"
+                >
+                  <Icon name="whatsapp" size={18} className="text-emerald-600" />
+                  WhatsApp: {site.contact.phoneFormatted}
+                  <Icon name="external" size={14} className="text-ink-muted" />
+                </a>
+              )}
+
               <a
                 href={site.youtube.channelUrl}
                 target="_blank"

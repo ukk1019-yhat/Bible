@@ -59,6 +59,19 @@ export function SiteFooter() {
             <Icon name="external" size={14} className="text-cream-300/70" />
           </a>
 
+          {site.contact.phone && (
+            <a
+              href={site.contact.whatsappUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="mt-3 flex min-h-10 items-center gap-2.5 rounded-[var(--radius-sm)] border border-white/15 px-4 text-sm text-cream-100 transition-colors hover:border-emerald-500/60 hover:text-white"
+            >
+              <Icon name="whatsapp" size={18} className="text-emerald-400" />
+              <span>WhatsApp: {site.contact.phoneFormatted}</span>
+              <Icon name="external" size={14} className="text-cream-300/70" />
+            </a>
+          )}
+
           {site.contact.email && (
             <a
               href={`mailto:${site.contact.email}`}

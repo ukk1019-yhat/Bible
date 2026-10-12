@@ -49,7 +49,9 @@ export const site = {
      * Official support & contact email.
      */
     email: 'bible@support.satyasakshi.in',
-    phone: null as string | null,
+    phone: '9849944954',
+    phoneFormatted: '+91 98499 44954',
+    whatsappUrl: 'https://wa.me/919849944954',
     address: 'కాకినాడ & గొంధి కొత్తపల్లి (శంఖవరం మండలం), కాకినాడ జిల్లా, ఆంధ్రప్రదేశ్',
   },
 
