@@ -118,18 +118,30 @@ export function SiteFooter() {
 
       <div className="border-t border-white/8">
         <div className="shell flex flex-col gap-5 py-7 text-xs text-cream-300/65 md:flex-row md:items-center md:justify-between md:gap-8">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <p>
               © {year} {site.brand.telugu}. {t('footer.rights')}
             </p>
-            <LanguageToggle compact />
-            <Link
-              to="/admin"
-              className="text-cream-400/50 hover:text-gold-300 transition-colors inline-flex items-center gap-1 text-[11px]"
-              title="అడ్మిన్ పోర్టల్"
-            >
-              అడ్మిన్
-            </Link>
+            <span className="hidden text-white/20 sm:inline" aria-hidden="true">
+              •
+            </span>
+            <p className="text-cream-300/80">
+              {t('footer.designedBy')}{' '}
+              <span className="font-medium text-gold-400/90">{site.credits.designedBy}</span>
+            </p>
+            <span className="hidden text-white/20 sm:inline" aria-hidden="true">
+              •
+            </span>
+            <div className="flex items-center gap-3">
+              <LanguageToggle compact />
+              <Link
+                to="/admin"
+                className="inline-flex items-center gap-1 text-[11px] text-cream-400/50 transition-colors hover:text-gold-300"
+                title="అడ్మిన్ పోర్టల్"
+              >
+                అడ్మిన్
+              </Link>
+            </div>
           </div>
 
           {/* Bible text attribution — required, and honest, in every language. */}

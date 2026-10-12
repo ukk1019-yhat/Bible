@@ -96,6 +96,10 @@ export const site = {
     privacyPath: '/privacy',
     termsPath: '/terms',
   },
+
+  credits: {
+    designedBy: 'Setsuzoku',
+  },
 } as const
 
 export type Site = typeof site
