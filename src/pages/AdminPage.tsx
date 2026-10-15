@@ -1179,7 +1179,7 @@ export function AdminPage() {
               </div>
               <div className="flex justify-between border-b border-cream-200 pb-2">
                 <span className="text-ink-soft">అడ్మిన్ ఈమెయిల్:</span>
-                <span className="font-semibold text-forest-900">{user.email}</span>
+                <span className="font-semibold text-forest-900">{user?.email || 'డెమో అడ్మిన్ (లాగిన్ కాలేదు)'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-ink-soft">హోస్టింగ్ డొమైన్:</span>
