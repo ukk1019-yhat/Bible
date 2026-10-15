@@ -1,5 +1,7 @@
 {
-  "projects": {},
+  "projects": {
+    "default": "satyasakshi-bible"
+  },
   "targets": {},
   "etags": {}
 }

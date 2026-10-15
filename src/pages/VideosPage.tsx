@@ -13,6 +13,7 @@ import { Icon } from '../components/ui/Icon'
 import { Breadcrumbs, PageHeader } from '../components/ui/Layout'
 import { Badge, EmptyState, Reveal } from '../components/ui/Section'
 import { graph, useSeo } from '../hooks/useSeo'
+import { trackContentClick } from '../services/analyticsService'
 import NotFoundPage from './NotFoundPage'
 
 /**
@@ -223,6 +224,12 @@ export function VideoRoute() {
   }, [])
 
   const video = videoList.find((v) => v.slug === slug) ?? getVideoBySlug(slug)
+
+  useEffect(() => {
+    if (video) {
+      trackContentClick('messages', video.slug, video.title, 'view', `/videos/${video.slug}`)
+    }
+  }, [video])
 
   useSeo({
     title: video ? `${video.title} — సత్యసాక్షి` : 'వీడియో కనబడలేదు',

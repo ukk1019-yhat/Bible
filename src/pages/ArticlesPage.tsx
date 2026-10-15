@@ -12,6 +12,7 @@ import { PageHeader, Prose } from '../components/ui/Layout'
 import { EmptyState, Reveal } from '../components/ui/Section'
 import { formatTeluguDate, readingTimeLabel } from '../utils/format'
 import { graph, useSeo } from '../hooks/useSeo'
+import { trackContentClick } from '../services/analyticsService'
 import NotFoundPage from './NotFoundPage'
 
 export function ArticlesPage() {
@@ -113,6 +114,12 @@ export function ArticleRoute() {
   }, [])
 
   const article = articlesList.find((a) => a.slug === slug) ?? getArticleBySlug(slug)
+
+  useEffect(() => {
+    if (article) {
+      trackContentClick('articles', article.slug, article.title, 'view', `/articles/${article.slug}`)
+    }
+  }, [article])
 
   useSeo({
     title: article ? `${article.title} — వ్యాసాలు` : 'వ్యాసం కనబడలేదు',

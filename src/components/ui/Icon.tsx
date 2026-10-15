@@ -41,6 +41,13 @@ export type IconName =
   | 'map-pin'
   | 'qr-code'
   | 'refresh'
+  | 'chart'
+  | 'trending-up'
+  | 'eye'
+  | 'mouse-pointer'
+  | 'filter'
+  | 'trash'
+  | 'export'
 
 const paths: Record<IconName, React.ReactNode> = {
   book: (
@@ -205,6 +212,50 @@ const paths: Record<IconName, React.ReactNode> = {
   ),
   refresh: (
     <path d="M21 12a9 9 0 0 0-15.5-6.36L3 8m0-5v5h5M3 12a9 9 0 0 0 15.5 6.36L21 16m0 5v-5h-5" />
+  ),
+  chart: (
+    <>
+      <path d="M3 3v18h18" />
+      <rect x="7" y="10" width="3" height="8" rx="1" />
+      <rect x="13" y="6" width="3" height="12" rx="1" />
+      <rect x="19" y="13" width="2" height="5" rx="1" />
+    </>
+  ),
+  'trending-up': (
+    <>
+      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+      <polyline points="16 7 22 7 22 13" />
+    </>
+  ),
+  eye: (
+    <>
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
+      <circle cx="12" cy="12" r="3" />
+    </>
+  ),
+  'mouse-pointer': (
+    <>
+      <path d="m3 3 7 18 3.5-6.5L20 11 3 3Z" />
+      <path d="m13 13 6 6" />
+    </>
+  ),
+  filter: (
+    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+  ),
+  trash: (
+    <>
+      <polyline points="3 6 5 6 21 6" />
+      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+      <line x1="10" y1="11" x2="10" y2="17" />
+      <line x1="14" y1="11" x2="14" y2="17" />
+    </>
+  ),
+  export: (
+    <>
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <polyline points="7 10 12 15 17 10" />
+      <line x1="12" y1="15" x2="12" y2="3" />
+    </>
   ),
 }
 

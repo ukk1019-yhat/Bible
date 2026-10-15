@@ -4,6 +4,7 @@ import type { Video } from '../../types/content'
 import { Button } from '../ui/Button'
 import { Icon } from '../ui/Icon'
 import { Badge } from '../ui/Section'
+import { trackContentClick } from '../../services/analyticsService'
 
 const THUMB = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
 
@@ -21,6 +22,15 @@ interface VideoCardProps {
  */
 export function VideoCard({ video, featured = false, delay = 0 }: VideoCardProps) {
   const [isPlaying, setIsPlaying] = useState(false)
+
+  const handleVideoClick = () => {
+    trackContentClick('messages', video.slug, video.title, 'click', `/videos/${video.slug}`)
+  }
+
+  const handlePlayClick = () => {
+    setIsPlaying(true)
+    trackContentClick('messages', video.slug, video.title, 'view', `/videos/${video.slug}`)
+  }
 
   return (
     <article
@@ -65,7 +75,7 @@ export function VideoCard({ video, featured = false, delay = 0 }: VideoCardProps
               {featured ? (
                 <button
                   type="button"
-                  onClick={() => setIsPlaying(true)}
+                  onClick={handlePlayClick}
                   className="group/play absolute inset-0 z-10 flex size-full cursor-pointer items-center justify-center bg-forest-950/25 transition-colors duration-300 hover:bg-forest-950/40"
                   aria-label={`${video.title} వీడియోను చూడండి`}
                 >
@@ -109,11 +119,11 @@ export function VideoCard({ video, featured = false, delay = 0 }: VideoCardProps
             }`}
           >
             {featured ? (
-              <Link to={`/videos/${video.slug}`} className="hover:underline">
+              <Link to={`/videos/${video.slug}`} onClick={handleVideoClick} className="hover:underline">
                 {video.title}
               </Link>
             ) : (
-              <Link to={`/videos/${video.slug}`} className="after:absolute after:inset-0">
+              <Link to={`/videos/${video.slug}`} onClick={handleVideoClick} className="after:absolute after:inset-0">
                 {video.title}
               </Link>
             )}
@@ -139,11 +149,12 @@ export function VideoCard({ video, featured = false, delay = 0 }: VideoCardProps
 
         {featured ? (
           <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-cream-300/80 pt-5">
-            <Button to={`/videos/${video.slug}`} size="sm" variant="secondary" icon="arrow-right">
+            <Button to={`/videos/${video.slug}`} onClick={handleVideoClick} size="sm" variant="secondary" icon="arrow-right">
               సందేశం వివరాలు
             </Button>
             <Button
               href={`https://youtu.be/${video.youtubeId}`}
+              onClick={handleVideoClick}
               size="sm"
               variant="ghost"
               icon="external"

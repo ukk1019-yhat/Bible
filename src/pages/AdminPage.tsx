@@ -30,6 +30,7 @@ import { speakers } from '../data/content/videos'
 import { Icon } from '../components/ui/Icon'
 import { BrandLockup } from '../components/brand/Logo'
 import { useSeo } from '../hooks/useSeo'
+import { AnalyticsDashboard } from '../components/admin/AnalyticsDashboard'
 
 export function AdminPage() {
   useSeo({
@@ -41,6 +42,7 @@ export function AdminPage() {
 
   const [user, setUser] = useState<User | null>(null)
   const [authLoading, setAuthLoading] = useState(true)
+  const [previewMode, setPreviewMode] = useState(false)
 
   // Auth form
   const [email, setEmail] = useState('')
@@ -50,7 +52,7 @@ export function AdminPage() {
   const [actionLoading, setActionLoading] = useState(false)
 
   // Tabs
-  const [activeTab, setActiveTab] = useState<'videos' | 'articles' | 'questions' | 'books' | 'info'>('videos')
+  const [activeTab, setActiveTab] = useState<'analytics' | 'videos' | 'articles' | 'questions' | 'books' | 'info'>('analytics')
 
   // Videos state
   const [videos, setVideos] = useState<Video[]>([])
@@ -94,14 +96,14 @@ export function AdminPage() {
     return () => unsubscribe()
   }, [])
 
-  // Load content when logged in
+  // Load content when logged in or in preview mode
   useEffect(() => {
-    if (!user) return
+    if (!user && !previewMode) return
     loadVideos()
     loadArticles()
     loadQuestions()
     loadDriveBooks()
-  }, [user])
+  }, [user, previewMode])
 
   const loadVideos = async () => {
     setVideosLoading(true)
@@ -499,7 +501,7 @@ export function AdminPage() {
   }
 
   // Not logged in -> Show Login Card
-  if (!user) {
+  if (!user && !previewMode) {
     return (
       <div className="shell flex min-h-[80vh] items-center justify-center py-16">
         <div className="w-full max-w-md rounded-2xl border border-cream-300 bg-white p-8 shadow-xl">
@@ -511,7 +513,7 @@ export function AdminPage() {
               అడ్మిన్ పోర్టల్ లాగిన్
             </h1>
             <p className="mt-2 text-sm text-ink-muted">
-              YouTube సందేశాలు, వ్యాసాలు మరియు ప్రశ్నలు మార్చుటకు ప్రవేశించండి.
+              క్లిక్స్ డ్యాష్‌బోర్డ్, సందేశాలు, వ్యాసాలు మరియు ప్రశ్నల నిర్వహణ.
             </p>
           </div>
 
@@ -563,14 +565,24 @@ export function AdminPage() {
             </button>
           </form>
 
-          <div className="mt-6 border-t border-cream-200 pt-4 text-center">
+          {/* Quick Preview Dashboard Button */}
+          <div className="mt-5 pt-4 border-t border-cream-200 flex flex-col gap-3">
+            <button
+              type="button"
+              onClick={() => setPreviewMode(true)}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-forest-800 bg-forest-50 py-2.5 text-xs font-bold text-forest-900 transition-colors hover:bg-forest-100 shadow-xs"
+            >
+              <Icon name="chart" size={15} />
+              <span>డ్యాష్‌బోర్డ్ త్వరిత పరిశీలన (Quick View Dashboard)</span>
+            </button>
+
             <button
               type="button"
               onClick={() => {
                 setIsRegisterMode(!isRegisterMode)
                 setAuthError('')
               }}
-              className="text-xs text-forest-700 hover:text-forest-900 underline font-medium"
+              className="text-xs text-forest-700 hover:text-forest-900 underline font-medium text-center"
             >
               {isRegisterMode
                 ? 'ఇప్పటికే ఖాతా ఉందా? లాగిన్ అవ్వండి'
@@ -619,19 +631,27 @@ export function AdminPage() {
 
           <div className="flex items-center gap-3">
             <div className="hidden text-right sm:block">
-              <p className="text-xs font-semibold text-ink-strong">{user.email}</p>
+              <p className="text-xs font-semibold text-ink-strong">
+                {user ? user.email : 'డెమో అడ్మిన్ ప్రివ్యూ'}
+              </p>
               <p className="text-[10px] text-green-700 flex items-center justify-end gap-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-                Firebase లైవ్ కనెక్ట్
+                {user ? 'Firebase లైవ్ కనెక్ట్' : 'ప్రివ్యూ మోడ్'}
               </p>
             </div>
 
             <button
-              onClick={handleLogout}
+              onClick={() => {
+                if (user) {
+                  handleLogout()
+                } else {
+                  setPreviewMode(false)
+                }
+              }}
               className="inline-flex items-center gap-1.5 rounded-lg border border-cream-300 bg-cream-50 px-3 py-1.5 text-xs font-medium text-ink-strong transition-colors hover:bg-cream-200"
             >
               <Icon name="close" size={14} />
-              లాగౌట్
+              {user ? 'లాగౌట్' : 'నిష్క్రమించు'}
             </button>
           </div>
         </div>
@@ -641,6 +661,18 @@ export function AdminPage() {
       <main className="shell py-8">
         {/* Navigation Tabs */}
         <div className="flex flex-wrap items-center gap-2 border-b border-cream-300 pb-3">
+          <button
+            onClick={() => setActiveTab('analytics')}
+            className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all ${
+              activeTab === 'analytics'
+                ? 'bg-forest-800 text-cream-50 shadow-sm'
+                : 'bg-white text-ink-soft hover:bg-cream-200 hover:text-ink-strong'
+            }`}
+          >
+            <Icon name="chart" size={16} />
+            క్లిక్స్ డ్యాష్‌బోర్డ్ (Analytics)
+          </button>
+
           <button
             onClick={() => setActiveTab('videos')}
             className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all ${
@@ -701,6 +733,13 @@ export function AdminPage() {
             సిస్టమ్ స్థితి & డేటాబేస్
           </button>
         </div>
+
+        {/* TAB: ANALYTICS & CLICKS DASHBOARD */}
+        {activeTab === 'analytics' && (
+          <section className="mt-6">
+            <AnalyticsDashboard onNotify={showToast} />
+          </section>
+        )}
 
         {/* TAB: YOUTUBE VIDEOS & MESSAGES */}
         {activeTab === 'videos' && (

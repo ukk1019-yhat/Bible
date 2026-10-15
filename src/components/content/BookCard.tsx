@@ -1,6 +1,7 @@
 import type { ChristianBook } from '../../types/content'
 import { Icon } from '../ui/Icon'
 import { Badge } from '../ui/Section'
+import { trackContentClick } from '../../services/analyticsService'
 
 /**
  * Book cover art, drawn rather than photographed.
@@ -47,6 +48,10 @@ export function BookCover({ book, className = '' }: { book: ChristianBook; class
 }
 
 export function BookCard({ book, delay = 0 }: { book: ChristianBook; delay?: number }) {
+  const handleBookClick = () => {
+    trackContentClick('books', book.slug, book.title, book.pdfUrl ? 'download' : 'click', '/books')
+  }
+
   return (
     <article
       data-reveal=""
@@ -58,6 +63,7 @@ export function BookCard({ book, delay = 0 }: { book: ChristianBook; delay?: num
           href={book.pdfUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={handleBookClick}
           className="block transition-transform duration-300 group-hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-600 focus-visible:ring-offset-2 rounded-[var(--radius-md)]"
           aria-label={`${book.title} (PDF)`}
         >
@@ -78,6 +84,7 @@ export function BookCard({ book, delay = 0 }: { book: ChristianBook; delay?: num
               href={book.pdfUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleBookClick}
               className="hover:text-forest-700 hover:underline"
             >
               {book.title}
@@ -100,6 +107,7 @@ export function BookCard({ book, delay = 0 }: { book: ChristianBook; delay?: num
             href={book.pdfUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={handleBookClick}
             className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-forest-700 hover:text-forest-800 hover:underline"
           >
             <Icon name="download" size={15} />

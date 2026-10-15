@@ -159,7 +159,6 @@ export function HomePage() {
                   aria-hidden="true"
                   className="absolute -inset-2 rounded-[calc(var(--radius-xl)+4px)] bg-gradient-to-tr from-gold-500/25 via-gold-400/10 to-transparent opacity-80 blur-lg transition-opacity duration-500 group-hover:opacity-100"
                 />
-
                 <div className="relative overflow-hidden rounded-[var(--radius-xl)] border border-gold-500/35 bg-forest-900/90 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
                   <img
                     src="/brand/psalm-119-105.jpg"
@@ -176,7 +175,6 @@ export function HomePage() {
                   />
                 </div>
               </div>
-
               {/* Core Concept editorial text */}
               <div className="flex flex-col">
                 <div className="flex flex-wrap items-center gap-3">

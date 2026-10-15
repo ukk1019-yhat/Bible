@@ -16,6 +16,7 @@ import { SearchField } from '../components/ui/SearchField'
 import { useDebounced } from '../hooks/useUi'
 import { graph, useSeo } from '../hooks/useSeo'
 import { matchesAllTokens } from '../utils/text'
+import { trackContentClick } from '../services/analyticsService'
 import NotFoundPage from './NotFoundPage'
 
 export function QuestionsPage() {
@@ -170,6 +171,12 @@ export function QuestionRoute() {
   }, [])
 
   const question = questionsList.find((q) => q.slug === slug) ?? getQuestionBySlug(slug)
+
+  useEffect(() => {
+    if (question) {
+      trackContentClick('questions', question.slug, question.question, 'view', `/questions/${question.slug}`)
+    }
+  }, [question])
 
   useSeo({
     title: question ? `${question.question} — ప్రశ్నలు & సమాధానాలు` : 'ప్రశ్న కనబడలేదు',

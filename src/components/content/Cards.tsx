@@ -3,12 +3,17 @@ import type { Article, Question } from '../../types/content'
 import { formatTeluguDate, readingTimeLabel } from '../../utils/format'
 import { Icon } from '../ui/Icon'
 import { Badge } from '../ui/Section'
+import { trackContentClick } from '../../services/analyticsService'
 
 /* -------------------------------------------------------------------------- */
 /*  Article card                                                               */
 /* -------------------------------------------------------------------------- */
 
 export function ArticleCard({ article, delay = 0 }: { article: Article; delay?: number }) {
+  const handleClick = () => {
+    trackContentClick('articles', article.slug, article.title, 'click', `/articles/${article.slug}`)
+  }
+
   return (
     <article
       data-reveal=""
@@ -32,7 +37,11 @@ export function ArticleCard({ article, delay = 0 }: { article: Article; delay?: 
       </div>
 
       <h3 className="mt-3.5 text-[1.15rem] leading-snug text-forest-900 transition-colors group-hover:text-forest-700">
-        <Link to={`/articles/${article.slug}`} className="after:absolute after:inset-0">
+        <Link
+          to={`/articles/${article.slug}`}
+          onClick={handleClick}
+          className="after:absolute after:inset-0"
+        >
           {article.title}
         </Link>
       </h3>
@@ -58,6 +67,10 @@ export function ArticleCard({ article, delay = 0 }: { article: Article; delay?: 
 /* -------------------------------------------------------------------------- */
 
 export function QuestionCard({ question, delay = 0 }: { question: Question; delay?: number }) {
+  const handleClick = () => {
+    trackContentClick('questions', question.slug, question.question, 'click', `/questions/${question.slug}`)
+  }
+
   return (
     <article
       data-reveal=""
@@ -69,7 +82,11 @@ export function QuestionCard({ question, delay = 0 }: { question: Question; dela
       </Badge>
 
       <h3 className="mt-3.5 font-serif text-[1.15rem] leading-snug text-forest-900 transition-colors group-hover:text-forest-700">
-        <Link to={`/questions/${question.slug}`} className="after:absolute after:inset-0">
+        <Link
+          to={`/questions/${question.slug}`}
+          onClick={handleClick}
+          className="after:absolute after:inset-0"
+        >
           {question.question}
         </Link>
       </h3>
