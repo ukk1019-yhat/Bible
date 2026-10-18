@@ -13,6 +13,7 @@
     "lint": "oxlint",
     "typecheck": "tsc -b --noEmit",
     "version:generate": "node scripts/generate-version.mjs",
+    "qr:generate": "python scripts/generate-app-qr.py",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "bible:generate": "node scripts/generate-bible-data.cjs",
     "og:image": "node scripts/generate-og-image.mjs",

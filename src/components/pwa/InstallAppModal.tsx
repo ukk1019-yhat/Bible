@@ -81,8 +81,42 @@ export function InstallAppModal() {
           </p>
         </div>
 
+        {/* Scannable QR Code Section */}
+        <div className="mx-6 mt-4 flex flex-col sm:flex-row items-center gap-4 rounded-2xl border border-gold-400/30 bg-gradient-to-r from-forest-950 via-forest-900 to-emerald-950 p-4 shadow-inner">
+          <div className="relative shrink-0 rounded-xl bg-white p-2 shadow-lg ring-2 ring-gold-400/40">
+            <img
+              src="/brand/qr-download-app.png"
+              alt="Satyasakshi Mobile App Download QR Code"
+              width={110}
+              height={110}
+              className="size-24 sm:size-28 rounded-lg object-contain bg-white"
+            />
+          </div>
+
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left space-y-1.5">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-gold-400/40 bg-gold-500/15 px-2.5 py-0.5 text-3xs font-bold uppercase tracking-wider text-gold-300">
+              <Icon name="qr-code" size={11} />
+              {t('pwa.scanQrTitle')}
+            </span>
+            <h4 className="text-sm sm:text-base font-bold text-white">
+              {t('footer.appScanQr')}
+            </h4>
+            <p className="text-xs text-cream-200/80 leading-relaxed">
+              {t('footer.appScanDesc')}
+            </p>
+            <a
+              href="/brand/qr-download-app.png"
+              download="satyasakshi-app-qr.png"
+              className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold text-gold-400 hover:text-gold-300 hover:underline"
+            >
+              <Icon name="download" size={13} />
+              <span>{t('pwa.downloadQrBtn')}</span>
+            </a>
+          </div>
+        </div>
+
         {/* Tab Selection */}
-        <div className="grid grid-cols-2 border-b border-white/10 bg-black/20 p-1.5 text-sm">
+        <div className="mx-6 mt-4 grid grid-cols-2 rounded-xl border border-white/10 bg-black/20 p-1 text-sm">
           <button
             type="button"
             onClick={() => setActiveTab('android')}

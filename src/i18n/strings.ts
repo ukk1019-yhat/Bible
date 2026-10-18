@@ -101,6 +101,10 @@ const te = {
   'pwa.updateReadyTitle': 'నూతన నవీకరణ అందుబాటులో ఉంది',
   'pwa.updateReadyDesc': 'సత్య సాక్షి తాజా వెర్షన్ సిద్ధమైంది. వెంటనే అప్‌డేట్ చేసుకోండి.',
   'pwa.reloadNow': 'వెంటనే అప్‌డేట్ చేయండి',
+  'footer.appScanQr': 'మొబైల్ కెమెరాతో స్కాన్ చేయండి',
+  'footer.appScanDesc': 'ఈ QR కోడ్‌ను మీ మొబైల్ కెమెరాతో స్కాన్ చేసి నేరుగా యాప్‌ను తెరవండి లేదా ఇన్‌స్టాల్ చేసుకోండి',
+  'pwa.scanQrTitle': 'ఫోన్‌తో స్కాన్ చేసి యాప్ పొందండి',
+  'pwa.downloadQrBtn': 'QR కోడ్ డౌన్‌లోడ్',
 
   /* Language switcher */
   'lang.label': 'భాష',
@@ -214,6 +218,10 @@ const en: Record<keyof typeof te, string> = {
   'pwa.updateReadyTitle': 'New Update Available',
   'pwa.updateReadyDesc': 'A newer version of Satyasakshi is ready. Update now to load the latest changes.',
   'pwa.reloadNow': 'Update Now',
+  'footer.appScanQr': 'Scan with Mobile Camera',
+  'footer.appScanDesc': 'Scan this QR code with your mobile camera to open and install the app directly',
+  'pwa.scanQrTitle': 'Scan with Phone to Get App',
+  'pwa.downloadQrBtn': 'Download QR Code',
 
   'lang.label': 'Language',
   'lang.switchTo': 'Switch to Telugu',

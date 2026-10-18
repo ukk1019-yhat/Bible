@@ -129,6 +129,35 @@ export function InstallAppCard() {
                 <span>{t('footer.appInstallBtn')}</span>
               </button>
 
+              {/* Scannable QR code badge */}
+              <button
+                type="button"
+                onClick={openModal}
+                title={t('footer.appScanQr')}
+                className="group/qr inline-flex items-center gap-3 rounded-xl border border-white/20 bg-white p-1.5 pr-3 shadow-md transition-all duration-300 hover:border-gold-400 hover:bg-cream-50 hover:scale-[1.02] hover:shadow-xl"
+              >
+                <img
+                  src="/brand/qr-download-app.png"
+                  alt="Satyasakshi App Download QR Code"
+                  width={56}
+                  height={56}
+                  className="size-12 rounded-lg object-contain bg-white"
+                  loading="lazy"
+                />
+                <div className="flex flex-col text-left">
+                  <span className="flex items-center gap-1 text-3xs font-bold uppercase tracking-wider text-forest-950">
+                    <Icon name="qr-code" size={11} className="text-forest-800" />
+                    {t('footer.scanQr')}
+                  </span>
+                  <span className="text-3xs font-semibold text-stone-700">
+                    మొబైల్ కెమెరాతో
+                  </span>
+                  <span className="text-3xs font-bold text-emerald-800 group-hover/qr:underline">
+                    యాప్ పొందండి →
+                  </span>
+                </div>
+              </button>
+
               <button
                 type="button"
                 onClick={openModal}
