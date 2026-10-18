@@ -85,6 +85,20 @@ export function PwaProvider({ children }: { children: ReactNode }) {
     window.addEventListener('beforeinstallprompt', handleBeforeInstall)
     window.addEventListener('appinstalled', handleAppInstalled)
 
+    // Auto-open direct download/install modal if user arrived via QR code or ?download=app
+    const searchParams = new URLSearchParams(window.location.search)
+    if (searchParams.has('download') || searchParams.has('install')) {
+      const timer = window.setTimeout(() => {
+        setIsModalOpen(true)
+      }, 450)
+      return () => {
+        clearTimeout(timer)
+        matcher.removeEventListener('change', checkStandalone)
+        window.removeEventListener('beforeinstallprompt', handleBeforeInstall)
+        window.removeEventListener('appinstalled', handleAppInstalled)
+      }
+    }
+
     return () => {
       matcher.removeEventListener('change', checkStandalone)
       window.removeEventListener('beforeinstallprompt', handleBeforeInstall)

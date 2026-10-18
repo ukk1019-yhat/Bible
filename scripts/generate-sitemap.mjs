@@ -9,7 +9,7 @@
  */
 import { readFile, writeFile } from 'node:fs/promises'
 
-const SITE = 'https://satyasakshi.in'
+const SITE = 'https://www.satyasakshi.in'
 const TODAY = new Date().toISOString().slice(0, 10)
 
 /**

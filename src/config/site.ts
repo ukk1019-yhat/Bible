@@ -8,7 +8,7 @@
 
 export const site = {
   /** Canonical origin. No trailing slash. */
-  url: 'https://satyasakshi.in',
+  url: 'https://www.satyasakshi.in',
   lang: 'te-IN',
   locale: 'te_IN',
 

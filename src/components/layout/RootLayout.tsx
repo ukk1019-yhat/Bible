@@ -5,6 +5,7 @@ import { SiteFooter } from './SiteFooter'
 import { FloatingWhatsApp } from '../ui/FloatingWhatsApp'
 import { InstallAppModal } from '../pwa/InstallAppModal'
 import { UpdateBanner } from '../pwa/UpdateBanner'
+import { MobileDownloadBar } from '../pwa/MobileDownloadBar'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 
 /**
@@ -71,6 +72,7 @@ export function RootLayout() {
         />
       </div>
 
+      <MobileDownloadBar />
       <SiteHeader />
 
       <main id="main" className="relative z-0 flex-1">
