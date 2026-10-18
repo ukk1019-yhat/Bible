@@ -48,6 +48,10 @@ export type IconName =
   | 'filter'
   | 'trash'
   | 'export'
+  | 'smartphone'
+  | 'apple'
+  | 'android'
+  | 'zap'
 
 const paths: Record<IconName, React.ReactNode> = {
   book: (
@@ -256,6 +260,30 @@ const paths: Record<IconName, React.ReactNode> = {
       <polyline points="7 10 12 15 17 10" />
       <line x1="12" y1="15" x2="12" y2="3" />
     </>
+  ),
+  smartphone: (
+    <>
+      <rect x="5" y="2" width="14" height="20" rx="3" />
+      <line x1="12" y1="18" x2="12.01" y2="18" />
+    </>
+  ),
+  apple: (
+    <>
+      <path d="M12 20.94c1.5 0 2.75-.81 3.5-1.5.75-.69 1.5-1.44 2.5-1.44.75 0 1.5.56 2 1.06-.5-1.88-1.5-3.06-2.5-4.06 1.75-1.25 2.5-3 2.5-5 0-3.31-2.69-6-6-6-2 0-3.5 1-4.5 1s-2.5-1-4.5-1c-3.31 0-6 2.69-6 6 0 4.5 3.5 10 6 10.94 1.5.56 2.5 0 3.5 0z" />
+      <path d="M12 4a3 3 0 0 1 2-3" />
+    </>
+  ),
+  android: (
+    <>
+      <path d="M5 16h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2Z" />
+      <line x1="7" y1="8" x2="5" y2="4" />
+      <line x1="17" y1="8" x2="19" y2="4" />
+      <circle cx="9" cy="12" r="1" fill="currentColor" />
+      <circle cx="15" cy="12" r="1" fill="currentColor" />
+    </>
+  ),
+  zap: (
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
   ),
 }
 

@@ -3,6 +3,8 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { SiteHeader } from './SiteHeader'
 import { SiteFooter } from './SiteFooter'
 import { FloatingWhatsApp } from '../ui/FloatingWhatsApp'
+import { InstallAppModal } from '../pwa/InstallAppModal'
+import { UpdateBanner } from '../pwa/UpdateBanner'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 
 /**
@@ -78,6 +80,9 @@ export function RootLayout() {
       <SiteFooter />
 
       <FloatingWhatsApp />
+
+      <InstallAppModal />
+      <UpdateBanner />
     </div>
   )
 }

@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import { LanguageProvider } from './i18n/LanguageProvider'
+import { PwaProvider } from './pwa/usePwa'
 import './index.css'
 
 const container = document.getElementById('root')
@@ -13,7 +14,9 @@ if (!container) {
 createRoot(container).render(
   <StrictMode>
     <LanguageProvider>
-      <App />
+      <PwaProvider>
+        <App />
+      </PwaProvider>
     </LanguageProvider>
   </StrictMode>,
 )

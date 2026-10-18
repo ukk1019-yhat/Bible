@@ -58,6 +58,15 @@
       ]
     },
     {
+      "source": "/(sw\\.js|version\\.json|site\\.webmanifest)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/data/bible/(.*)",
       "headers": [
         {

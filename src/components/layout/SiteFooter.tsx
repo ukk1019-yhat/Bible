@@ -7,6 +7,7 @@ import { site } from '../../config/site'
 import { useLanguage } from '../../i18n/LanguageProvider'
 import { navLabel } from '../../i18n/navLabels'
 import { FooterLocations } from './FooterLocations'
+import { InstallAppCard } from '../pwa/InstallAppCard'
 
 const year = new Date().getFullYear()
 
@@ -125,6 +126,10 @@ export function SiteFooter() {
           </ul>
         </nav>
       </div>
+      <div className="shell pb-10">
+        <InstallAppCard />
+      </div>
+
       <div className="shell pb-12">
         <FooterLocations />
       </div>

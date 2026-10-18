@@ -9,7 +9,32 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#10291e",
-  "categories": ["books", "education", "lifestyle"],
+  "id": "/",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "పరిశుద్ధ బైబిల్ (Telugu Bible)",
+      "short_name": "బైబిల్",
+      "description": "పరిశుద్ధ తెలుగు బైబిల్ చదవండి",
+      "url": "/bible",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "ప్రశ్నలు & సమాధానాలు",
+      "short_name": "ప్రశ్నలు",
+      "description": "క్రైస్తవ విశ్వాస ప్రశ్నలు & సమాధానాలు",
+      "url": "/questions",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "వాక్య సందేశాలు",
+      "short_name": "సందేశాలు",
+      "description": "దేవుని వాక్య సందేశాలు & వీడియోలు",
+      "url": "/messages",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
   "icons": [
     {
       "src": "/icons/icon-192.png",
