@@ -54,6 +54,7 @@ export function PwaProvider({ children }: { children: ReactNode }) {
 
   const swRegistrationRef = useRef<ServiceWorkerRegistration | null>(null)
   const currentVersionRef = useRef<string | null>(null)
+  const deferredPromptRef = useRef<BeforeInstallPromptEvent | null>(null)
 
   // 1. Detect if running in standalone mode (installed PWA)
   useEffect(() => {
@@ -72,13 +73,16 @@ export function PwaProvider({ children }: { children: ReactNode }) {
     // Intercept native beforeinstallprompt
     const handleBeforeInstall = (e: Event) => {
       e.preventDefault()
-      setDeferredPrompt(e as BeforeInstallPromptEvent)
+      const promptEvent = e as BeforeInstallPromptEvent
+      setDeferredPrompt(promptEvent)
+      deferredPromptRef.current = promptEvent
     }
 
     // App installed event
     const handleAppInstalled = () => {
       setIsInstalled(true)
       setDeferredPrompt(null)
+      deferredPromptRef.current = null
       setIsModalOpen(false)
     }
 
@@ -90,9 +94,21 @@ export function PwaProvider({ children }: { children: ReactNode }) {
     if (searchParams.has('download') || searchParams.has('install')) {
       const timer = window.setTimeout(() => {
         setIsModalOpen(true)
-      }, 450)
+      }, 350)
+
+      // On first touch/click, if prompt is ready, immediately pop up native install
+      const handleUserGesture = () => {
+        if (deferredPromptRef.current) {
+          deferredPromptRef.current.prompt().catch(() => {})
+        }
+      }
+      window.addEventListener('click', handleUserGesture, { once: true })
+      window.addEventListener('touchstart', handleUserGesture, { once: true })
+
       return () => {
         clearTimeout(timer)
+        window.removeEventListener('click', handleUserGesture)
+        window.removeEventListener('touchstart', handleUserGesture)
         matcher.removeEventListener('change', checkStandalone)
         window.removeEventListener('beforeinstallprompt', handleBeforeInstall)
         window.removeEventListener('appinstalled', handleAppInstalled)
