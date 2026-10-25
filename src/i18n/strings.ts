@@ -56,7 +56,7 @@ const te = {
   /* Footer */
   'footer.resources': 'వనరులు',
   'footer.info': 'సమాచారం',
-  'footer.rights': 'సర్వ హక్కులు సురక్షితం.',
+  'footer.rights': 'సర్వ హక్కులూ ప్రత్యేకించబడ్డాయి (All Rights Reserved)',
   'footer.designedBy': 'Designed by',
   'footer.bibleText': 'బైబిల్ వాక్యం',
   'footer.bibleSource': 'తెలుగు బైబిల్ (BSI)',

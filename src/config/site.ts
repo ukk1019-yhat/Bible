@@ -13,7 +13,7 @@ export const site = {
   locale: 'te_IN',
 
   brand: {
-    telugu: 'సత్య సాక్షి',
+    telugu: 'సత్యసాక్షి',
     teluguSpaced: 'సత్య సాక్షి',
     english: 'Satya Sakshi',
     tagline: 'We Challenge Conventional Thinking',
