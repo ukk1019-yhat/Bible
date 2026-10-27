@@ -81,7 +81,7 @@ export function HomePage() {
 
               <p className="mt-6 max-w-xl text-[1.05rem] leading-relaxed text-ink-soft sm:text-lg">
                 పరిశుద్ధ తెలుగు బైబిల్, బైబిల్ సందేశాలు, ప్రశ్నలు & సమాధానాలు, వ్యాసాలు
-                — అన్నీ ఒకే వేదికలో, ఉచితంగా. చదవండి, వెతకండి, మీ హృదయానికి సమీపించండి.
+                — అన్నీ ఒకే వేదికలో, ఉచితంగా. చదవండి, వెతకండి, మీ హృదయానికి సమీపించనీయండి.
               </p>
 
               <div className="mt-9 flex flex-wrap gap-3">
@@ -115,7 +115,9 @@ export function HomePage() {
                 <Icon name="quote" size={28} className="text-gold-500" />
                 {/* ScriptureBlock renders the reference itself, so it is not repeated here. */}
                 <ScriptureBlock
-                  reference={{ bookSlug: 'john', chapter: 3, verseStart: 16, verseEnd: 16 }}
+                  reference={{ bookSlug: 'revelation', chapter: 3, verseStart: 14, verseEnd: 14 }}
+                  overrideText="ఆమేన్ అనువాడును నమ్మకమైన సత్యసాక్షియు దేవుని సృష్టికి ఆదియునైనవాడు చెప్పు సంగతులేవనగా"
+                  overrideLabel="Revelation(ప్రకటన గ్రంథము) 3:14"
                   showLink={false}
                 />
 
@@ -125,10 +127,10 @@ export function HomePage() {
                     బైబిల్ నుండే. దేవుడే మాట.
                   </p>
                   <Link
-                    to="/bible/search?q=%E0%B0%AF%D0%BE%E0%B0%B9%D0%BE%E0%B0%BE%E0%B0%A8"
+                    to="/bible/revelation/3#v14"
                     className="link-underline mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-forest-700"
                   >
-                    బైబిల్‌లో వెతకండి
+                    బైబిల్‌లో చూడండి
                     <Icon name="arrow-right" size={15} />
                   </Link>
                 </div>
@@ -428,7 +430,7 @@ export function HomePage() {
               <div>
                 <Icon name="youtube" size={30} className="text-gold-400" />
                 <h2 className="mt-5 text-2xl text-cream-50 sm:text-3xl">
-                  Church of The Living God — కాకినాడ
+                  Church of The Living God — Kakinada
                 </h2>
                 <p className="mt-4 max-w-xl leading-relaxed text-cream-300/85">
                   సత్యసాక్షి సందేశాలు YouTube చానెల్‌లో అందుబాటులో ఉన్నాయి. మీరు ఎప్పుడైనా,

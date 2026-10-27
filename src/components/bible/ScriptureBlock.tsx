@@ -22,10 +22,14 @@ export function ScriptureBlock({
   reference,
   size = 'md',
   showLink = true,
+  overrideText,
+  overrideLabel,
 }: {
   reference: BibleReference
   size?: 'sm' | 'md'
   showLink?: boolean
+  overrideText?: string
+  overrideLabel?: string
 }) {
   const { bookSlug, chapter, verseStart, verseEnd } = reference
   const key = `${bookSlug}-${chapter}-${verseStart}-${verseEnd}`
@@ -34,6 +38,8 @@ export function ScriptureBlock({
   const [result, setResult] = useState<QuoteResult>({ key: '', text: null, failed: false })
 
   useEffect(() => {
+    if (overrideText) return
+
     let cancelled = false
 
     loadBook(bookSlug)
@@ -54,13 +60,14 @@ export function ScriptureBlock({
     return () => {
       cancelled = true
     }
-  }, [bookSlug, chapter, verseStart, verseEnd, key])
+  }, [bookSlug, chapter, verseStart, verseEnd, key, overrideText])
 
   // Staleness is derived, so changing reference never needs a sync reset.
   const current = result.key === key ? result : { text: null, failed: false }
-  const { text, failed } = current
+  const text = overrideText ?? current.text
+  const failed = !overrideText && current.failed
 
-  const label = formatReference(bookSlug, chapter, verseStart, verseEnd)
+  const label = overrideLabel ?? formatReference(bookSlug, chapter, verseStart, verseEnd)
   const path = `/bible/${bookSlug}/${chapter}#v${verseStart}`
 
   return (

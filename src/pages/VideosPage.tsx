@@ -186,7 +186,7 @@ export function VideosPage() {
         eyebrow="వీడియోలు"
         title="అన్ని వీడియోలు"
         icon="youtube"
-        lede="Church of The Living God — కాకినాడ చానెల్‌లోని అన్ని సందేశాలు ఒకే చోట."
+        lede="Church of The Living God — Kakinada చానెల్‌లోని అన్ని సందేశాలు ఒకే చోట."
         crumbs={[{ label: 'హోమ్', to: '/' }, { label: 'వీడియోలు' }]}
       >
         <a

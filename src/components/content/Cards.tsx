@@ -46,7 +46,7 @@ export function ArticleCard({ article, delay = 0 }: { article: Article; delay?: 
         </Link>
       </h3>
 
-      <p className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-ink-soft">
+      <p className="mt-3 flex-1 text-justify text-[0.95rem] leading-relaxed text-ink-soft">
         {article.excerpt}
       </p>
 
@@ -91,7 +91,7 @@ export function QuestionCard({ question, delay = 0 }: { question: Question; dela
         </Link>
       </h3>
 
-      <p className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-ink-soft">
+      <p className="mt-3 flex-1 text-justify text-[0.95rem] leading-relaxed text-ink-soft">
         {question.summary}
       </p>
 
