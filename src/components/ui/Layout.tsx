@@ -88,7 +88,7 @@ export function PageHeader({
             ) : null}
             <h1 className="text-3xl text-forest-950 sm:text-4xl lg:text-[2.6rem]">{title}</h1>
             {lede ? (
-              <p className="mt-4 text-[1.02rem] leading-relaxed text-ink-soft">{lede}</p>
+              <p className="mt-4 text-[1.02rem] leading-relaxed text-ink-soft text-justify [text-align:justify] [text-justify:inter-word]">{lede}</p>
             ) : null}
           </div>
 

@@ -385,6 +385,13 @@
    ========================================================================== */
 
 @layer utilities {
+  .text-justify {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+
   .font-logo {
     font-family: var(--font-logo);
     font-weight: 800;

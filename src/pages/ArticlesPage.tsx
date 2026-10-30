@@ -12,12 +12,17 @@ import { PageHeader, Prose } from '../components/ui/Layout'
 import { EmptyState, Reveal } from '../components/ui/Section'
 import { formatTeluguDate, readingTimeLabel } from '../utils/format'
 import { graph, useSeo } from '../hooks/useSeo'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 import { trackContentClick } from '../services/analyticsService'
 import NotFoundPage from './NotFoundPage'
 
 export function ArticlesPage() {
   const [category, setCategory] = useState<string | null>(null)
   const [articlesList, setArticlesList] = useState<Article[]>(getCachedArticles())
+  const [viewStyle, setViewStyle] = useLocalStorage<'justify' | 'grid' | 'list'>(
+    'articles_view_style',
+    'justify',
+  )
 
   useEffect(() => {
     fetchLiveArticles().then(setArticlesList)
@@ -49,35 +54,90 @@ export function ArticlesPage() {
       />
 
       <div className="shell py-12 sm:py-16">
-        <div className="mb-8 flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setCategory(null)}
-            aria-pressed={category === null}
-            className={`min-h-9 rounded-full px-4 text-sm transition-colors ${
-              category === null
-                ? 'bg-forest-800 font-medium text-cream-50'
-                : 'bg-cream-200 text-ink-soft hover:bg-cream-300'
-            }`}
-          >
-            అన్నీ ({articlesList.length})
-          </button>
-
-          {articleCategories.map((item) => (
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
             <button
-              key={item.slug}
               type="button"
-              onClick={() => setCategory(item.slug)}
-              aria-pressed={category === item.slug}
+              onClick={() => setCategory(null)}
+              aria-pressed={category === null}
               className={`min-h-9 rounded-full px-4 text-sm transition-colors ${
-                category === item.slug
+                category === null
                   ? 'bg-forest-800 font-medium text-cream-50'
                   : 'bg-cream-200 text-ink-soft hover:bg-cream-300'
               }`}
             >
-              {item.telugu} ({articlesList.filter((a) => a.category.slug === item.slug).length})
+              అన్నీ ({articlesList.length})
             </button>
-          ))}
+
+            {articleCategories.map((item) => (
+              <button
+                key={item.slug}
+                type="button"
+                onClick={() => setCategory(item.slug)}
+                aria-pressed={category === item.slug}
+                className={`min-h-9 rounded-full px-4 text-sm transition-colors ${
+                  category === item.slug
+                    ? 'bg-forest-800 font-medium text-cream-50'
+                    : 'bg-cream-200 text-ink-soft hover:bg-cream-300'
+                }`}
+              >
+                {item.telugu} ({articlesList.filter((a) => a.category.slug === item.slug).length})
+              </button>
+            ))}
+          </div>
+
+          {/* View Style Switcher */}
+          <div
+            role="group"
+            aria-label="వ్యాసాల ప్రదర్శన శైలి (Articles View Style)"
+            className="inline-flex items-center rounded-full border border-cream-300 bg-cream-100 p-0.5 shadow-xs"
+          >
+            <span className="hidden ps-2.5 pe-1 text-xs font-medium text-ink-muted sm:inline">
+              శైలి:
+            </span>
+            <button
+              type="button"
+              onClick={() => setViewStyle('justify')}
+              aria-pressed={viewStyle === 'justify'}
+              title="జస్టిఫైడ్ వీక్షణ (Justify View) — చక్కగా సమతుల్యమైన విస్తృత కార్డులు"
+              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all ${
+                viewStyle === 'justify'
+                  ? 'bg-forest-800 text-cream-50 shadow-sm'
+                  : 'text-ink-soft hover:bg-cream-200 hover:text-forest-950'
+              }`}
+            >
+              <Icon name="layers" size={14} />
+              <span>జస్టిఫైడ్ (Justify)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewStyle('grid')}
+              aria-pressed={viewStyle === 'grid'}
+              title="కార్డుల గ్రిడ్ (Cards Grid)"
+              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all ${
+                viewStyle === 'grid'
+                  ? 'bg-forest-800 text-cream-50 shadow-sm'
+                  : 'text-ink-soft hover:bg-cream-200 hover:text-forest-950'
+              }`}
+            >
+              <Icon name="grid" size={14} />
+              <span className="hidden sm:inline">గ్రిడ్</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewStyle('list')}
+              aria-pressed={viewStyle === 'list'}
+              title="జాబితా శైలి (List View)"
+              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all ${
+                viewStyle === 'list'
+                  ? 'bg-forest-800 text-cream-50 shadow-sm'
+                  : 'text-ink-soft hover:bg-cream-200 hover:text-forest-950'
+              }`}
+            >
+              <Icon name="list" size={14} />
+              <span className="hidden sm:inline">జాబితా</span>
+            </button>
+          </div>
         </div>
 
         {visible.length === 0 ? (
@@ -88,10 +148,18 @@ export function ArticlesPage() {
             action={{ label: 'అన్ని వ్యాసాలు', to: '/articles' }}
           />
         ) : (
-          <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <ul
+            className={`grid ${
+              viewStyle === 'justify'
+                ? 'gap-6 grid-cols-1 lg:grid-cols-2'
+                : viewStyle === 'list'
+                  ? 'gap-3 grid-cols-1'
+                  : 'gap-5 md:grid-cols-2 lg:grid-cols-3'
+            }`}
+          >
             {visible.map((article, index) => (
               <li key={article.slug}>
-                <ArticleCard article={article} delay={index * 60} />
+                <ArticleCard article={article} delay={index * 60} variant={viewStyle} />
               </li>
             ))}
           </ul>
