@@ -28,7 +28,7 @@ export function BibleBookPage() {
   return (
     <>
       <PageHeader
-        eyebrow={`${book.testament === 'ot' ? 'పరిశుద్ధ బైబిల్' : 'నూతన నిబంధనం'} · ${book.english}`}
+        eyebrow={`${book.testament === 'ot' ? 'పాత నిబంధన' : 'నూతన నిబంధన'} · ${book.english}`}
         title={book.telugu}
         crumbs={[
           { label: 'హోమ్', to: '/' },

@@ -173,7 +173,7 @@ export function BiblePage() {
           <SectionHeading
             as="h2"
             title="అన్ని పుస్తకాలు"
-            lede="పరిశుద్ధ బైబిల్ మరియు నూతన నిబంధనం — మొత్తం 66 పుస్తకాలు."
+            lede="పాత నిబంధన మరియు నూతన నిబంధన — మొత్తం 66 పుస్తకాలు."
           />
           <div className="mt-8">
             <BookGrid highlightSlugs={START_HERE} />

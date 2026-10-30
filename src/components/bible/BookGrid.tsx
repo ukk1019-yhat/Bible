@@ -5,8 +5,8 @@ import { Icon, type IconName } from '../ui/Icon'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
 
 const TESTAMENTS: { key: Testament; telugu: string; english: string }[] = [
-  { key: 'ot', telugu: 'పరిశుద్ధ బైబిల్', english: 'Old Testament' },
-  { key: 'nt', telugu: 'నూతన నిబంధనం', english: 'New Testament' },
+  { key: 'ot', telugu: 'పాత నిబంధన', english: 'Old Testament' },
+  { key: 'nt', telugu: 'నూతన నిబంధన', english: 'New Testament' },
 ]
 
 type BookViewStyle = 'cards' | 'compact' | 'list' | 'grouped'

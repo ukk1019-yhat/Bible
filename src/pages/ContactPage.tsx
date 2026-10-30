@@ -63,9 +63,9 @@ export function ContactPage() {
     <>
       <PageHeader
         eyebrow="సంప్రదింపు"
-        title="మేము ఎలా చేరుకోవాలి"
+        title="మేము ఎలా చేరుకోవాలి?"
         icon="mail"
-        lede="మీ ప్రశ్న, మీ సూచన — మేము వినండి."
+        lede="మీ ప్రశ్న, మీ సూచన - మాకు పంపండి"
         crumbs={[{ label: 'హోమ్', to: '/' }, { label: 'సంప్రదించండి' }]}
       />
 
