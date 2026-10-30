@@ -52,6 +52,10 @@ export type IconName =
   | 'apple'
   | 'android'
   | 'zap'
+  | 'grid'
+  | 'grid-compact'
+  | 'list'
+  | 'layers'
 
 const paths: Record<IconName, React.ReactNode> = {
   book: (
@@ -284,6 +288,44 @@ const paths: Record<IconName, React.ReactNode> = {
   ),
   zap: (
     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  ),
+  grid: (
+    <>
+      <rect x="3.5" y="3.5" width="7" height="7" rx="1.5" />
+      <rect x="13.5" y="3.5" width="7" height="7" rx="1.5" />
+      <rect x="3.5" y="13.5" width="7" height="7" rx="1.5" />
+      <rect x="13.5" y="13.5" width="7" height="7" rx="1.5" />
+    </>
+  ),
+  'grid-compact': (
+    <>
+      <rect x="3.5" y="3.5" width="4.5" height="4.5" rx="1" />
+      <rect x="9.75" y="3.5" width="4.5" height="4.5" rx="1" />
+      <rect x="16" y="3.5" width="4.5" height="4.5" rx="1" />
+      <rect x="3.5" y="9.75" width="4.5" height="4.5" rx="1" />
+      <rect x="9.75" y="9.75" width="4.5" height="4.5" rx="1" />
+      <rect x="16" y="9.75" width="4.5" height="4.5" rx="1" />
+      <rect x="3.5" y="16" width="4.5" height="4.5" rx="1" />
+      <rect x="9.75" y="16" width="4.5" height="4.5" rx="1" />
+      <rect x="16" y="16" width="4.5" height="4.5" rx="1" />
+    </>
+  ),
+  list: (
+    <>
+      <line x1="8" y1="6" x2="20" y2="6" />
+      <line x1="8" y1="12" x2="20" y2="12" />
+      <line x1="8" y1="18" x2="20" y2="18" />
+      <circle cx="4" cy="6" r="1.2" fill="currentColor" />
+      <circle cx="4" cy="12" r="1.2" fill="currentColor" />
+      <circle cx="4" cy="18" r="1.2" fill="currentColor" />
+    </>
+  ),
+  layers: (
+    <>
+      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+      <polyline points="2 17 12 22 22 17" />
+      <polyline points="2 12 12 17 22 12" />
+    </>
   ),
 }
 

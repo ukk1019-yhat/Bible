@@ -6,6 +6,7 @@ import { Icon } from '../components/ui/Icon'
 import { PageHeader } from '../components/ui/Layout'
 import { EmptyState, Reveal } from '../components/ui/Section'
 import { useSeo } from '../hooks/useSeo'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 import { fetchDriveBooks, getCachedBooks } from '../services/driveBooks'
 import type { ChristianBook } from '../types/content'
 
@@ -15,6 +16,10 @@ export function BooksPage() {
   const [category, setCategory] = useState<string | null>(null)
   const [loading, setLoading] = useState(initialBooks.length === 0)
   const [refreshing, setRefreshing] = useState(false)
+  const [viewStyle, setViewStyle] = useLocalStorage<'grid' | 'list' | 'compact'>(
+    'christian_books_view_style',
+    'grid',
+  )
 
   const loadBooks = async (isManual = false) => {
     if (isManual) setRefreshing(true)
@@ -101,25 +106,85 @@ export function BooksPage() {
             })}
           </div>
 
-          <button
-            type="button"
-            onClick={() => loadBooks(true)}
-            disabled={refreshing}
-            className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-cream-400 bg-cream-100 px-3.5 py-1 text-xs font-medium text-forest-900 transition-colors hover:bg-cream-200 disabled:opacity-50"
-            title="Google Drive నుండి తాజా పుస్తకాలను అప్‌డేట్ చేయండి"
-          >
-            <Icon
-              name="refresh"
-              size={14}
-              className={refreshing ? 'animate-spin text-gold-600' : 'text-forest-700'}
-            />
-            <span>{refreshing ? 'తాజాకరిస్తోంది...' : 'తాజాకరించు (Sync)'}</span>
-          </button>
+          <div className="flex items-center gap-2">
+            {/* View Style Switcher */}
+            <div
+              role="group"
+              aria-label="పుస్తకాల ప్రదర్శన శైలి (Book View Style)"
+              className="inline-flex items-center rounded-full border border-cream-300 bg-cream-100 p-0.5"
+            >
+              <button
+                type="button"
+                onClick={() => setViewStyle('grid')}
+                aria-pressed={viewStyle === 'grid'}
+                title="కవర్ల గ్రిడ్ (Grid)"
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all ${
+                  viewStyle === 'grid'
+                    ? 'bg-forest-800 text-cream-50 shadow-sm'
+                    : 'text-ink-soft hover:bg-cream-200 hover:text-forest-950'
+                }`}
+              >
+                <Icon name="grid" size={14} />
+                <span className="hidden sm:inline">గ్రిడ్</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewStyle('list')}
+                aria-pressed={viewStyle === 'list'}
+                title="వివరణాత్మక జాబితా (List)"
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all ${
+                  viewStyle === 'list'
+                    ? 'bg-forest-800 text-cream-50 shadow-sm'
+                    : 'text-ink-soft hover:bg-cream-200 hover:text-forest-950'
+                }`}
+              >
+                <Icon name="list" size={14} />
+                <span className="hidden sm:inline">జాబితా</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewStyle('compact')}
+                aria-pressed={viewStyle === 'compact'}
+                title="కాంపాక్ట్ టైల్స్ (Compact)"
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all ${
+                  viewStyle === 'compact'
+                    ? 'bg-forest-800 text-cream-50 shadow-sm'
+                    : 'text-ink-soft hover:bg-cream-200 hover:text-forest-950'
+                }`}
+              >
+                <Icon name="grid-compact" size={14} />
+                <span className="hidden sm:inline">కాంపాక్ట్</span>
+              </button>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => loadBooks(true)}
+              disabled={refreshing}
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-cream-400 bg-cream-100 px-3.5 py-1 text-xs font-medium text-forest-900 transition-colors hover:bg-cream-200 disabled:opacity-50"
+              title="Google Drive నుండి తాజా పుస్తకాలను అప్‌డేట్ చేయండి"
+            >
+              <Icon
+                name="refresh"
+                size={14}
+                className={refreshing ? 'animate-spin text-gold-600' : 'text-forest-700'}
+              />
+              <span>{refreshing ? 'తాజాకరిస్తోంది...' : 'తాజాకరించు'}</span>
+            </button>
+          </div>
         </div>
 
         {/* Book Grid or Skeleton or Empty State */}
         {loading && bookList.length === 0 ? (
-          <div className="grid gap-6 sm:grid-cols-3 lg:grid-cols-5">
+          <div
+            className={`grid gap-6 ${
+              viewStyle === 'list'
+                ? 'sm:grid-cols-1 lg:grid-cols-2'
+                : viewStyle === 'compact'
+                  ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6'
+                  : 'sm:grid-cols-3 lg:grid-cols-5'
+            }`}
+          >
             {[1, 2, 3, 4, 5].map((i) => (
               <div
                 key={i}
@@ -130,10 +195,18 @@ export function BooksPage() {
             ))}
           </div>
         ) : visible.length > 0 ? (
-          <ul className="grid gap-6 sm:grid-cols-3 lg:grid-cols-5">
+          <ul
+            className={`grid ${
+              viewStyle === 'list'
+                ? 'gap-4 sm:grid-cols-1 lg:grid-cols-2'
+                : viewStyle === 'compact'
+                  ? 'gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6'
+                  : 'gap-6 sm:grid-cols-3 lg:grid-cols-5'
+            }`}
+          >
             {visible.map((book, index) => (
               <li key={book.slug}>
-                <BookCard book={book} delay={index * 40} />
+                <BookCard book={book} delay={index * 40} variant={viewStyle} />
               </li>
             ))}
           </ul>
