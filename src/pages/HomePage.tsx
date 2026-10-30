@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BIBLE_BOOKS } from '../data/bible/books.generated'
 import { articles } from '../data/content/articles'
 import { questions } from '../data/content/questions'
-import { featuredVideo } from '../data/content/videos'
+import type { Video } from '../types/content'
+import { getInitialFeaturedVideo, fetchLatestYouTubeVideos } from '../services/youtubeService'
+import { fetchLiveVideos } from '../services/firestoreContent'
 import { quickResources } from '../data/navigation'
 import { site } from '../config/site'
 import { ScriptureBlock } from '../components/bible/ScriptureBlock'
@@ -26,6 +29,25 @@ const RESOURCE_ICONS: Record<string, IconName> = {
 }
 
 export function HomePage() {
+  const [featured, setFeatured] = useState<Video>(() => getInitialFeaturedVideo())
+
+  useEffect(() => {
+    // 1. Check YouTube channel feed for latest releases
+    fetchLatestYouTubeVideos().then(({ latest }) => {
+      if (latest && latest.youtubeId) {
+        setFeatured((prev) => (prev.youtubeId !== latest.youtubeId ? { ...latest, featured: true } : prev))
+      }
+    })
+
+    // 2. Also check Firestore in case an admin featured or updated a message
+    fetchLiveVideos().then((liveVideos) => {
+      const explicitFeatured = liveVideos.find((v) => v.featured)
+      if (explicitFeatured) {
+        setFeatured(explicitFeatured)
+      }
+    })
+  }, [])
+
   useSeo({
     title: `${site.brand.telugu} | ${site.brand.positioning}`,
     description:
@@ -323,7 +345,7 @@ export function HomePage() {
           </Reveal>
 
           <div className="mt-9">
-            <VideoCard video={featuredVideo} featured />
+            <VideoCard video={featured} featured />
           </div>
         </div>
       </section>

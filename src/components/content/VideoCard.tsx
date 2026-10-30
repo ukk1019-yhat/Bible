@@ -99,7 +99,7 @@ export function VideoCard({ video, featured = false, delay = 0 }: VideoCardProps
 
         {video.featured ? (
           <span className="pointer-events-none absolute left-3 top-3 z-20">
-            <Badge tone="gold">ప్రధాన సందేశం</Badge>
+            <Badge tone="gold">తాజా సందేశం</Badge>
           </span>
         ) : null}
       </div>

@@ -11,6 +11,7 @@ import type { Article, Question, Video } from '../types/content'
 import { articles as initialArticles } from '../data/content/articles'
 import { questions as initialQuestions } from '../data/content/questions'
 import { videos as initialVideos } from '../data/content/videos'
+import { getCachedRecentYouTubeVideos } from './youtubeService'
 
 const ARTICLES_COLLECTION = 'articles'
 const DELETED_ARTICLES_COLLECTION = 'deleted_articles'
@@ -251,6 +252,15 @@ export async function fetchLiveVideos(): Promise<Video[]> {
         map.set(item.slug, item)
       }
     }
+    const ytVideos = getCachedRecentYouTubeVideos()
+    for (const item of ytVideos) {
+      if (!deletedSlugs.has(item.slug) && !map.has(item.slug)) {
+        const alreadyExists = Array.from(map.values()).some((v) => v.youtubeId === item.youtubeId)
+        if (!alreadyExists) {
+          map.set(item.slug, item)
+        }
+      }
+    }
 
     const merged = Array.from(map.values())
     cachedVideos = merged
@@ -262,7 +272,16 @@ export async function fetchLiveVideos(): Promise<Video[]> {
 }
 
 export function getCachedVideos(): Video[] {
-  return cachedVideos || initialVideos
+  if (cachedVideos) return cachedVideos
+  const ytVideos = getCachedRecentYouTubeVideos()
+  if (!ytVideos.length) return initialVideos
+  const map = new Map<string, Video>()
+  for (const item of initialVideos) map.set(item.slug, item)
+  for (const item of ytVideos) {
+    const alreadyExists = Array.from(map.values()).some((v) => v.youtubeId === item.youtubeId)
+    if (!alreadyExists) map.set(item.slug, item)
+  }
+  return Array.from(map.values())
 }
 
 export async function saveVideoToFirestore(video: Video): Promise<void> {

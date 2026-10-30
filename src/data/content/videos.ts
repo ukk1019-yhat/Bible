@@ -20,6 +20,17 @@ const sudhakar = speakers[0]
 
 export const videos: Video[] = [
   {
+    slug: 'samson-jeevitham-anukaraneeyam',
+    title: 'సంసోను జీవితం నుండి అనుసరణీయమైనది ఏదైనా ఉందా? A Wonderful explanation by Man of God CH.Sudhakar Garu',
+    description:
+      'సంసోను జీవితం, విశ్వాసం, బలహీనతలు మరియు దైవ ప్రణాళిక గురించిన లోతైన బైబిల్ అధ్యయనం — Bro. Sudhakar CH., Church of The Living God.',
+    youtubeId: 'WWKB7RNT03w',
+    category: 'బైబిల్ సందేశాలు',
+    speaker: sudhakar,
+    publishedAt: '2026-10-26T14:28:10+00:00',
+    featured: true,
+  },
+  {
     slug: 'satya-sakshi-magazine-rerelease',
     title: 'సత్యసాక్షి పత్రిక పునఃప్రచురణ — సామర్లకోట బైబిల్ సెమినార్',
     description:
@@ -27,7 +38,6 @@ export const videos: Video[] = [
     youtubeId: 'Q2a2PxXr3vk',
     category: 'బైబిల్ సందేశాలు',
     speaker: sudhakar,
-    featured: true,
   },
   {
     slug: 'bible-chadive-kramamu',

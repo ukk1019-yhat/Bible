@@ -4,7 +4,25 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    {
+      name: 'api-latest-video',
+      configureServer(server) {
+        server.middlewares.use('/api/latest-video', async (_req, res) => {
+          try {
+            // @ts-expect-error Dynamic import of local API handler
+            const { default: apiHandler } = await import('./api/latest-video.js')
+            await apiHandler(_req, res)
+          } catch (err) {
+            res.statusCode = 500
+            res.end(JSON.stringify({ success: false, error: String(err) }))
+          }
+        })
+      },
+    },
+  ],
   build: {
     target: 'es2022',
     cssMinify: 'lightningcss',
