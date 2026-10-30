@@ -81,7 +81,7 @@ export function HomePage() {
 
               <p className="mt-6 max-w-xl text-[1.05rem] leading-relaxed text-ink-soft sm:text-lg">
                 పరిశుద్ధ తెలుగు బైబిల్, బైబిల్ సందేశాలు, ప్రశ్నలు & సమాధానాలు, వ్యాసాలు
-                — అన్నీ ఒకే వేదికలో, ఉచితంగా. చదవండి, వెతకండి, మీ హృదయానికి సమీపించనీయండి.
+                — అన్నీ ఒకే వేదికలో. ఉచితముగా వెతకండి, చదవండి, అడగండి, వీక్షించండి మరియు మీ హృదయానికి సమీపించనీయండి.
               </p>
 
               <div className="mt-9 flex flex-wrap gap-3">
@@ -124,7 +124,7 @@ export function HomePage() {
                 <div className="mt-7 border-t border-cream-300 pt-6">
                   <p className="text-[0.95rem] leading-relaxed text-ink-soft">
                     ఈ వేదికలో మీరు చదివే ప్రతి వాక్యం, ప్రతి సమాధానం — అన్నీ
-                    బైబిల్ నుండే. దేవుడే మాట.
+                    బైబిల్ నుండే. అన్నీ ఆ దేవుని మాటలే.
                   </p>
                   <Link
                     to="/bible/revelation/3#v14"
@@ -316,7 +316,7 @@ export function HomePage() {
           <Reveal>
             <SectionHeading
               eyebrow="బైబిల్ సందేశం"
-              title="ఈ సప్తాహాంలో మొదలుపెట్టండి"
+              title="సందేశాలను ఇక్కడ నుండి వీక్షించండి"
               lede="Bro. Sudhakar CH. బైబిల్ సందేశాలు — మీరు ఎప్పుడైనా చూడగలరు."
               action={{ label: 'అన్ని సందేశాలు', to: '/messages' }}
             />
