@@ -118,7 +118,7 @@ export function Prose({ children, className = '' }: { children: React.ReactNode;
 }
 
 export function ProseParagraph({ children }: { children: React.ReactNode }) {
-  return <p className="mb-5">{children}</p>
+  return <p className="mb-5 text-justify [text-align:justify] [text-justify:inter-word]">{children}</p>
 }
 
 /** Blockquote with an optional scripture reference in the margin. */
@@ -131,7 +131,7 @@ export function ProseQuote({
 }) {
   return (
     <figure className="my-7 border-s-2 border-gold-500 ps-5">
-      <blockquote className="text-[1.1rem] leading-relaxed text-forest-900">
+      <blockquote className="text-justify text-[1.1rem] leading-relaxed text-forest-900 [text-align:justify] [text-justify:inter-word]">
         {children}
       </blockquote>
       {reference ? (

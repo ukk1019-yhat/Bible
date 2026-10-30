@@ -14,6 +14,7 @@ import { PageHeader, Prose } from '../components/ui/Layout'
 import { Badge, EmptyState, Reveal } from '../components/ui/Section'
 import { SearchField } from '../components/ui/SearchField'
 import { useDebounced } from '../hooks/useUi'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 import { graph, useSeo } from '../hooks/useSeo'
 import { matchesAllTokens } from '../utils/text'
 import { trackContentClick } from '../services/analyticsService'
@@ -23,6 +24,10 @@ export function QuestionsPage() {
   const [topic, setTopic] = useState<string | null>(null)
   const [input, setInput] = useState('')
   const [questionsList, setQuestionsList] = useState<Question[]>(getCachedQuestions())
+  const [viewStyle, setViewStyle] = useLocalStorage<'justify' | 'grid' | 'list'>(
+    'questions_view_style',
+    'justify',
+  )
   const query = useDebounced(input, 180)
 
   useEffect(() => {
@@ -137,17 +142,89 @@ export function QuestionsPage() {
               />
             ) : (
               <>
-                <p className="mb-6 text-sm text-ink-muted" role="status" aria-live="polite">
-                  {visible.length} ప్రశ్నలు
-                </p>
+                <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+                  <p className="text-sm text-ink-muted" role="status" aria-live="polite">
+                    {visible.length} ప్రశ్నలు
+                  </p>
 
-                <ul className="grid gap-4 md:grid-cols-2">
-                  {visible.map((question, index) => (
-                    <li key={question.slug}>
-                      <QuestionCard question={question} delay={index * 50} />
-                    </li>
-                  ))}
-                </ul>
+                  <div
+                    role="group"
+                    aria-label="ప్రశ్నల ప్రదర్శన శైలి (Questions View Style)"
+                    className="inline-flex items-center rounded-full border border-cream-300 bg-cream-100 p-0.5 shadow-xs"
+                  >
+                    <span className="hidden ps-2.5 pe-1 text-xs font-medium text-ink-muted sm:inline">
+                      శైలి:
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setViewStyle('justify')}
+                      aria-pressed={viewStyle === 'justify'}
+                      title="జస్టిఫైడ్ వీక్షణ (Justify View) — చక్కగా సమతుల్యమైన విస్తృత కార్డులు"
+                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all ${
+                        viewStyle === 'justify'
+                          ? 'bg-forest-800 text-cream-50 shadow-sm'
+                          : 'text-ink-soft hover:bg-cream-200 hover:text-forest-950'
+                      }`}
+                    >
+                      <Icon name="layers" size={14} />
+                      <span>జస్టిఫైడ్ (Justify)</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setViewStyle('grid')}
+                      aria-pressed={viewStyle === 'grid'}
+                      title="గ్రిడ్ వీక్షణ (Grid View) — సమాంతర కార్డులు"
+                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all ${
+                        viewStyle === 'grid'
+                          ? 'bg-forest-800 text-cream-50 shadow-sm'
+                          : 'text-ink-soft hover:bg-cream-200 hover:text-forest-950'
+                      }`}
+                    >
+                      <Icon name="grid" size={14} />
+                      <span>గ్రిడ్</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setViewStyle('list')}
+                      aria-pressed={viewStyle === 'list'}
+                      title="జాబితా వీక్షణ (List View) — వరుస క్రమం"
+                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all ${
+                        viewStyle === 'list'
+                          ? 'bg-forest-800 text-cream-50 shadow-sm'
+                          : 'text-ink-soft hover:bg-cream-200 hover:text-forest-950'
+                      }`}
+                    >
+                      <Icon name="menu" size={14} />
+                      <span>జాబితా</span>
+                    </button>
+                  </div>
+                </div>
+
+                {viewStyle === 'justify' ? (
+                  <ul className="grid gap-5 md:grid-cols-2">
+                    {visible.map((question, index) => (
+                      <li key={question.slug}>
+                        <QuestionCard question={question} variant="justify" delay={index * 50} />
+                      </li>
+                    ))}
+                  </ul>
+                ) : viewStyle === 'list' ? (
+                  <ul className="space-y-3">
+                    {visible.map((question, index) => (
+                      <li key={question.slug}>
+                        <QuestionCard question={question} variant="list" delay={index * 40} />
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <ul className="grid gap-4 md:grid-cols-2">
+                    {visible.map((question, index) => (
+                      <li key={question.slug}>
+                        <QuestionCard question={question} variant="grid" delay={index * 50} />
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </>
             )}
           </section>
@@ -215,7 +292,7 @@ function QuestionView({ question }: { question: Question }) {
       <div className="shell py-12 sm:py-16">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,44rem)_17rem] lg:items-start lg:gap-16">
           <article>
-            <p className="border-s-2 border-gold-500 ps-5 text-[1.2rem] leading-relaxed text-forest-900">
+            <p className="border-s-2 border-gold-500 ps-5 text-[1.2rem] leading-relaxed text-forest-900 text-justify [text-align:justify] [text-justify:inter-word]">
               {question.summary}
             </p>
 
@@ -224,7 +301,10 @@ function QuestionView({ question }: { question: Question }) {
                 <section key={section.heading} className="mb-10 last:mb-0">
                   <h2 className="mb-4 text-xl text-forest-950">{section.heading}</h2>
                   {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph.slice(0, 40)} className="mb-5">
+                    <p
+                      key={paragraph.slice(0, 40)}
+                      className="mb-5 text-justify [text-align:justify] [text-justify:inter-word]"
+                    >
                       {paragraph}
                     </p>
                   ))}
