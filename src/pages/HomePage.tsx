@@ -6,6 +6,7 @@ import { questions } from '../data/content/questions'
 import type { Video } from '../types/content'
 import { getInitialFeaturedVideo, fetchLatestYouTubeVideos } from '../services/youtubeService'
 import { fetchLiveVideos } from '../services/firestoreContent'
+import { useSiteText } from '../services/siteTextService'
 import { quickResources } from '../data/navigation'
 import { site } from '../config/site'
 import { ScriptureBlock } from '../components/bible/ScriptureBlock'
@@ -29,6 +30,7 @@ const RESOURCE_ICONS: Record<string, IconName> = {
 }
 
 export function HomePage() {
+  const { t } = useSiteText()
   const [featured, setFeatured] = useState<Video>(() => getInitialFeaturedVideo())
 
   useEffect(() => {
@@ -96,14 +98,14 @@ export function HomePage() {
               </div>
 
               <h1 className="text-[2.15rem] leading-[1.22] text-forest-950 sm:text-5xl lg:text-[3.4rem]">
-                దేవుని వాక్యము
-                <br />
-                ప్రతి ఇంటికి
+                {t('home.hero.title', 'దేవుని వాక్యము ప్రతి ఇంటికి')}
               </h1>
 
               <p className="mt-6 max-w-xl text-[1.05rem] leading-relaxed text-ink-soft sm:text-lg">
-                పరిశుద్ధ తెలుగు బైబిల్, బైబిల్ సందేశాలు, ప్రశ్నలు & సమాధానాలు, వ్యాసాలు
-                — అన్నీ ఒకే వేదికలో. ఉచితముగా వెతకండి, చదవండి, అడగండి, వీక్షించండి మరియు మీ హృదయానికి సమీపించనీయండి.
+                {t(
+                  'home.hero.lede',
+                  'పరిశుద్ధ తెలుగు బైబిల్, బైబిల్ సందేశాలు, ప్రశ్నలు & సమాధానాలు, వ్యాసాలు — అన్నీ ఒకే వేదికలో. ఉచితముగా వెతకండి, చదవండి, అడగండి, వీక్షించండి మరియు మీ హృదయానికి సమీపించనీయండి.'
+                )}
               </p>
 
               <div className="mt-9 flex flex-wrap gap-3">
@@ -145,8 +147,10 @@ export function HomePage() {
 
                 <div className="mt-7 border-t border-cream-300 pt-6">
                   <p className="text-[0.95rem] leading-relaxed text-ink-soft">
-                    ఈ వేదికలో మీరు చదివే ప్రతి వాక్యం, ప్రతి సమాధానం — అన్నీ
-                    బైబిల్ నుండే. అన్నీ ఆ దేవుని మాటలే.
+                    {t(
+                      'home.quote.verse',
+                      'ఈ వేదికలో మీరు చదివే ప్రతి వాక్యం, ప్రతి సమాధానం — అన్నీ బైబిల్ నుండే. అన్నీ ఆ దేవుని మాటలే.'
+                    )}
                   </p>
                   <Link
                     to="/bible/revelation/3#v14"
@@ -337,9 +341,12 @@ export function HomePage() {
         <div className="shell">
           <Reveal>
             <SectionHeading
-              eyebrow="బైబిల్ సందేశం"
-              title="సందేశాలను ఇక్కడ నుండి వీక్షించండి"
-              lede="Bro. Sudhakar CH. బైబిల్ సందేశాలు — మీరు ఎప్పుడైనా చూడగలరు."
+              eyebrow={t('home.messages.eyebrow', 'బైబిల్ సందేశం')}
+              title={t('home.messages.title', 'సందేశాలను ఇక్కడ నుండి వీక్షించండి')}
+              lede={t(
+                'home.messages.lede',
+                'Bro. Sudhakar CH. బైబిల్ సందేశాలు — మీరు ఎప్పుడైనా చూడగలరు.'
+              )}
               action={{ label: 'అన్ని సందేశాలు', to: '/messages' }}
             />
           </Reveal>
@@ -355,17 +362,18 @@ export function HomePage() {
         <Reveal>
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16">
             <div>
-              <p className="eyebrow mb-3">పరిశుద్ధ బైబిల్</p>
+              <p className="eyebrow mb-3">{t('home.bible.eyebrow', 'పరిశుద్ధ బైబిల్')}</p>
               <h2
                 id="bible-invite"
                 className="text-2xl text-forest-950 sm:text-3xl lg:text-[2.1rem]"
               >
-                మీ భాషలోనే, అధ్యాయం వారీగా
+                {t('home.bible.title', 'మీ భాషలోనే, అధ్యాయం వారీగా')}
               </h2>
               <p className="mt-4 max-w-lg text-[1.02rem] leading-relaxed text-ink-soft">
-                మీరు తెరిచిన అధ్యాయం మాత్రమే లోడ్ అవుతుంది — అందుకే చదవడం వేగంగా, డేటా
-                వ్యర్థం లేకుండా. అక్షర పరిమాణాన్ని మార్చవచ్చు, వాక్యాన్ని భద్రపరచవచ్చు, భాగం
-                చేయవచ్చు.
+                {t(
+                  'home.bible.lede',
+                  'మీరు తెరిచిన అధ్యాయం మాత్రమే లోడ్ అవుతుంది — అందుకే చదవడం వేగంగా, డేటా వ్యర్థం లేకుండా. అక్షర పరిమాణాన్ని మార్చవచ్చు, వాక్యాన్ని భద్రపరచవచ్చు, భాగం చేయవచ్చు.'
+                )}
               </p>
 
               <div className="mt-7 flex flex-wrap gap-3">
@@ -408,8 +416,11 @@ export function HomePage() {
           <Reveal>
             <SectionHeading
               eyebrow="ప్రశ్నలు & సమాధానాలు"
-              title="బైబిల్ ఆధారంగా"
-              lede="మీ ప్రశ్నకు సమాధానం బైబిల్‌లో ఉంది. ఇక్కడ అదే వాక్యాలతో వివరణ ఇస్తున్నాం."
+              title={t('home.questions.title', 'బైబిల్ ఆధారంగా')}
+              lede={t(
+                'home.questions.lede',
+                'మీ ప్రశ్నకు సమాధానం బైబిల్‌లో ఉంది. ఇక్కడ అదే వాక్యాలతో వివరణ ఇస్తున్నాం.'
+              )}
               action={{ label: 'అన్ని ప్రశ్నలు', to: '/questions' }}
             />
           </Reveal>
@@ -429,8 +440,11 @@ export function HomePage() {
         <Reveal>
           <SectionHeading
             eyebrow="వ్యాసాలు"
-            title="ఆలోచనలకు ఆహారం"
-            lede="విశ్వాసం, ప్రార్థన, ఆత్మీయ జీవితం గురించి సంక్షిప్త వ్యాసాలు."
+            title={t('home.articles.title', 'ఆలోచనలకు ఆహారం')}
+            lede={t(
+              'home.articles.lede',
+              'విశ్వాసం, ప్రార్థన, ఆత్మీయ జీవితం గురించి సంక్షిప్త వ్యాసాలు.'
+            )}
             action={{ label: 'అన్ని వ్యాసాలు', to: '/articles' }}
           />
         </Reveal>

@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom'
 import { BIBLE_BOOKS, type Testament } from '../../data/bible/books.generated'
 import { Icon, type IconName } from '../ui/Icon'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
-
-const TESTAMENTS: { key: Testament; telugu: string; english: string }[] = [
-  { key: 'ot', telugu: 'పాత నిబంధన', english: 'Old Testament' },
-  { key: 'nt', telugu: 'నూతన నిబంధన', english: 'New Testament' },
-]
+import { useSiteText } from '../../services/siteTextService'
 
 type BookViewStyle = 'cards' | 'compact' | 'list' | 'grouped'
 
@@ -203,6 +199,7 @@ export interface BookGridProps {
  * readers the easiest and most convenient way to explore the Word of God.
  */
 export function BookGrid({ testament, highlightSlugs = [] }: BookGridProps) {
+  const { t } = useSiteText()
   const [active, setActive] = useState<Testament>(testament ?? 'nt')
   const [filter, setFilter] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -272,7 +269,10 @@ export function BookGrid({ testament, highlightSlugs = [] }: BookGridProps) {
           aria-label="నిబంధనాలు"
           className="flex border-b border-cream-300"
         >
-          {TESTAMENTS.map((item) => {
+          {[
+            { key: 'ot' as Testament, telugu: t('bible.ot.label', 'పాత నిబంధన'), english: 'Old Testament' },
+            { key: 'nt' as Testament, telugu: t('bible.nt.label', 'నూతన నిబంధన'), english: 'New Testament' },
+          ].map((item) => {
             const isSelected = currentTestament === item.key
             const bookCount = BIBLE_BOOKS.filter((b) => b.testament === item.key).length
             return (

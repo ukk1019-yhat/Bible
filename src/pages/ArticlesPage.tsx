@@ -14,9 +14,11 @@ import { formatTeluguDate, readingTimeLabel } from '../utils/format'
 import { graph, useSeo } from '../hooks/useSeo'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { trackContentClick } from '../services/analyticsService'
+import { useSiteText } from '../services/siteTextService'
 import NotFoundPage from './NotFoundPage'
 
 export function ArticlesPage() {
+  const { t } = useSiteText()
   const [category, setCategory] = useState<string | null>(null)
   const [articlesList, setArticlesList] = useState<Article[]>(getCachedArticles())
   const [viewStyle, setViewStyle] = useLocalStorage<'justify' | 'grid' | 'list'>(
@@ -47,9 +49,9 @@ export function ArticlesPage() {
     <>
       <PageHeader
         eyebrow="వ్యాసాలు"
-        title="వ్యాసాలు"
+        title={t('articles.header.title', 'వ్యాసాలు')}
         icon="book"
-        lede="బైబిల్ ఆధారంగా ఆలోచించడానికి సహాయపడే సంక్షిప్త వ్యాసాలు."
+        lede={t('articles.header.lede', 'బైబిల్ ఆధారంగా ఆలోచించడానికి సహాయపడే సంక్షిప్త వ్యాసాలు.')}
         crumbs={[{ label: 'హోమ్', to: '/' }, { label: 'వ్యాసాలు' }]}
       />
 
@@ -248,7 +250,7 @@ export function ArticleRoute() {
       <div className="shell py-12 sm:py-16">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,44rem)_17rem] lg:items-start lg:gap-16">
           <article>
-            <p className="border-s-2 border-gold-500 ps-5 text-justify text-[1.2rem] leading-relaxed text-forest-900">
+            <p className="border-s-2 border-gold-500 ps-5 text-justify [text-align:justify] [text-justify:inter-word] text-[1.2rem] leading-relaxed text-forest-900">
               {article.excerpt}
             </p>
 
@@ -265,7 +267,7 @@ export function ArticleRoute() {
                   if (block.type === 'quote') {
                     return (
                       <figure key={index} className="my-7 border-s-2 border-gold-500 ps-5">
-                        <blockquote className="text-justify text-[1.1rem] leading-relaxed text-forest-900">
+                        <blockquote className="text-justify [text-align:justify] [text-justify:inter-word] text-[1.1rem] leading-relaxed text-forest-900">
                           {block.text}
                         </blockquote>
                         {block.reference ? (
@@ -286,7 +288,7 @@ export function ArticleRoute() {
                     )
                   }
                   return (
-                    <p key={index} className="mb-5 text-justify">
+                    <p key={index} className="mb-5 text-justify [text-align:justify] [text-justify:inter-word]">
                       {block.text}
                     </p>
                   )

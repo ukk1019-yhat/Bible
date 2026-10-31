@@ -18,9 +18,11 @@ import { useLocalStorage } from '../hooks/useLocalStorage'
 import { graph, useSeo } from '../hooks/useSeo'
 import { matchesAllTokens } from '../utils/text'
 import { trackContentClick } from '../services/analyticsService'
+import { useSiteText } from '../services/siteTextService'
 import NotFoundPage from './NotFoundPage'
 
 export function QuestionsPage() {
+  const { t } = useSiteText()
   const [topic, setTopic] = useState<string | null>(null)
   const [input, setInput] = useState('')
   const [questionsList, setQuestionsList] = useState<Question[]>(getCachedQuestions())
@@ -71,9 +73,12 @@ export function QuestionsPage() {
     <>
       <PageHeader
         eyebrow="ప్రశ్నలు & సమాధానాలు"
-        title="మీ ప్రశ్నకు సమాధానం ఇక్కడే"
+        title={t('questions.header.title', 'మీ ప్రశ్నకు సమాధానం ఇక్కడే')}
         icon="question"
-        lede="ప్రతి సమాధానం బైబిల్ వాక్యంతో ముందుచేయబడింది. మీరు కూడా ప్రశ్న పెట్టాలంటే సంప్రదించండి."
+        lede={t(
+          'questions.header.lede',
+          'ప్రతి సమాధానం బైబిల్ వాక్యంతో ముందుచేయబడింది. మీరు కూడా ప్రశ్న పెట్టాలంటే సంప్రదించండి.'
+        )}
         crumbs={[{ label: 'హోమ్', to: '/' }, { label: 'ప్రశ్నలు & సమాధానాలు' }]}
       />
 

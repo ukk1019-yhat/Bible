@@ -8,6 +8,7 @@ import { PageHeader, Prose } from '../components/ui/Layout'
 import { SectionHeading, Reveal } from '../components/ui/Section'
 import { useBookmarks } from '../hooks/useBookmarks'
 import { graph, useSeo } from '../hooks/useSeo'
+import { useSiteText } from '../services/siteTextService'
 
 const totals = {
   books: BIBLE_BOOKS.length,
@@ -19,6 +20,7 @@ const totals = {
 const START_HERE = ['john', 'matthew', 'psalms', 'genesis', 'acts', 'proverbs']
 
 export function BiblePage() {
+  const { t } = useSiteText()
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const { bookmarks, remove } = useBookmarks()
@@ -49,9 +51,12 @@ export function BiblePage() {
     <>
       <PageHeader
         eyebrow="పరిశుద్ధ బైబిల్"
-        title="తెలుగు బైబిల్"
+        title={t('bible.header.title', 'తెలుగు బైబిల్')}
         icon="book-open"
-        lede="దేవుని వాక్యాన్ని అధ్యాయం వారీగా, సూచనలతో చదవండి. పుస్తకాన్ని ఎంచుకోండి, అధ్యాయాన్ని తెరవండి."
+        lede={t(
+          'bible.header.lede',
+          'దేవుని వాక్యాన్ని అధ్యాయం వారీగా, సూచనలతో చదవండి. పుస్తకాన్ని ఎంచుకోండి, అధ్యాయాన్ని తెరవండి.'
+        )}
         crumbs={[{ label: 'హోమ్', to: '/' }, { label: 'బైబిల్' }]}
       >
         <dl className="flex gap-8 sm:gap-10">
@@ -172,8 +177,8 @@ export function BiblePage() {
         <Reveal>
           <SectionHeading
             as="h2"
-            title="అన్ని పుస్తకాలు"
-            lede="పాత నిబంధన మరియు నూతన నిబంధన — మొత్తం 66 పుస్తకాలు."
+            title={t('bible.books.heading', 'అన్ని పుస్తకాలు')}
+            lede={t('bible.books.lede', 'పాత నిబంధన మరియు నూతన నిబంధన — మొత్తం 66 పుస్తకాలు.')}
           />
           <div className="mt-8">
             <BookGrid highlightSlugs={START_HERE} />

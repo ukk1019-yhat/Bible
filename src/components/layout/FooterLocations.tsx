@@ -1,9 +1,11 @@
 import { site } from '../../config/site'
 import { Icon } from '../ui/Icon'
 import { useLanguage } from '../../i18n/LanguageProvider'
+import { useSiteText } from '../../services/siteTextService'
 
 export function FooterLocations() {
   const { t, language } = useLanguage()
+  const { t: siteText } = useSiteText()
 
   return (
     <section aria-labelledby="footer-locations-heading" className="border-t border-white/10 pt-12 pb-6">
@@ -36,7 +38,11 @@ export function FooterLocations() {
           const title = isTelugu ? loc.teluguName : loc.name
           const subtitle = isTelugu ? loc.name : loc.teluguName
           const tag = isTelugu ? loc.tag : loc.englishTag
-          const address = isTelugu ? loc.addressLine1 + ', ' + loc.addressLine2 : loc.fullAddress
+          const address = isTelugu
+            ? loc.id === 'kakinada-bible-study'
+              ? `${siteText('contact.kakinada.address1', loc.addressLine1)}, ${siteText('contact.kakinada.address2', loc.addressLine2)}`
+              : `${siteText('contact.kottapalli.address1', loc.addressLine1)}, ${siteText('contact.kottapalli.address2', loc.addressLine2)}`
+            : loc.fullAddress
 
           return (
             <article

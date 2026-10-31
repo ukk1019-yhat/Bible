@@ -5,6 +5,7 @@ import { Icon } from '../components/ui/Icon'
 import { PageHeader } from '../components/ui/Layout'
 import { Reveal } from '../components/ui/Section'
 import { useSeo } from '../hooks/useSeo'
+import { useSiteText } from '../services/siteTextService'
 
 /**
  * Contact Page.
@@ -14,6 +15,7 @@ import { useSeo } from '../hooks/useSeo'
  * them to bible@support.satyasakshi.in with their name, email, and message.
  */
 export function ContactPage() {
+  const { t } = useSiteText()
   useSeo({
     title: 'సంప్రదించండి',
     description:
@@ -63,9 +65,9 @@ export function ContactPage() {
     <>
       <PageHeader
         eyebrow="సంప్రదింపు"
-        title="మేము ఎలా చేరుకోవాలి?"
+        title={t('contact.header.title', 'మేము ఎలా చేరుకోవాలి?')}
         icon="mail"
-        lede="మీ ప్రశ్న, మీ సూచన - మాకు పంపండి"
+        lede={t('contact.header.lede', 'మీ ప్రశ్న, మీ సూచన - మాకు పంపండి')}
         crumbs={[{ label: 'హోమ్', to: '/' }, { label: 'సంప్రదించండి' }]}
       />
 

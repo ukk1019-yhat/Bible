@@ -31,6 +31,7 @@ import { Icon } from '../components/ui/Icon'
 import { BrandLockup } from '../components/brand/Logo'
 import { useSeo } from '../hooks/useSeo'
 import { AnalyticsDashboard } from '../components/admin/AnalyticsDashboard'
+import { SiteTextManager } from '../components/admin/SiteTextManager'
 
 export function AdminPage() {
   useSeo({
@@ -52,7 +53,7 @@ export function AdminPage() {
   const [actionLoading, setActionLoading] = useState(false)
 
   // Tabs
-  const [activeTab, setActiveTab] = useState<'analytics' | 'videos' | 'articles' | 'questions' | 'books' | 'info'>('analytics')
+  const [activeTab, setActiveTab] = useState<'analytics' | 'videos' | 'articles' | 'questions' | 'books' | 'texts' | 'info'>('analytics')
 
   // Videos state
   const [videos, setVideos] = useState<Video[]>([])
@@ -722,6 +723,18 @@ export function AdminPage() {
           </button>
 
           <button
+            onClick={() => setActiveTab('texts')}
+            className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all ${
+              activeTab === 'texts'
+                ? 'bg-forest-800 text-cream-50 shadow-sm'
+                : 'bg-white text-ink-soft hover:bg-cream-200 hover:text-ink-strong'
+            }`}
+          >
+            <Icon name="quote" size={16} />
+            పాఠ్య సవరణలు (Text Corrections)
+          </button>
+
+          <button
             onClick={() => setActiveTab('info')}
             className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all ${
               activeTab === 'info'
@@ -733,6 +746,13 @@ export function AdminPage() {
             సిస్టమ్ స్థితి & డేటాబేస్
           </button>
         </div>
+
+        {/* TAB: SITE TEXT CORRECTIONS */}
+        {activeTab === 'texts' && (
+          <section className="mt-6">
+            <SiteTextManager onNotify={showToast} />
+          </section>
+        )}
 
         {/* TAB: ANALYTICS & CLICKS DASHBOARD */}
         {activeTab === 'analytics' && (

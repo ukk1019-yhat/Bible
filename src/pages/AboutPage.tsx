@@ -7,6 +7,7 @@ import { Icon, type IconName } from '../components/ui/Icon'
 import { PageHeader, Prose } from '../components/ui/Layout'
 import { Reveal, SectionHeading } from '../components/ui/Section'
 import { graph, useSeo } from '../hooks/useSeo'
+import { useSiteText } from '../services/siteTextService'
 
 const PILLARS: { icon: IconName; title: string; body: string; to: string }[] = [
   {
@@ -36,6 +37,7 @@ const PILLARS: { icon: IconName; title: string; body: string; to: string }[] = [
 ]
 
 export function AboutPage() {
+  const { t } = useSiteText()
   useSeo({
     title: 'మా గురించి — సత్య సాక్షి',
     description:
@@ -53,9 +55,9 @@ export function AboutPage() {
     <>
       <PageHeader
         eyebrow="మా గురించి"
-        title={site.brand.telugu}
+        title={t('about.header.title', site.brand.telugu)}
         icon="sparkle"
-        lede={`${site.brand.mission}. ${site.brand.promise}`}
+        lede={t('about.header.lede', `${site.brand.mission}. ${site.brand.promise}`)}
         crumbs={[{ label: 'హోమ్', to: '/' }, { label: 'మా గురించి' }]}
       />
 

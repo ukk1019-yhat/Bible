@@ -14,6 +14,7 @@ import { Breadcrumbs, PageHeader } from '../components/ui/Layout'
 import { Badge, EmptyState, Reveal } from '../components/ui/Section'
 import { graph, useSeo } from '../hooks/useSeo'
 import { trackContentClick } from '../services/analyticsService'
+import { useSiteText } from '../services/siteTextService'
 import NotFoundPage from './NotFoundPage'
 
 /**
@@ -118,6 +119,8 @@ function VideoListing({ messagesOnly = false }: ListingProps) {
 /* -------------------------------------------------------------------------- */
 
 export function MessagesPage() {
+  const { t } = useSiteText()
+
   useSeo({
     title: 'బైబిల్ సందేశాలు — Bro. Sudhakar CH. బోధనలు',
     description:
@@ -135,9 +138,12 @@ export function MessagesPage() {
     <>
       <PageHeader
         eyebrow="సందేశాలు"
-        title="బైబిల్ సందేశాలు"
+        title={t('videos.header.title', 'బైబిల్ సందేశాలు')}
         icon="play"
-        lede="బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — Bro. Sudhakar CH. బోధనలు. మీరు ఎప్పుడైనా, ఎక్కడనుండైనా చూడగలరు."
+        lede={t(
+          'videos.header.lede',
+          'బైబిల్ సందేశాలు, బైబిల్ అధ్యయనం — Bro. Sudhakar CH. బోధనలు. మీరు ఎప్పుడైనా, ఎక్కడనుండైనా చూడగలరు.'
+        )}
         crumbs={[{ label: 'హోమ్', to: '/' }, { label: 'సందేశాలు' }]}
       />
 
